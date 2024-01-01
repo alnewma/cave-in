@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bscdxtwf8klxv"]
+
+[ext_resource type="Script" path="res://GameMap/activity_base.gd" id="1_avbar"]
+
+[node name="ActivityArea" type="Area2D"]
+script = ExtResource("1_avbar")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

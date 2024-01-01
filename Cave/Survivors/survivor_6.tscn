@@ -1,0 +1,144 @@
+[gd_scene load_steps=22 format=3 uid="uid://cgabcp7pnc7ge"]
+
+[ext_resource type="PackedScene" uid="uid://d185j6h1es4ps" path="res://Survivors/survivor_base.tscn" id="1_u7xk5"]
+[ext_resource type="Texture2D" uid="uid://i0k7nr2xm2b5" path="res://ArtAssets/PeopleSprites1/6/Idle.png" id="2_eqvcl"]
+[ext_resource type="Texture2D" uid="uid://dff4lmcds0grf" path="res://ArtAssets/PeopleSprites1/6/Special.png" id="3_26or3"]
+[ext_resource type="Texture2D" uid="uid://d0r74j8bm3qtw" path="res://ArtAssets/PeopleSprites1/6/Walk.png" id="4_sxfd4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2us36"]
+atlas = ExtResource("2_eqvcl")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ygnhs"]
+atlas = ExtResource("2_eqvcl")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_80ihy"]
+atlas = ExtResource("2_eqvcl")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_geepo"]
+atlas = ExtResource("2_eqvcl")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_temx3"]
+atlas = ExtResource("3_26or3")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lij0y"]
+atlas = ExtResource("3_26or3")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n3o31"]
+atlas = ExtResource("3_26or3")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rhdo4"]
+atlas = ExtResource("3_26or3")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ce4sl"]
+atlas = ExtResource("3_26or3")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_46ic1"]
+atlas = ExtResource("3_26or3")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tkuxn"]
+atlas = ExtResource("4_sxfd4")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g740q"]
+atlas = ExtResource("4_sxfd4")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h3bw2"]
+atlas = ExtResource("4_sxfd4")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2q0or"]
+atlas = ExtResource("4_sxfd4")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dxrem"]
+atlas = ExtResource("4_sxfd4")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhonf"]
+atlas = ExtResource("4_sxfd4")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f47e2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2us36")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ygnhs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_80ihy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_geepo")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_temx3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lij0y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n3o31")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rhdo4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ce4sl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_46ic1")
+}],
+"loop": false,
+"name": &"special",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tkuxn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g740q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h3bw2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2q0or")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dxrem")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhonf")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="survivor6" instance=ExtResource("1_u7xk5")]
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_f47e2")
+animation = &"special"
+frame = 3
+frame_progress = 0.61172

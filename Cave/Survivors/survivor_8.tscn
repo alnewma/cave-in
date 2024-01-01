@@ -1,0 +1,80 @@
+[gd_scene load_steps=13 format=3 uid="uid://cusfai1myggmq"]
+
+[ext_resource type="PackedScene" uid="uid://d185j6h1es4ps" path="res://Survivors/survivor_base.tscn" id="1_cvihc"]
+[ext_resource type="Texture2D" uid="uid://dpajyndxckoq6" path="res://ArtAssets/PeopleSprites1/8/Idle.png" id="2_mpobd"]
+[ext_resource type="Texture2D" uid="uid://x1maqe116hq0" path="res://ArtAssets/PeopleSprites1/8/Special.png" id="3_vb8d5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkox3"]
+atlas = ExtResource("2_mpobd")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_et2j4"]
+atlas = ExtResource("2_mpobd")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4npf"]
+atlas = ExtResource("2_mpobd")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6agmx"]
+atlas = ExtResource("2_mpobd")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_onpyf"]
+atlas = ExtResource("3_vb8d5")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kh2es"]
+atlas = ExtResource("3_vb8d5")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7ark"]
+atlas = ExtResource("3_vb8d5")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u77gd"]
+atlas = ExtResource("3_vb8d5")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4kw14"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jkox3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_et2j4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t4npf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6agmx")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onpyf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kh2es")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7ark")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u77gd")
+}],
+"loop": false,
+"name": &"special",
+"speed": 5.0
+}]
+
+[node name="survivor8" instance=ExtResource("1_cvihc")]
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_4kw14")
+animation = &"special"

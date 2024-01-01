@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjiwhknxcx6xk"]
+
+[ext_resource type="Script" path="res://UI/interaction_base.gd" id="1_d6l75"]
+[ext_resource type="Texture2D" uid="uid://cm5lb1bi11657" path="res://ArtAssets/UI/UIPage.png" id="1_j6n1p"]
+
+[node name="interaction_base" type="CanvasLayer"]
+script = ExtResource("1_d6l75")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_j6n1p")
+stretch_mode = 5
+
+[node name="button_holder" type="VBoxContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="menu_title" type="Label" parent="TextureRect/button_holder"]
+layout_mode = 2
+text = "Survivor Assignment"
+horizontal_alignment = 1
