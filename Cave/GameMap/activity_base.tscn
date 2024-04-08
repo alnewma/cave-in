@@ -5,4 +5,4 @@
 [node name="ActivityArea" type="Area2D"]
 script = ExtResource("1_avbar")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]

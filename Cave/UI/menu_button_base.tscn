@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://lisxvkd8i4da"]
+
+[ext_resource type="Texture2D" uid="uid://ngi6dsmnf7gs" path="res://ArtAssets/UI/UIBanner.png" id="1_llm0t"]
+[ext_resource type="Script" path="res://UI/menu_button_base.gd" id="1_x0s1h"]
+[ext_resource type="Theme" uid="uid://c0w38urtirqsi" path="res://UI/button_theme.tres" id="2_vgx6l"]
+
+[node name="button_holder" type="CenterContainer" groups=["menu_button"]]
+script = ExtResource("1_x0s1h")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+texture = ExtResource("1_llm0t")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="Button" type="Button" parent="NinePatchRect" groups=["button"]]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_vgx6l")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 25

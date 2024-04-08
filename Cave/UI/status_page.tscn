@@ -1,0 +1,103 @@
+[gd_scene load_steps=8 format=3 uid="uid://c5a70cfo1egqy"]
+
+[ext_resource type="PackedScene" uid="uid://bjiwhknxcx6xk" path="res://UI/interaction_base.tscn" id="1_yufgc"]
+[ext_resource type="Texture2D" uid="uid://dxv845gol0lyu" path="res://ArtAssets/UI/UIInventoryIcon.png" id="2_17hf1"]
+[ext_resource type="Script" path="res://UI/status_page.gd" id="2_js0vl"]
+[ext_resource type="Theme" uid="uid://bgr6frj5j5a2w" path="res://UI/label_theme.tres" id="3_n48s5"]
+[ext_resource type="PackedScene" uid="uid://b13m7ybp1isac" path="res://UI/title_holder.tscn" id="3_w13ky"]
+[ext_resource type="PackedScene" uid="uid://bnlm43q5metkn" path="res://UI/back_button.tscn" id="5_rtrbq"]
+[ext_resource type="Texture2D" uid="uid://cs4vk0dmjakde" path="res://ArtAssets/UI/UIFrame2.png" id="5_yt5up"]
+
+[node name="status_page" instance=ExtResource("1_yufgc")]
+script = ExtResource("2_js0vl")
+
+[node name="icon" type="TextureRect" parent="background/button_holder" index="0"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+texture = ExtResource("2_17hf1")
+stretch_mode = 5
+
+[node name="title_holder" parent="background/button_holder" index="1" instance=ExtResource("3_w13ky")]
+layout_mode = 2
+
+[node name="Label" parent="background/button_holder/title_holder/TitleBanner" index="0"]
+text = "Character Name"
+
+[node name="status_holder2" type="CenterContainer" parent="background/button_holder" index="2"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="background/button_holder/status_holder2" index="0"]
+layout_mode = 2
+
+[node name="health_title" type="Label" parent="background/button_holder/status_holder2/VBoxContainer" index="0"]
+layout_mode = 2
+theme = ExtResource("3_n48s5")
+theme_override_font_sizes/font_size = 25
+text = "Health"
+horizontal_alignment = 1
+
+[node name="health_status" type="ProgressBar" parent="background/button_holder/status_holder2/VBoxContainer" index="1"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+show_percentage = false
+
+[node name="status_holder1" type="CenterContainer" parent="background/button_holder" index="3"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="background/button_holder/status_holder1" index="0"]
+layout_mode = 2
+
+[node name="thirst_title" type="Label" parent="background/button_holder/status_holder1/VBoxContainer" index="0"]
+layout_mode = 2
+theme = ExtResource("3_n48s5")
+theme_override_font_sizes/font_size = 25
+text = "Thirst"
+horizontal_alignment = 1
+
+[node name="thirst_status" type="ProgressBar" parent="background/button_holder/status_holder1/VBoxContainer" index="1"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+show_percentage = false
+
+[node name="item_holder" type="Control" parent="background/button_holder" index="4"]
+layout_mode = 2
+
+[node name="item_label" type="Label" parent="background/button_holder/item_holder" index="0"]
+layout_mode = 2
+offset_right = 400.0
+offset_bottom = 26.0
+theme = ExtResource("3_n48s5")
+theme_override_font_sizes/font_size = 25
+text = "Item"
+horizontal_alignment = 1
+
+[node name="item_button" type="TextureButton" parent="background/button_holder/item_holder" index="1"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+offset_top = 30.0
+offset_right = 400.0
+offset_bottom = 230.0
+texture_normal = ExtResource("5_yt5up")
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="background/button_holder/item_holder" index="2"]
+layout_mode = 0
+offset_top = 30.0
+offset_right = 400.0
+offset_bottom = 230.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="item_image" type="TextureRect" parent="background/button_holder/item_holder/MarginContainer" index="0"]
+layout_mode = 2
+stretch_mode = 5
+
+[node name="MarginContainer" parent="background" index="1" instance=ExtResource("5_rtrbq")]
+layout_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+
+[editable path="background/button_holder/title_holder"]

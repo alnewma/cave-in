@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccyk8hmxcmshm"]
+
+[ext_resource type="Script" path="res://GameMap/interaction_object.gd" id="1_klf66"]
+[ext_resource type="PackedScene" uid="uid://csnxkosty46yr" path="res://UI/assignment_menu_prompt.tscn" id="2_x1xiw"]
+
+[node name="interaction_object" type="Area2D" groups=["interaction_object"]]
+script = ExtResource("1_klf66")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="depletion_timer" type="Timer" parent="."]
+autostart = true
+
+[node name="progression_timer" type="Timer" parent="."]
+autostart = true
+
+[node name="assignment_menu_prompt" parent="." instance=ExtResource("2_x1xiw")]
+
+[connection signal="timeout" from="depletion_timer" to="." method="_on_depletion__timer_timeout"]
+[connection signal="timeout" from="progression_timer" to="." method="_on_progression_timer_timeout"]

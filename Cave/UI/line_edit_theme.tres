@@ -1,0 +1,15 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://brnwg1k0lrtsw"]
+
+[ext_resource type="FontFile" uid="uid://cmvis4l03ujqr" path="res://UI/PixelFont.ttf" id="1_gswel"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0fbye"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wyqyd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cjnjw"]
+
+[resource]
+LineEdit/fonts/font = ExtResource("1_gswel")
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_0fbye")
+LineEdit/styles/normal = SubResource("StyleBoxEmpty_wyqyd")
+LineEdit/styles/read_only = SubResource("StyleBoxEmpty_cjnjw")

@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnlm43q5metkn"]
+
+[ext_resource type="Texture2D" uid="uid://dyrxilj7ovacu" path="res://ArtAssets/UI/UIBack.png" id="1_0nqhc"]
+[ext_resource type="Script" path="res://UI/back_button.gd" id="1_ybyqw"]
+
+[node name="MarginContainer" type="MarginContainer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -105.0
+offset_top = -61.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_bottom = 15
+script = ExtResource("1_ybyqw")
+
+[node name="back_button" type="TextureButton" parent="."]
+layout_mode = 2
+texture_normal = ExtResource("1_0nqhc")
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="back_button" to="." method="_on_back_button_pressed"]

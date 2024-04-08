@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://cnv7hwv0fiyx"]
+
+[ext_resource type="PackedScene" uid="uid://bjiwhknxcx6xk" path="res://UI/interaction_base.tscn" id="1_q874p"]
+[ext_resource type="Script" path="res://UI/edit_location.gd" id="2_8e7uu"]
+[ext_resource type="PackedScene" uid="uid://b13m7ybp1isac" path="res://UI/title_holder.tscn" id="3_v8x66"]
+[ext_resource type="PackedScene" uid="uid://lisxvkd8i4da" path="res://UI/menu_button_base.tscn" id="4_53gtr"]
+
+[node name="edit_location" instance=ExtResource("1_q874p")]
+script = ExtResource("2_8e7uu")
+
+[node name="title_holder" parent="background/button_holder" index="0" instance=ExtResource("3_v8x66")]
+layout_mode = 2
+
+[node name="TitleBanner" parent="background/button_holder/title_holder" index="0"]
+custom_minimum_size = Vector2(400, 100)
+
+[node name="Label" parent="background/button_holder/title_holder/TitleBanner" index="0"]
+text = "Location Name"
+
+[node name="confirm_button" parent="background/button_holder" index="1" instance=ExtResource("4_53gtr")]
+layout_mode = 2
+
+[node name="Button" parent="background/button_holder/confirm_button/NinePatchRect" index="0"]
+theme_override_font_sizes/font_size = 20
+text = "Remove Location?"
+
+[node name="close_button" parent="background/button_holder" index="2" instance=ExtResource("4_53gtr")]
+layout_mode = 2
+button_text = "Close"
+
+[node name="NinePatchRect" parent="background/button_holder/close_button" index="0"]
+custom_minimum_size = Vector2(180, 30)
+
+[node name="Button" parent="background/button_holder/close_button/NinePatchRect" index="0"]
+theme_override_font_sizes/font_size = 20
+text = "Close"
+
+[connection signal="pressed" from="background/button_holder/confirm_button/NinePatchRect/Button" to="." method="_on_button_pressed" binds= ["Confirm"]]
+[connection signal="pressed" from="background/button_holder/close_button/NinePatchRect/Button" to="." method="_on_button_pressed" binds= ["Close"]]
+
+[editable path="background/button_holder/title_holder"]
+[editable path="background/button_holder/confirm_button"]
+[editable path="background/button_holder/close_button"]

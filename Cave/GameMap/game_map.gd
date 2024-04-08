@@ -1,0 +1,59 @@
+extends Node2D
+
+@onready var interaction_menu = $interaction_UI_handler
+@onready var flag_creation_menu = $map_menu/establish_location
+@onready var flag_edit_menu = $map_menu/edit_location
+@onready var location_flag = preload("res://GameMap/location_flag.tscn")
+
+func _ready():
+	setup_map()
+
+func _on_child_entered_tree(node):
+	if node.is_in_group("survivor"):
+		node.survivor_clicked.connect(create_interaction_menu)
+		node.survivor_mouse_entered.connect(survivor_mouse_entered)
+		node.survivor_mouse_exited.connect(survivor_mouse_exited)
+	elif node.is_in_group("location_flag"):
+		node.flag_clicked.connect(create_removal_menu)
+		node.flag_mouse_entered.connect(flag_mouse_entered)
+		node.flag_mouse_exited.connect(flag_mouse_exited)
+
+var survivors_within_mouse = []
+func survivor_mouse_entered(survivor):
+	survivors_within_mouse.append(survivor)
+func survivor_mouse_exited(survivor):
+	survivors_within_mouse.erase(survivor)
+
+var flags_within_mouse = []
+func flag_mouse_entered(flag):
+	flags_within_mouse.append(flag)
+func flag_mouse_exited(flag):
+	flags_within_mouse.erase(flag)
+
+func create_interaction_menu(survivor):
+	interaction_menu.change_page(interaction_menu.start_page,true)
+	interaction_menu.current_survivor = survivor
+func create_removal_menu(flag):
+	flag_edit_menu.removal_process(flag)
+
+func _unhandled_input(event):
+	if GameHandler.prompts_hovered.size() == 0:
+		if event.is_action_pressed("object_select") and survivors_within_mouse.size() == 0 and flags_within_mouse.size() == 0 and not flag_creation_menu.visible:
+			var flag = location_flag.instantiate()
+			flag.global_position = NavigationServer2D.map_get_closest_point(get_tree().get_first_node_in_group("navigation_region").get_navigation_map(),get_global_mouse_position())
+			flag_creation_menu.creation_process(flag)
+			flag.self_modulate.a = .5
+
+## Map Setup ##
+
+func setup_map():
+	create_locations()
+
+func create_locations():
+	var flag_list = GameHandler.player_data.map_data.locations
+	for location in flag_list:
+		var flag = location_flag.instantiate()
+		flag.flag_placed = true
+		flag.flag_name = location["name"]
+		flag.global_position = str_to_var("Vector2" + location["position"]) # convert from string to vector2
+		add_child(flag)

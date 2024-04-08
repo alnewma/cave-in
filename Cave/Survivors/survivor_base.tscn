@@ -1,16 +1,99 @@
-[gd_scene load_steps=3 format=3 uid="uid://d185j6h1es4ps"]
+[gd_scene load_steps=12 format=3 uid="uid://d185j6h1es4ps"]
 
 [ext_resource type="Script" path="res://Survivors/survivor_base.gd" id="1_21p5d"]
+[ext_resource type="Script" path="res://Survivors/finite_state_machine.gd" id="2_861pe"]
+[ext_resource type="Script" path="res://Survivors/survivor_activity_state.gd" id="3_5t7pu"]
+[ext_resource type="Script" path="res://HelpfulFunctions/polygon_point_generator.gd" id="4_5lacm"]
+[ext_resource type="Script" path="res://Survivors/survivor_rest_state.gd" id="4_mhv7o"]
+[ext_resource type="Script" path="res://Survivors/survivor_movement_state.gd" id="5_h0sfs"]
+[ext_resource type="Script" path="res://Survivors/survivor_defense_state.gd" id="6_432de"]
+[ext_resource type="Script" path="res://Survivors/survivor_death_state.gd" id="7_fd67k"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bnvq1"]
-height = 38.0
+radius = 4.0
+height = 16.0
 
-[node name="SurvivorBase" type="CharacterBody2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xnsnr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7vnyp"]
+radius = 136.719
+
+[node name="SurvivorBase" type="CharacterBody2D" groups=["survivor"]]
+scale = Vector2(0.5, 0.5)
+collision_layer = 4
+motion_mode = 1
+wall_min_slide_angle = 0.0
 script = ExtResource("1_21p5d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -19)
+position = Vector2(0, -4)
+rotation = 1.5708
 shape = SubResource("CapsuleShape2D_bnvq1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(9, -24)
+position = Vector2(0, -24)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 5.0
+avoidance_enabled = true
+debug_enabled = true
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
+script = ExtResource("2_861pe")
+state = NodePath("SurvivorRestState")
+
+[node name="SurvivorActivityState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator", "vision_cast")]
+script = ExtResource("3_5t7pu")
+actor = NodePath("../..")
+animator = NodePath("../../AnimatedSprite2D")
+vision_cast = NodePath("../../RayCast2D")
+
+[node name="SurvivorRestState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("animator")]
+script = ExtResource("4_mhv7o")
+animator = NodePath("../../AnimatedSprite2D")
+
+[node name="SurvivorMovementState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator")]
+script = ExtResource("5_h0sfs")
+actor = NodePath("../..")
+animator = NodePath("../../AnimatedSprite2D")
+
+[node name="SurvivorDefenseState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor")]
+script = ExtResource("6_432de")
+actor = NodePath("../..")
+
+[node name="SurvivorDeathState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor")]
+script = ExtResource("7_fd67k")
+actor = NodePath("../..")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(0, -8)
+target_position = Vector2(0, 16)
+
+[node name="PolygonRandomPointGenerator" type="Node" parent="."]
+script = ExtResource("4_5lacm")
+
+[node name="interaction_area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interaction_area"]
+position = Vector2(0, -14)
+shape = SubResource("CapsuleShape2D_xnsnr")
+
+[node name="thirst_timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="danger_area" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="danger_area"]
+shape = SubResource("CircleShape2D_7vnyp")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="actor_reached_target" from="FiniteStateMachine/SurvivorMovementState" to="." method="_on_survivor_movement_state_actor_reached_target"]
+[connection signal="input_event" from="interaction_area" to="." method="_on_interaction_area_input_event"]
+[connection signal="mouse_entered" from="interaction_area" to="." method="_on_interaction_area_mouse_entered"]
+[connection signal="mouse_exited" from="interaction_area" to="." method="_on_interaction_area_mouse_exited"]
+[connection signal="timeout" from="thirst_timer" to="." method="_on_thirst_timer_timeout"]
+[connection signal="body_entered" from="danger_area" to="." method="_on_danger_area_body_entered"]
+[connection signal="body_exited" from="danger_area" to="." method="_on_danger_area_body_exited"]

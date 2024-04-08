@@ -1,0 +1,82 @@
+[gd_scene load_steps=12 format=3 uid="uid://upsox6ca23ao"]
+
+[ext_resource type="Texture2D" uid="uid://tvgkmfknvcfb" path="res://ArtAssets/Flag.png" id="1_aekpx"]
+[ext_resource type="Script" path="res://GameMap/location_flag.gd" id="2_7d250"]
+[ext_resource type="Texture2D" uid="uid://cwsm04eflme6w" path="res://ArtAssets/Areas.png" id="3_a2005"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tq1qh"]
+atlas = ExtResource("1_aekpx")
+region = Rect2(0, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l57he"]
+atlas = ExtResource("1_aekpx")
+region = Rect2(18, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wkopo"]
+atlas = ExtResource("1_aekpx")
+region = Rect2(36, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vo1je"]
+atlas = ExtResource("1_aekpx")
+region = Rect2(54, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jal2"]
+atlas = ExtResource("1_aekpx")
+region = Rect2(72, 0, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sjrm7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tq1qh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l57he")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wkopo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vo1je")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jal2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mh2xl"]
+radius = 6.0
+height = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sj2gv"]
+radius = 64.0078
+
+[node name="location_flag" type="AnimatedSprite2D" groups=["location_flag"]]
+sprite_frames = SubResource("SpriteFrames_sjrm7")
+autoplay = "default"
+offset = Vector2(6, -8)
+script = ExtResource("2_7d250")
+
+[node name="interaction_area" type="Area2D" parent="."]
+position = Vector2(-4, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interaction_area"]
+position = Vector2(6, -8)
+shape = SubResource("CapsuleShape2D_mh2xl")
+
+[node name="location_perimeter" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.2)
+texture = ExtResource("3_a2005")
+
+[node name="location_area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="location_area"]
+shape = SubResource("CircleShape2D_sj2gv")
+
+[connection signal="input_event" from="interaction_area" to="." method="_on_interaction_area_input_event"]
+[connection signal="mouse_entered" from="interaction_area" to="." method="_on_interaction_area_mouse_entered"]
+[connection signal="mouse_exited" from="interaction_area" to="." method="_on_interaction_area_mouse_exited"]

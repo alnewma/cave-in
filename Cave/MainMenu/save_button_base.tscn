@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://nmfgotssstbe"]
+
+[ext_resource type="Script" path="res://MainMenu/save_button_base.gd" id="1_eeggq"]
+
+[node name="save_file" type="Button" groups=["save_button"]]
+custom_minimum_size = Vector2(200, 50)
+text = "Save 1"
+script = ExtResource("1_eeggq")

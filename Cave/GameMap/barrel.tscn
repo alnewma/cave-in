@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://davja3ux7626q"]
+
+[ext_resource type="Texture2D" uid="uid://cx0cl5ue5n15d" path="res://ArtAssets/Barrel.png" id="1_p6oo0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jrb1m"]
+atlas = ExtResource("1_p6oo0")
+region = Rect2(0, 0, 12, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ah8i"]
+atlas = ExtResource("1_p6oo0")
+region = Rect2(12, 0, 12, 13)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8dgv2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jrb1m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ah8i")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="barrelSprite" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_8dgv2")
+offset = Vector2(0, -6)

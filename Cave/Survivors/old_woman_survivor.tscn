@@ -1,0 +1,140 @@
+[gd_scene load_steps=21 format=3 uid="uid://cimeurx3tlf36"]
+
+[ext_resource type="PackedScene" uid="uid://d185j6h1es4ps" path="res://Survivors/survivor_base.tscn" id="1_0vgns"]
+[ext_resource type="Texture2D" uid="uid://cb0ktfkd2lhd4" path="res://ArtAssets/PeopleSprites2/2 Old_woman/Old_woman_idle.png" id="2_35q4q"]
+[ext_resource type="Texture2D" uid="uid://bj50shcf2fmm" path="res://ArtAssets/PeopleSprites2/2 Old_woman/Old_woman_death.png" id="3_ipbrf"]
+[ext_resource type="Texture2D" uid="uid://bs3fro2hmga8b" path="res://ArtAssets/PeopleSprites2/2 Old_woman/Old_woman_attack.png" id="3_qtxec"]
+[ext_resource type="Texture2D" uid="uid://bic838dklxum" path="res://ArtAssets/PeopleSprites2/2 Old_woman/Old_woman_hurt.png" id="4_wblle"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixiv7"]
+atlas = ExtResource("3_qtxec")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spylx"]
+atlas = ExtResource("3_qtxec")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ls24k"]
+atlas = ExtResource("3_qtxec")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxi1y"]
+atlas = ExtResource("3_qtxec")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_neo0g"]
+atlas = ExtResource("3_ipbrf")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iqy2g"]
+atlas = ExtResource("3_ipbrf")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmkno"]
+atlas = ExtResource("3_ipbrf")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6w18t"]
+atlas = ExtResource("3_ipbrf")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hpk6d"]
+atlas = ExtResource("4_wblle")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ymp1m"]
+atlas = ExtResource("4_wblle")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iqohr"]
+atlas = ExtResource("2_35q4q")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_udht0"]
+atlas = ExtResource("2_35q4q")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6b74"]
+atlas = ExtResource("2_35q4q")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycs0k"]
+atlas = ExtResource("2_35q4q")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0y4vc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ixiv7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spylx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ls24k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oxi1y")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_neo0g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iqy2g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gmkno")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6w18t")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hpk6d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ymp1m")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iqohr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_udht0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k6b74")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ycs0k")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="old_woman_survivor" instance=ExtResource("1_0vgns")]
+survivor_type = 3
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_0y4vc")
+animation = &"attack"

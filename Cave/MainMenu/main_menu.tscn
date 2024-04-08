@@ -1,0 +1,92 @@
+[gd_scene load_steps=2 format=3 uid="uid://slxdkui1guxf"]
+
+[ext_resource type="Script" path="res://MainMenu/main_menu.gd" id="1_t0rvo"]
+
+[node name="main_menu" type="CanvasLayer"]
+script = ExtResource("1_t0rvo")
+
+[node name="background" type="TextureRect" parent="."]
+offset_right = 1146.0
+offset_bottom = 573.0
+
+[node name="main_container" type="VBoxContainer" parent="background"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="new_game" type="Button" parent="background/main_container"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "New Game"
+
+[node name="load_game" type="Button" parent="background/main_container"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "Load Game"
+
+[node name="settings" type="Button" parent="background/main_container"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "Settings"
+
+[node name="quit" type="Button" parent="background/main_container"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "Quit"
+
+[node name="new_container" type="VBoxContainer" parent="background"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="menu_title" type="Label" parent="background/new_container"]
+layout_mode = 2
+text = "New Game"
+
+[node name="name_entry" type="LineEdit" parent="background/new_container"]
+layout_mode = 2
+placeholder_text = "Enter name..."
+max_length = 8
+
+[node name="create_button" type="Button" parent="background/new_container"]
+layout_mode = 2
+text = "Create"
+
+[node name="name_warning" type="Label" parent="background/new_container"]
+visible = false
+layout_mode = 2
+text = "Name taken"
+
+[node name="back" type="Button" parent="background/new_container"]
+layout_mode = 2
+text = "Back"
+
+[node name="load_container" type="VBoxContainer" parent="background"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="back" type="Button" parent="background/load_container"]
+layout_mode = 2
+text = "Back"
+
+[node name="settings_container" type="VBoxContainer" parent="background"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="back" type="Button" parent="background/settings_container"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="background/main_container/new_game" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="background/main_container/load_game" to="." method="_on_load_game_pressed"]
+[connection signal="pressed" from="background/main_container/quit" to="." method="_on_quit_pressed"]
+[connection signal="text_changed" from="background/new_container/name_entry" to="." method="_on_name_entry_text_changed"]
+[connection signal="pressed" from="background/new_container/create_button" to="." method="_on_create_button_pressed"]
+[connection signal="pressed" from="background/new_container/back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="background/load_container/back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="background/settings_container/back" to="." method="_on_back_pressed"]

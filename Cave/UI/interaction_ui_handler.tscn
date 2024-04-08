@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=3 uid="uid://buwfwcnvl62h1"]
+
+[ext_resource type="PackedScene" uid="uid://bfvjvfehvv0pr" path="res://UI/interaction_page.tscn" id="1_3fm8v"]
+[ext_resource type="Script" path="res://UI/interaction_ui_handler.gd" id="1_mld6s"]
+[ext_resource type="PackedScene" uid="uid://c5a70cfo1egqy" path="res://UI/status_page.tscn" id="2_kl22o"]
+[ext_resource type="PackedScene" uid="uid://b13esoyuiywak" path="res://UI/location_page.tscn" id="3_eriyx"]
+[ext_resource type="Script" path="res://UI/status_page.gd" id="4_yfccg"]
+[ext_resource type="PackedScene" uid="uid://com1f41jayn4w" path="res://UI/assignment_page.tscn" id="5_jrrwh"]
+
+[node name="interaction_UI_handler" type="CanvasLayer"]
+scale = Vector2(0.7, 0.7)
+transform = Transform2D(0.7, 0, 0, 0.7, 0, 0)
+script = ExtResource("1_mld6s")
+
+[node name="interaction_page" parent="." instance=ExtResource("1_3fm8v")]
+visible = false
+
+[node name="status_page" parent="." instance=ExtResource("2_kl22o")]
+visible = false
+script = ExtResource("4_yfccg")
+
+[node name="MarginContainer" parent="status_page/background" index="1"]
+previous_page = NodePath("../../../interaction_page")
+
+[node name="location_page" parent="." instance=ExtResource("3_eriyx")]
+visible = false
+
+[node name="MarginContainer" parent="location_page/background" index="1"]
+previous_page = NodePath("../../../interaction_page")
+
+[node name="assignment_page" parent="." instance=ExtResource("5_jrrwh")]
+visible = false
+
+[node name="MarginContainer" parent="assignment_page/background" index="1"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -105.0
+offset_top = -61.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 0
+previous_page = NodePath("../../../location_page")
+
+[connection signal="visibility_changed" from="status_page" to="status_page" method="_on_visibility_changed"]
+[connection signal="visibility_changed" from="location_page" to="location_page" method="_on_visibility_changed"]
+
+[editable path="interaction_page"]
+[editable path="interaction_page/background/button_holder/title_holder"]
+[editable path="interaction_page/background/button_holder/speak_button"]
+[editable path="interaction_page/background/button_holder/status_button"]
+[editable path="interaction_page/background/button_holder/assignment_button"]
+[editable path="interaction_page/background/button_holder/button_holder"]
+[editable path="status_page"]
+[editable path="status_page/background/button_holder/title_holder"]
+[editable path="location_page"]
+[editable path="location_page/background/button_holder/title_holder"]
+[editable path="assignment_page"]
+[editable path="assignment_page/background/button_holder/title_holder"]

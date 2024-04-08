@@ -1,0 +1,16 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://b7i8iy7krauku"]
+
+[ext_resource type="FontFile" uid="uid://cmvis4l03ujqr" path="res://UI/PixelFont.ttf" id="1_h80mi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bmger"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s084p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lrrx5"]
+
+[resource]
+TextEdit/colors/background_color = Color(0, 0, 0, 0)
+TextEdit/fonts/font = ExtResource("1_h80mi")
+TextEdit/styles/focus = SubResource("StyleBoxEmpty_bmger")
+TextEdit/styles/normal = SubResource("StyleBoxEmpty_s084p")
+TextEdit/styles/read_only = SubResource("StyleBoxEmpty_lrrx5")

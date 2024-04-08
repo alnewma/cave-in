@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cr4nt5stvace6"]
+[gd_scene load_steps=19 format=3 uid="uid://cr4nt5stvace6"]
 
 [ext_resource type="PackedScene" uid="uid://d185j6h1es4ps" path="res://Survivors/survivor_base.tscn" id="1_jrjkf"]
 [ext_resource type="Texture2D" uid="uid://behs3k53e8mns" path="res://ArtAssets/PeopleSprites1/9/Idle.png" id="2_4odtt"]
@@ -17,6 +17,22 @@ atlas = ExtResource("2_4odtt")
 region = Rect2(96, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0g70x"]
+atlas = ExtResource("2_4odtt")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u8jc0"]
+atlas = ExtResource("2_4odtt")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pmary"]
+atlas = ExtResource("2_4odtt")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xa1o5"]
+atlas = ExtResource("2_4odtt")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n1p71"]
 atlas = ExtResource("2_4odtt")
 region = Rect2(144, 0, 48, 48)
 
@@ -65,6 +81,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_u8jc0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pmary")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xa1o5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n1p71")
+}],
+"loop": false,
+"name": &"special",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_d1mcs")
 }, {
 "duration": 1.0,
@@ -91,4 +124,4 @@ animations = [{
 
 [node name="AnimatedSprite2D" parent="." index="1"]
 sprite_frames = SubResource("SpriteFrames_arywj")
-animation = &"walk"
+animation = &"special"

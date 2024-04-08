@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://b13m7ybp1isac"]
+
+[ext_resource type="Texture2D" uid="uid://cc4el8qogehbl" path="res://ArtAssets/UI/UITitleBanner.png" id="1_iuggx"]
+[ext_resource type="Theme" uid="uid://bgr6frj5j5a2w" path="res://UI/label_theme.tres" id="2_4xo1r"]
+
+[node name="title_holder" type="CenterContainer"]
+
+[node name="TitleBanner" type="NinePatchRect" parent="."]
+custom_minimum_size = Vector2(400, 50)
+layout_mode = 2
+texture = ExtResource("1_iuggx")
+patch_margin_left = 26
+patch_margin_top = 8
+patch_margin_right = 26
+patch_margin_bottom = 8
+
+[node name="Label" type="Label" parent="TitleBanner"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_4xo1r")
+theme_override_font_sizes/font_size = 30
+text = "Interactions"
+horizontal_alignment = 1
+vertical_alignment = 1

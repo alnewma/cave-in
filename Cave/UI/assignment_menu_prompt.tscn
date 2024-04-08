@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://csnxkosty46yr"]
+
+[ext_resource type="Script" path="res://UI/assignment_menu_prompt.gd" id="1_3ddgk"]
+[ext_resource type="Texture2D" uid="uid://bgrnx71yqjfpa" path="res://ArtAssets/UI/assignment_icon2.png" id="2_sdni1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xroug"]
+radius = 10.0125
+
+[node name="assignment_menu_prompt" type="Area2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_3ddgk")
+
+[node name="button_icon" type="Sprite2D" parent="."]
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("2_sdni1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xroug")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

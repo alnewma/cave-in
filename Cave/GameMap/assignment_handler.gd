@@ -4,7 +4,5 @@ extends Node
 enum assignments {
 	water_gathering = 1,
 	resting = 1,
-	exploration = 1,
-	guarding = 1,
 	
 }

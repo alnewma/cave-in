@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bgr6frj5j5a2w"]
+
+[ext_resource type="FontFile" uid="uid://cmvis4l03ujqr" path="res://UI/PixelFont.ttf" id="1_mrq06"]
+
+[resource]
+Label/fonts/font = ExtResource("1_mrq06")
