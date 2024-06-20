@@ -5,8 +5,7 @@ class_name PlayerData
 	health = 100,
 	thirst = 100,
 	global_position = Vector2.ZERO,
-	notes = "",
-	inventory = []
+	notes = ""
 }
 
 @export var map_data = {

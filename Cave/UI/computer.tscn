@@ -1,0 +1,491 @@
+[gd_scene load_steps=10 format=3 uid="uid://5v62qkneob0d"]
+
+[ext_resource type="Script" path="res://UI/computer.gd" id="1_5pdpm"]
+[ext_resource type="Texture2D" uid="uid://cjduktjnn04rc" path="res://ArtAssets/computer_screen.png" id="1_jyp6a"]
+[ext_resource type="Theme" uid="uid://cv6n8i5ybuo2h" path="res://UI/computer_font_theme.tres" id="3_0gtt5"]
+[ext_resource type="FontFile" uid="uid://bok2h3w4j5fn6" path="res://ArtAssets/UI/PublicPixel-E447g.ttf" id="4_fweoj"]
+[ext_resource type="Theme" uid="uid://d2s06bwxpwow" path="res://UI/computer_button_theme.tres" id="4_smsvl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rjsbn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5l1v2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rtn0j"]
+
+[sub_resource type="Theme" id="Theme_vc6oc"]
+LineEdit/colors/caret_color = Color(0.00784314, 1, 0, 1)
+LineEdit/colors/font_color = Color(0.00784314, 1, 0, 1)
+LineEdit/constants/caret_width = 12
+LineEdit/fonts/font = ExtResource("4_fweoj")
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_rjsbn")
+LineEdit/styles/normal = SubResource("StyleBoxEmpty_5l1v2")
+LineEdit/styles/read_only = SubResource("StyleBoxEmpty_rtn0j")
+
+[node name="computer" type="Control" groups=["computer_ui"]]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5pdpm")
+
+[node name="Base" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_jyp6a")
+
+[node name="password_text" type="Control" parent="Base"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="title" type="Label" parent="Base/password_text"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0512153
+anchor_top = 0.0972222
+anchor_right = 0.412326
+anchor_bottom = 0.132716
+offset_left = 59.0
+offset_top = 63.0
+offset_right = 475.0
+offset_bottom = 79.0
+theme = ExtResource("3_0gtt5")
+text = "Enter password to begin."
+
+[node name="body" type="LineEdit" parent="Base/password_text"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0512153
+anchor_top = 0.0972222
+anchor_right = 0.412326
+anchor_bottom = 0.132716
+offset_left = 89.0
+offset_top = 106.0
+offset_right = 1063.0
+offset_bottom = 156.0
+theme = SubResource("Theme_vc6oc")
+context_menu_enabled = false
+caret_blink = true
+caret_force_displayed = true
+metadata/_edit_use_anchors_ = true
+
+[node name="exit_button" type="Button" parent="Base/password_text"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1016.0
+offset_top = 571.0
+offset_right = 1080.0
+offset_bottom = 587.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("4_smsvl")
+text = "Exit"
+alignment = 0
+
+[node name="start_text" type="Control" parent="Base"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+
+[node name="title" type="Label" parent="Base/start_text"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0512153
+anchor_top = 0.0972222
+anchor_right = 0.412326
+anchor_bottom = 0.132716
+offset_left = 59.0
+offset_top = 63.0
+offset_right = 475.0
+offset_bottom = 79.0
+theme = ExtResource("3_0gtt5")
+text = "Select an option."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Base/start_text"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 89.0
+offset_top = 106.0
+offset_right = 297.0
+offset_bottom = 163.0
+theme_override_constants/separation = 25
+metadata/_edit_use_anchors_ = true
+
+[node name="logs_button" type="Button" parent="Base/start_text/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_smsvl")
+text = "Logs"
+alignment = 0
+
+[node name="door_button" type="Button" parent="Base/start_text/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_smsvl")
+text = "Door Controls"
+alignment = 0
+
+[node name="exit_button" type="Button" parent="Base/start_text"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1016.0
+offset_top = 571.0
+offset_right = 1080.0
+offset_bottom = 587.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("4_smsvl")
+text = "Exit"
+alignment = 0
+
+[node name="logs_text" type="Control" parent="Base"]
+visible = false
+anchors_preset = 0
+
+[node name="title" type="Label" parent="Base/logs_text"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0512153
+anchor_top = 0.0972222
+anchor_right = 0.412326
+anchor_bottom = 0.132716
+offset_left = 59.0
+offset_top = 63.0
+offset_right = 475.0
+offset_bottom = 79.0
+theme = ExtResource("3_0gtt5")
+text = "Select log."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Base/logs_text"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 89.0
+offset_top = 106.0
+offset_right = 297.0
+offset_bottom = 163.0
+theme_override_constants/separation = 25
+metadata/_edit_use_anchors_ = true
+
+[node name="logs_button1" type="Button" parent="Base/logs_text/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_smsvl")
+text = "Log 1"
+alignment = 0
+
+[node name="logs_button2" type="Button" parent="Base/logs_text/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_smsvl")
+text = "Log 2"
+alignment = 0
+
+[node name="logs_button3" type="Button" parent="Base/logs_text/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_smsvl")
+text = "Log 3"
+alignment = 0
+
+[node name="back_button" type="Button" parent="Base/logs_text"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1016.0
+offset_top = 571.0
+offset_right = 1080.0
+offset_bottom = 587.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("4_smsvl")
+text = "Back"
+alignment = 0
+
+[node name="doors_text" type="Control" parent="Base"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+
+[node name="title" type="Label" parent="Base/doors_text"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0512153
+anchor_top = 0.0972222
+anchor_right = 0.412326
+anchor_bottom = 0.132716
+offset_left = 59.0
+offset_top = 63.0
+offset_right = 475.0
+offset_bottom = 79.0
+theme = ExtResource("3_0gtt5")
+text = "Select door."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Base/doors_text"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 89.0
+offset_top = 106.0
+offset_right = 297.0
+offset_bottom = 163.0
+theme_override_constants/separation = 25
+metadata/_edit_use_anchors_ = true
+
+[node name="door1_button" type="Button" parent="Base/doors_text/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_smsvl")
+text = "Entry Door [Unresponsive]"
+alignment = 0
+
+[node name="door2_button" type="Button" parent="Base/doors_text/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_smsvl")
+text = "Staircase Security Door"
+alignment = 0
+
+[node name="back_button" type="Button" parent="Base/doors_text"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1016.0
+offset_top = 571.0
+offset_right = 1080.0
+offset_bottom = 587.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("4_smsvl")
+text = "Back"
+alignment = 0
+
+[node name="log1_text" type="Control" parent="Base"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+
+[node name="title" type="Label" parent="Base/log1_text"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0512153
+anchor_top = 0.0972222
+anchor_right = 0.412326
+anchor_bottom = 0.132716
+offset_left = 59.0
+offset_top = 63.0
+offset_right = 475.0
+offset_bottom = 79.0
+theme = ExtResource("3_0gtt5")
+text = "Log 1"
+
+[node name="body" type="Label" parent="Base/log1_text"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0512153
+anchor_top = 0.0972222
+anchor_right = 0.412326
+anchor_bottom = 0.132716
+offset_left = 89.0
+offset_top = 106.0
+offset_right = 1063.0
+offset_bottom = 535.0
+theme = ExtResource("3_0gtt5")
+text = "Log body."
+metadata/_edit_use_anchors_ = true
+
+[node name="back_buttonL" type="Button" parent="Base/log1_text"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1016.0
+offset_top = 571.0
+offset_right = 1080.0
+offset_bottom = 587.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("4_smsvl")
+text = "Back"
+alignment = 0
+
+[node name="log2_text" type="Control" parent="Base"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+
+[node name="title" type="Label" parent="Base/log2_text"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0512153
+anchor_top = 0.0972222
+anchor_right = 0.412326
+anchor_bottom = 0.132716
+offset_left = 59.0
+offset_top = 63.0
+offset_right = 475.0
+offset_bottom = 79.0
+theme = ExtResource("3_0gtt5")
+text = "Log 2"
+
+[node name="body" type="Label" parent="Base/log2_text"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0512153
+anchor_top = 0.0972222
+anchor_right = 0.412326
+anchor_bottom = 0.132716
+offset_left = 89.0
+offset_top = 106.0
+offset_right = 1063.0
+offset_bottom = 535.0
+theme = ExtResource("3_0gtt5")
+text = "Log body."
+metadata/_edit_use_anchors_ = true
+
+[node name="back_buttonL" type="Button" parent="Base/log2_text"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1016.0
+offset_top = 571.0
+offset_right = 1080.0
+offset_bottom = 587.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("4_smsvl")
+text = "Back"
+alignment = 0
+
+[node name="log3_text" type="Control" parent="Base"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+
+[node name="title" type="Label" parent="Base/log3_text"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0512153
+anchor_top = 0.0972222
+anchor_right = 0.412326
+anchor_bottom = 0.132716
+offset_left = 59.0
+offset_top = 63.0
+offset_right = 475.0
+offset_bottom = 79.0
+theme = ExtResource("3_0gtt5")
+text = "Log 3"
+
+[node name="body" type="Label" parent="Base/log3_text"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0512153
+anchor_top = 0.0972222
+anchor_right = 0.412326
+anchor_bottom = 0.132716
+offset_left = 89.0
+offset_top = 106.0
+offset_right = 1063.0
+offset_bottom = 535.0
+theme = ExtResource("3_0gtt5")
+text = "Cat picture."
+metadata/_edit_use_anchors_ = true
+
+[node name="back_buttonL" type="Button" parent="Base/log3_text"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1016.0
+offset_top = 571.0
+offset_right = 1080.0
+offset_bottom = 587.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("4_smsvl")
+text = "Back"
+alignment = 0
+
+[node name="opened_text" type="Control" parent="Base"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+
+[node name="title" type="Label" parent="Base/opened_text"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0512153
+anchor_top = 0.0972222
+anchor_right = 0.412326
+anchor_bottom = 0.132716
+offset_left = 59.0
+offset_top = 63.0
+offset_right = 475.0
+offset_bottom = 79.0
+theme = ExtResource("3_0gtt5")
+text = "Staircase Security Door."
+
+[node name="body" type="Label" parent="Base/opened_text"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0512153
+anchor_top = 0.0972222
+anchor_right = 0.412326
+anchor_bottom = 0.132716
+offset_left = 89.0
+offset_top = 106.0
+offset_right = 1063.0
+offset_bottom = 535.0
+theme = ExtResource("3_0gtt5")
+text = "Door opened."
+metadata/_edit_use_anchors_ = true
+
+[node name="back_buttonD" type="Button" parent="Base/opened_text"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1016.0
+offset_top = 571.0
+offset_right = 1080.0
+offset_bottom = 587.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("4_smsvl")
+text = "Back"
+alignment = 0
+
+[connection signal="pressed" from="Base/password_text/exit_button" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="Base/start_text/VBoxContainer/logs_button" to="." method="_on_logs_button_pressed"]
+[connection signal="pressed" from="Base/start_text/VBoxContainer/door_button" to="." method="_on_door_button_pressed"]
+[connection signal="pressed" from="Base/start_text/exit_button" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="Base/logs_text/VBoxContainer/logs_button1" to="." method="_on_logs_button_1_pressed"]
+[connection signal="pressed" from="Base/logs_text/VBoxContainer/logs_button2" to="." method="_on_logs_button_2_pressed"]
+[connection signal="pressed" from="Base/logs_text/VBoxContainer/logs_button3" to="." method="_on_logs_button_3_pressed"]
+[connection signal="pressed" from="Base/logs_text/back_button" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="Base/doors_text/VBoxContainer/door2_button" to="." method="_on_door_2_button_pressed"]
+[connection signal="pressed" from="Base/doors_text/back_button" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="Base/log1_text/back_buttonL" to="." method="_on_back_button_l_pressed"]
+[connection signal="pressed" from="Base/log2_text/back_buttonL" to="." method="_on_back_button_l_pressed"]
+[connection signal="pressed" from="Base/log3_text/back_buttonL" to="." method="_on_back_button_l_pressed"]
+[connection signal="pressed" from="Base/opened_text/back_buttonD" to="." method="_on_back_button_d_pressed"]

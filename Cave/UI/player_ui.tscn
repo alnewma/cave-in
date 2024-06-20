@@ -1,10 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://c7ugmytmsbal0"]
+[gd_scene load_steps=4 format=3 uid="uid://c7ugmytmsbal0"]
 
 [ext_resource type="PackedScene" uid="uid://b2es3ytop7jbs" path="res://UI/heart.tscn" id="1_5vto1"]
+[ext_resource type="PackedScene" uid="uid://cykw63mwr86q2" path="res://UI/usage_prompt.tscn" id="2_a7v35"]
+[ext_resource type="PackedScene" uid="uid://5v62qkneob0d" path="res://UI/computer.tscn" id="3_4ap37"]
 
 [node name="player_ui" type="CanvasLayer"]
-visible = false
 
 [node name="Control" parent="." instance=ExtResource("1_5vto1")]
 offset_left = 16.0
 offset_top = 14.0
+
+[node name="usage_prompt" parent="." instance=ExtResource("2_a7v35")]
+visible = false
+
+[node name="computer" parent="." instance=ExtResource("3_4ap37")]

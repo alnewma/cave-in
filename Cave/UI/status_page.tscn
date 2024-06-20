@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c5a70cfo1egqy"]
+[gd_scene load_steps=10 format=3 uid="uid://c5a70cfo1egqy"]
 
 [ext_resource type="PackedScene" uid="uid://bjiwhknxcx6xk" path="res://UI/interaction_base.tscn" id="1_yufgc"]
 [ext_resource type="Texture2D" uid="uid://dxv845gol0lyu" path="res://ArtAssets/UI/UIInventoryIcon.png" id="2_17hf1"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://b13m7ybp1isac" path="res://UI/title_holder.tscn" id="3_w13ky"]
 [ext_resource type="PackedScene" uid="uid://bnlm43q5metkn" path="res://UI/back_button.tscn" id="5_rtrbq"]
 [ext_resource type="Texture2D" uid="uid://cs4vk0dmjakde" path="res://ArtAssets/UI/UIFrame2.png" id="5_yt5up"]
+[ext_resource type="Texture2D" uid="uid://bwn132w0td5v0" path="res://ArtAssets/Items/Flashlight.png" id="7_dpowb"]
+[ext_resource type="Theme" uid="uid://c0w38urtirqsi" path="res://UI/button_theme.tres" id="8_0fon7"]
 
 [node name="status_page" instance=ExtResource("1_yufgc")]
 script = ExtResource("2_js0vl")
@@ -60,7 +62,9 @@ layout_mode = 2
 show_percentage = false
 
 [node name="item_holder" type="Control" parent="background/button_holder" index="4"]
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
+mouse_filter = 1
 
 [node name="item_label" type="Label" parent="background/button_holder/item_holder" index="0"]
 layout_mode = 2
@@ -77,6 +81,7 @@ layout_mode = 2
 offset_top = 30.0
 offset_right = 400.0
 offset_bottom = 230.0
+mouse_filter = 1
 texture_normal = ExtResource("5_yt5up")
 stretch_mode = 5
 
@@ -85,19 +90,72 @@ layout_mode = 0
 offset_top = 30.0
 offset_right = 400.0
 offset_bottom = 230.0
+mouse_filter = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="item_image" type="TextureRect" parent="background/button_holder/item_holder/MarginContainer" index="0"]
+[node name="VBoxContainer" type="VBoxContainer" parent="background/button_holder/item_holder/MarginContainer" index="0"]
 layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="item_image" type="TextureRect" parent="background/button_holder/item_holder/MarginContainer/VBoxContainer" index="0"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("7_dpowb")
 stretch_mode = 5
+
+[node name="image_small" type="TextureRect" parent="background/button_holder/item_holder/MarginContainer/VBoxContainer" index="1"]
+visible = false
+custom_minimum_size = Vector2(75, 75)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("7_dpowb")
+stretch_mode = 5
+
+[node name="take_button" type="Button" parent="background/button_holder/item_holder/MarginContainer/VBoxContainer" index="2"]
+visible = false
+layout_mode = 2
+mouse_filter = 1
+theme = ExtResource("8_0fon7")
+theme_override_font_sizes/font_size = 20
+text = "Take Item"
+
+[node name="replace_button" type="Button" parent="background/button_holder/item_holder/MarginContainer/VBoxContainer" index="3"]
+visible = false
+layout_mode = 2
+mouse_filter = 1
+theme = ExtResource("8_0fon7")
+theme_override_font_sizes/font_size = 20
+text = "Replace Item"
+
+[node name="inv_scroll" type="ScrollContainer" parent="background/button_holder/item_holder/MarginContainer/VBoxContainer" index="4"]
+visible = false
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="background/button_holder/item_holder/MarginContainer/VBoxContainer/inv_scroll" index="0"]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="background/button_holder/item_holder/MarginContainer/VBoxContainer/inv_scroll/VBoxContainer" index="0"]
+layout_mode = 2
+theme = ExtResource("3_n48s5")
+theme_override_font_sizes/font_size = 20
+text = "Replace With"
+horizontal_alignment = 1
 
 [node name="MarginContainer" parent="background" index="1" instance=ExtResource("5_rtrbq")]
 layout_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="mouse_entered" from="background/button_holder/item_holder" to="." method="_on_item_holder_mouse_entered"]
+[connection signal="mouse_exited" from="background/button_holder/item_holder" to="." method="_on_item_holder_mouse_exited"]
+[connection signal="pressed" from="background/button_holder/item_holder/MarginContainer/VBoxContainer/take_button" to="." method="_on_take_button_pressed"]
+[connection signal="pressed" from="background/button_holder/item_holder/MarginContainer/VBoxContainer/replace_button" to="." method="_on_replace_button_pressed"]
 
 [editable path="background/button_holder/title_holder"]

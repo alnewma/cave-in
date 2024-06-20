@@ -20,5 +20,6 @@ func _physics_process(_delta):
 	emit_signal("actor_reached_target")
 	if target_reached and actor.assigned_location != Vector2.ZERO and not actor.status_break and get_parent().state != get_parent().activity:
 		get_parent().change_state(get_parent().activity)
-		if not get_node(actor.target_assignment).assigned_survivors.has(actor):
-			get_node(actor.target_assignment).assigned_survivors.append(actor)
+		if actor.target_assignment:
+			if not get_node(actor.target_assignment).assigned_survivors.has(actor):
+				get_node(actor.target_assignment).assigned_survivors.append(actor)

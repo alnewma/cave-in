@@ -23,7 +23,6 @@ enum survivor_types {
 
 @export var health := 100  : set = _on_health_changed
 @export var thirst := 100
-@export var item = [GameHandler.items.ENGINE]
 
 func _ready():
 	player = get_tree().get_nodes_in_group("player")[0]
@@ -86,7 +85,6 @@ func _on_interaction_area_mouse_exited():
 @export var status_break = false
 
 func status_check(): # check status when one decreases
-	print("status: " + str(thirst))
 	if thirst < 20 and not status_break:
 		status_break = true
 		take_status_break("thirst")

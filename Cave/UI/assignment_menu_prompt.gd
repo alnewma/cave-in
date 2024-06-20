@@ -28,5 +28,8 @@ func _on_input_event(viewport, event, _shape_idx):
 		if location.has_required_tool:
 			menu_instance.requirements.text = "Tool Requirements: " + GameHandler.items.keys()[location.required_tool].capitalize()
 		for item in location.available_items:
-			pass
-			# add items
+			var item_sprite = TextureRect.new()
+			item_sprite.custom_minimum_size = Vector2(95,95)
+			item_sprite.texture = GameHandler.item_images[item]
+			menu_instance.output_grid.add_child(item_sprite)
+			# add items to available output of assignment in assignment menu

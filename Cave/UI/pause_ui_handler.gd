@@ -5,10 +5,12 @@ func _ready():
 
 func pause_setup():
 	notes.text = GameHandler.player_data.player_character_stats.notes
-	for item in GameHandler.player_data.player_character_stats.inventory:
-		var item_button = inventory_item.instantiate()
-		item_button.texture = get(item)
-		inventory_grid.add_child(item_button)
+	var player = get_tree().get_first_node_in_group("player")
+	for item in GameHandler.item_instances:
+		if item[1] is Node2D and item[1] == player:
+			var item_button = inventory_item.instantiate()
+			item_button.texture = get(item)
+			inventory_grid.add_child(item_button)
 	
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"):

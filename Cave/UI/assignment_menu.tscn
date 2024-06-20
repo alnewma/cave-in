@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://lisxvkd8i4da" path="res://UI/menu_button_base.tscn" id="6_fisxy"]
 
 [node name="assignment_menu" type="Control"]
+z_index = 1
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_nvwk8")
@@ -77,6 +78,7 @@ layout_mode = 2
 
 [node name="GridContainer" type="GridContainer" parent="background/button_holder/scrollbox"]
 layout_mode = 2
+columns = 4
 
 [node name="close_holder" parent="background/button_holder" instance=ExtResource("6_fisxy")]
 layout_mode = 2

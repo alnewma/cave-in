@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8c0k7xnb44cb"]
+
+[ext_resource type="Theme" uid="uid://c0w38urtirqsi" path="res://UI/button_theme.tres" id="1_unkhy"]
+
+[node name="scroll_item" type="Button" groups=["scroll_item"]]
+offset_right = 8.0
+offset_bottom = 8.0
+theme = ExtResource("1_unkhy")
+text = "Placeholder"

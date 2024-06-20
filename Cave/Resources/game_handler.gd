@@ -25,8 +25,7 @@ func save_data(path : String = SAVE_DIR + SAVE_FILE_NAME):
 					"x": GameHandler.player_data.player_character_stats.global_position.x,
 					"y": GameHandler.player_data.player_character_stats.global_position.y
 				},
-				"notes": GameHandler.player_data.player_character_stats.notes,
-				"inventory" : GameHandler.player_data.player_character_stats.inventory
+				"notes": GameHandler.player_data.player_character_stats.notes
 			},
 			"map_data":{
 				"locations": GameHandler.player_data.map_data.locations
@@ -69,6 +68,14 @@ func load_data(path : String):
 func verify_save_directory(path : String):
 	DirAccess.make_dir_absolute(path)
 
+enum events {
+	NULL_EVENT,
+	BLAST_DOOR,
+	COMPUTER_UNLOCK,
+	ENTRANCE_DOOR
+}
+var events_completed = []
+
 @export var prompts_hovered = []
 
 enum items {
@@ -83,6 +90,18 @@ enum items {
 	ENGINE,
 	PROPELLER
 }
+const item_names = {
+	items.FLASHLIGHT : "Flashlight",
+	items.GASMASK : "Gas Mask",
+	items.ID : "ID Card",
+	items.KEY : "Key",
+	items.KNIFE : "Knife",
+	items.MEDKIT : "Medkit",
+	items.WELDER : "Welding Set",
+	items.TIRE : "Tire",
+	items.ENGINE : "Engine",
+	items.PROPELLER : "Makeshift Propeller",
+}
 const item_images = {
 	items.FLASHLIGHT : preload("res://ArtAssets/Items/Flashlight.png"),
 	items.GASMASK : preload("res://ArtAssets/Items/GasMask.png"),
@@ -95,7 +114,9 @@ const item_images = {
 	items.ENGINE : preload("res://ArtAssets/Engine.png"),
 	items.PROPELLER : preload("res://ArtAssets/Propeller.png"),
 }
-var item_instances = [
+var item_instances = [ # all items in game. [1] is the survivor it is assigned to
+	[items.FLASHLIGHT, null],
+	[items.FLASHLIGHT, null],
 	[items.FLASHLIGHT, null],
 	[items.FLASHLIGHT, null],
 	[items.GASMASK, null],
@@ -135,3 +156,27 @@ func damage_target(origin:CharacterBody2D,target:CharacterBody2D,damage:int):
 		get_tree().create_timer(.25).connect("timeout",_damage_timer_timeout.bind(target))
 func _damage_timer_timeout(target):
 	target.modulate = Color.WHITE
+
+enum enemies {
+	BAT,
+	DOG,
+	RAT,
+	SPIDER
+}
+var bat_base = preload("res://Animals/bat_base.tscn")
+var dog_base = preload("res://Animals/dog_base.tscn")
+var rat_base = preload("res://Animals/rat_base.tscn")
+var spider_base = preload("res://Animals/spider_base.tscn")
+func spawn_enemy(type:enemies,location:Vector2):
+	var enemy_instance
+	match type:
+		enemies.BAT:
+			enemy_instance = bat_base.instantiate()
+		enemies.DOG:
+			enemy_instance = dog_base.instantiate()
+		enemies.RAT:
+			enemy_instance = rat_base.instantiate()
+		enemies.SPIDER:
+			enemy_instance = spider_base.instantiate()
+	get_tree().get_current_scene().call_deferred("add_child",enemy_instance)
+	enemy_instance.global_position = location
