@@ -1,28 +1,39 @@
 extends "res://UI/interaction_base.gd"
 
+@onready var title = $background/button_holder/title_holder/TitleBanner/Label
 @onready var health_bar = $background/button_holder/status_holder2/VBoxContainer/health_status
 @onready var thirst_bar = $background/button_holder/status_holder1/VBoxContainer/thirst_status
-@onready var item_image = $background/button_holder/item_holder/MarginContainer/VBoxContainer/item_image
+@onready var item_image = $background/item_holder/MarginContainer/VBoxContainer/item_image
 @onready var handler = get_parent()
 
 @onready var button_holder = $background/button_holder
-@onready var item_button = $background/button_holder/item_holder/item_button
-@onready var item_holder = $background/button_holder/item_holder
+@onready var item_button = $background/item_holder/item_button
+@onready var item_holder = $background/item_holder
 
-@onready var small_image = $background/button_holder/item_holder/MarginContainer/VBoxContainer/image_small
-@onready var take_button = $background/button_holder/item_holder/MarginContainer/VBoxContainer/take_button
-@onready var replace_button = $background/button_holder/item_holder/MarginContainer/VBoxContainer/replace_button
+@onready var item_name = $background/item_holder/MarginContainer/VBoxContainer/item_name
+@onready var take_button = $background/item_holder/MarginContainer/VBoxContainer/take_button
+@onready var replace_button = $background/item_holder/MarginContainer/VBoxContainer/replace_button
+@onready var replace_warning = $background/item_holder/MarginContainer/VBoxContainer/inv_scroll/VBoxContainer/replace_warning
 var item_menu_nodes = []
 
-@onready var replace_scoll_container = $background/button_holder/item_holder/MarginContainer/VBoxContainer/inv_scroll
+@onready var replace_scoll_container = $background/item_holder/MarginContainer/VBoxContainer/inv_scroll
 
 func _ready():
-	item_menu_nodes = [small_image,take_button,replace_button]
+	item_menu_nodes = [item_name,take_button,replace_button]
 
 func _on_visibility_changed():
 	if handler != null:
+		var survivor_name : String
+		match get_parent().current_survivor.survivor_type:
+			0: survivor_name = "Kate"
+			1: pass # No survivor
+			2: survivor_name = "Mace"
+			3: survivor_name = "Ida"
+			4: survivor_name = "Wesley"
+		title.text = survivor_name
 		health_bar.value = handler.current_survivor.health
 		thirst_bar.value = handler.current_survivor.thirst
+		print("refreshing textures")
 		refresh_item_textures()
 
 func refresh_item_textures():
@@ -32,13 +43,13 @@ func refresh_item_textures():
 			survivor_item = item[0]
 	if survivor_item != null:
 		item_image.texture = GameHandler.item_images[survivor_item]
-		small_image.texture = GameHandler.item_images[survivor_item]
+		item_name.text = "Item: " + GameHandler.item_names[survivor_item]
 		take_button.text = "Take Item"
 		
 	else:
 		print("no texture")
 		item_image.texture = null
-		small_image.texture = null
+		item_name.text = "No Item Equipped"
 		take_button.text = ""
 @onready var rect = item_button.get_rect()
 #func _process(delta):
@@ -53,10 +64,12 @@ func inside_change(value):
 	if value != inside:
 		inside = value
 		if inside:
+			print("inside changed: inside")
 			item_image.visible = false
 			for node in item_menu_nodes:
 				node.visible = true
 		else:
+			print("inside changed: not inside")
 			item_image.visible = true
 			for node in item_menu_nodes:
 				node.visible = false
@@ -78,13 +91,19 @@ func _on_replace_button_pressed():
 			child.queue_free()
 	replace_scoll_container.visible = true
 	var player = get_tree().get_first_node_in_group("player")
+	var items_found = 0
 	for item in GameHandler.item_instances:
 		if item[1] is Node2D and item[1] == player:
 			print("items found for player")
+			items_found += 1
 			var label = item_base.instantiate()
 			label.text = GameHandler.item_names[item[0]]
 			replace_scoll_container.get_child(0).add_child(label)
 			label.connect("pressed",replace_item_clicked.bind(item[0]))
+	if items_found == 0:
+		replace_warning.show()
+	else:
+		replace_warning.hide()
 
 func replace_item_clicked(pressed_item):
 	_on_take_button_pressed()
@@ -106,6 +125,5 @@ func _on_item_holder_mouse_exited():
 	print("exited")
 	print(item_holder.get_rect())
 	print(get_local_mouse_position())
-	if not Rect2(button_holder.position+item_holder.position,item_holder.size).has_point(get_local_mouse_position()):
-		print("Comparison:")
+	if not Rect2(item_holder.position,item_holder.size).has_point(get_local_mouse_position()):
 		inside = false

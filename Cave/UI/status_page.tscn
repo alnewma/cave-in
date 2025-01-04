@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c5a70cfo1egqy"]
+[gd_scene load_steps=16 format=3 uid="uid://c5a70cfo1egqy"]
 
 [ext_resource type="PackedScene" uid="uid://bjiwhknxcx6xk" path="res://UI/interaction_base.tscn" id="1_yufgc"]
 [ext_resource type="Texture2D" uid="uid://dxv845gol0lyu" path="res://ArtAssets/UI/UIInventoryIcon.png" id="2_17hf1"]
@@ -6,156 +6,201 @@
 [ext_resource type="Theme" uid="uid://bgr6frj5j5a2w" path="res://UI/label_theme.tres" id="3_n48s5"]
 [ext_resource type="PackedScene" uid="uid://b13m7ybp1isac" path="res://UI/title_holder.tscn" id="3_w13ky"]
 [ext_resource type="PackedScene" uid="uid://bnlm43q5metkn" path="res://UI/back_button.tscn" id="5_rtrbq"]
-[ext_resource type="Texture2D" uid="uid://cs4vk0dmjakde" path="res://ArtAssets/UI/UIFrame2.png" id="5_yt5up"]
+[ext_resource type="Texture2D" uid="uid://cxbrgnslb8ux4" path="res://ArtAssets/UI/frame_resize.png" id="6_73fvs"]
+[ext_resource type="Texture2D" uid="uid://qnxrdejplt0k" path="res://ArtAssets/UI/health_bar.png" id="6_e8y0r"]
 [ext_resource type="Texture2D" uid="uid://bwn132w0td5v0" path="res://ArtAssets/Items/Flashlight.png" id="7_dpowb"]
+[ext_resource type="Theme" uid="uid://bbnymcubxegu0" path="res://UI/thirst_bar_theme.tres" id="7_jfg5c"]
 [ext_resource type="Theme" uid="uid://c0w38urtirqsi" path="res://UI/button_theme.tres" id="8_0fon7"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_md4i3"]
+load_path = "res://.godot/imported/scroll_horizontal_bg.png-ad58533ba051f97babb676dcce3fe392.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bi61s"]
+texture = SubResource("CompressedTexture2D_md4i3")
+texture_margin_left = 3.0
+texture_margin_right = 3.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4cj51"]
+texture = ExtResource("6_e8y0r")
+texture_margin_left = 2.0
+texture_margin_right = 2.0
+
+[sub_resource type="Theme" id="Theme_r1t4g"]
+ProgressBar/styles/background = SubResource("StyleBoxTexture_bi61s")
+ProgressBar/styles/fill = SubResource("StyleBoxTexture_4cj51")
 
 [node name="status_page" instance=ExtResource("1_yufgc")]
 script = ExtResource("2_js0vl")
 
 [node name="icon" type="TextureRect" parent="background/button_holder" index="0"]
-custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 texture = ExtResource("2_17hf1")
 stretch_mode = 5
 
 [node name="title_holder" parent="background/button_holder" index="1" instance=ExtResource("3_w13ky")]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="Label" parent="background/button_holder/title_holder/TitleBanner" index="0"]
+offset_top = 2.0
+offset_bottom = -2.0
 text = "Character Name"
+autowrap_mode = 2
 
 [node name="status_holder2" type="CenterContainer" parent="background/button_holder" index="2"]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="background/button_holder/status_holder2" index="0"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="health_title" type="Label" parent="background/button_holder/status_holder2/VBoxContainer" index="0"]
 layout_mode = 2
 theme = ExtResource("3_n48s5")
-theme_override_font_sizes/font_size = 25
-text = "Health"
+theme_override_font_sizes/font_size = 3
+text = " Health"
 horizontal_alignment = 1
 
 [node name="health_status" type="ProgressBar" parent="background/button_holder/status_holder2/VBoxContainer" index="1"]
-custom_minimum_size = Vector2(300, 20)
+custom_minimum_size = Vector2(36, 3)
 layout_mode = 2
+theme = SubResource("Theme_r1t4g")
+value = 50.0
+rounded = true
 show_percentage = false
 
 [node name="status_holder1" type="CenterContainer" parent="background/button_holder" index="3"]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="background/button_holder/status_holder1" index="0"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="thirst_title" type="Label" parent="background/button_holder/status_holder1/VBoxContainer" index="0"]
 layout_mode = 2
 theme = ExtResource("3_n48s5")
-theme_override_font_sizes/font_size = 25
-text = "Thirst"
+theme_override_font_sizes/font_size = 3
+text = " Thirst"
 horizontal_alignment = 1
 
 [node name="thirst_status" type="ProgressBar" parent="background/button_holder/status_holder1/VBoxContainer" index="1"]
-custom_minimum_size = Vector2(300, 20)
+custom_minimum_size = Vector2(36, 3)
 layout_mode = 2
+theme = ExtResource("7_jfg5c")
+value = 50.0
 show_percentage = false
 
-[node name="item_holder" type="Control" parent="background/button_holder" index="4"]
-custom_minimum_size = Vector2(0, 200)
+[node name="item_holder" type="Control" parent="background" index="1"]
+custom_minimum_size = Vector2(38, 38)
 layout_mode = 2
+anchors_preset = 0
+offset_left = 45.0
+offset_top = 5.0
+offset_right = 83.0
+offset_bottom = 43.0
 mouse_filter = 1
 
-[node name="item_label" type="Label" parent="background/button_holder/item_holder" index="0"]
-layout_mode = 2
-offset_right = 400.0
-offset_bottom = 26.0
-theme = ExtResource("3_n48s5")
-theme_override_font_sizes/font_size = 25
-text = "Item"
-horizontal_alignment = 1
-
-[node name="item_button" type="TextureButton" parent="background/button_holder/item_holder" index="1"]
-custom_minimum_size = Vector2(0, 200)
-layout_mode = 2
-offset_top = 30.0
-offset_right = 400.0
-offset_bottom = 230.0
+[node name="item_button" type="TextureButton" parent="background/item_holder" index="0"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.0
+offset_top = -19.0
+offset_right = 19.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 1
-texture_normal = ExtResource("5_yt5up")
+texture_normal = ExtResource("6_73fvs")
 stretch_mode = 5
 
-[node name="MarginContainer" type="MarginContainer" parent="background/button_holder/item_holder" index="2"]
+[node name="MarginContainer" type="MarginContainer" parent="background/item_holder" index="1"]
 layout_mode = 0
-offset_top = 30.0
-offset_right = 400.0
-offset_bottom = 230.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 34.0
+offset_bottom = 34.0
 mouse_filter = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="background/button_holder/item_holder/MarginContainer" index="0"]
+[node name="VBoxContainer" type="VBoxContainer" parent="background/item_holder/MarginContainer" index="0"]
 layout_mode = 2
+size_flags_vertical = 4
 mouse_filter = 2
+theme_override_constants/separation = 2
 alignment = 1
 
-[node name="item_image" type="TextureRect" parent="background/button_holder/item_holder/MarginContainer/VBoxContainer" index="0"]
-custom_minimum_size = Vector2(150, 150)
+[node name="item_image" type="TextureRect" parent="background/item_holder/MarginContainer/VBoxContainer" index="0"]
+custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("7_dpowb")
 stretch_mode = 5
 
-[node name="image_small" type="TextureRect" parent="background/button_holder/item_holder/MarginContainer/VBoxContainer" index="1"]
+[node name="item_name" type="Label" parent="background/item_holder/MarginContainer/VBoxContainer" index="1"]
 visible = false
-custom_minimum_size = Vector2(75, 75)
-layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("7_dpowb")
-stretch_mode = 5
-
-[node name="take_button" type="Button" parent="background/button_holder/item_holder/MarginContainer/VBoxContainer" index="2"]
-visible = false
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("8_0fon7")
-theme_override_font_sizes/font_size = 20
-text = "Take Item"
-
-[node name="replace_button" type="Button" parent="background/button_holder/item_holder/MarginContainer/VBoxContainer" index="3"]
-visible = false
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("8_0fon7")
-theme_override_font_sizes/font_size = 20
-text = "Replace Item"
-
-[node name="inv_scroll" type="ScrollContainer" parent="background/button_holder/item_holder/MarginContainer/VBoxContainer" index="4"]
-visible = false
-custom_minimum_size = Vector2(0, 150)
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="background/button_holder/item_holder/MarginContainer/VBoxContainer/inv_scroll" index="0"]
-custom_minimum_size = Vector2(360, 0)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="background/button_holder/item_holder/MarginContainer/VBoxContainer/inv_scroll/VBoxContainer" index="0"]
 layout_mode = 2
 theme = ExtResource("3_n48s5")
-theme_override_font_sizes/font_size = 20
-text = "Replace With"
+theme_override_font_sizes/font_size = 3
+text = "Item: Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="take_button" type="Button" parent="background/item_holder/MarginContainer/VBoxContainer" index="2"]
+visible = false
+layout_mode = 2
+mouse_filter = 1
+theme = ExtResource("8_0fon7")
+theme_override_font_sizes/font_size = 3
+text = "Take Item"
+
+[node name="replace_button" type="Button" parent="background/item_holder/MarginContainer/VBoxContainer" index="3"]
+visible = false
+layout_mode = 2
+mouse_filter = 1
+theme = ExtResource("8_0fon7")
+theme_override_font_sizes/font_size = 3
+text = "Replace Item"
+
+[node name="inv_scroll" type="ScrollContainer" parent="background/item_holder/MarginContainer/VBoxContainer" index="4"]
+visible = false
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="background/item_holder/MarginContainer/VBoxContainer/inv_scroll" index="0"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="background/item_holder/MarginContainer/VBoxContainer/inv_scroll/VBoxContainer" index="0"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+theme = ExtResource("3_n48s5")
+theme_override_font_sizes/font_size = 3
+text = "Replace With:"
 horizontal_alignment = 1
 
-[node name="MarginContainer" parent="background" index="1" instance=ExtResource("5_rtrbq")]
-layout_mode = 1
-metadata/_edit_use_anchors_ = true
+[node name="replace_warning" type="Label" parent="background/item_holder/MarginContainer/VBoxContainer/inv_scroll/VBoxContainer" index="1"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+theme = ExtResource("3_n48s5")
+theme_override_font_sizes/font_size = 3
+text = "No Items to Replace With!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="button_container" parent="background" index="2" instance=ExtResource("5_rtrbq")]
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
-[connection signal="mouse_entered" from="background/button_holder/item_holder" to="." method="_on_item_holder_mouse_entered"]
-[connection signal="mouse_exited" from="background/button_holder/item_holder" to="." method="_on_item_holder_mouse_exited"]
-[connection signal="pressed" from="background/button_holder/item_holder/MarginContainer/VBoxContainer/take_button" to="." method="_on_take_button_pressed"]
-[connection signal="pressed" from="background/button_holder/item_holder/MarginContainer/VBoxContainer/replace_button" to="." method="_on_replace_button_pressed"]
+[connection signal="mouse_entered" from="background/item_holder" to="." method="_on_item_holder_mouse_entered"]
+[connection signal="mouse_exited" from="background/item_holder" to="." method="_on_item_holder_mouse_exited"]
+[connection signal="pressed" from="background/item_holder/MarginContainer/VBoxContainer/take_button" to="." method="_on_take_button_pressed"]
+[connection signal="pressed" from="background/item_holder/MarginContainer/VBoxContainer/replace_button" to="." method="_on_replace_button_pressed"]
 
 [editable path="background/button_holder/title_holder"]

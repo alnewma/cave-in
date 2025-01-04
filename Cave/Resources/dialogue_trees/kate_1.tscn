@@ -1,0 +1,108 @@
+[gd_scene load_steps=2 format=3 uid="uid://xs5i8msiux24"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_hdxkl"]
+
+[node name="kate_1" instance=ExtResource("1_hdxkl")]
+visible = true
+line = "I don’t want to be here! I was just going on a camping trip, this wasn’t supposed to happen."
+response1 = "How did you split up from the rest of your group?"
+response2 = "Do you know if the rest of your group is OK?"
+response3 = "A camping trip? Did you bring anything useful with you from the campsite?"
+response1_fulfilled_req = "kate"
+response2_fulfilled_req = "kate"
+response3_fulfilled_req = "kate"
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_hdxkl")]
+layout_mode = 2
+line = "I wanted to explore the tunnel and my parents would let me! So when they were gathering firewood I decided to come explore on my own."
+response1 = "Well I guess that’s a lesson for disobeying adults."
+response2 = "Well listen to us and hopefully we can make it out of here safe and sound. You’ll get back to your parents in no time."
+reacting_character4 = 4
+dislikes_1 = true
+reacting_character2 = 4
+likes_2 = true
+
+[node name="r1_1" parent="r1" index="4" instance=ExtResource("1_hdxkl")]
+layout_mode = 2
+line = "OK I don’t care! I just want to get out of here."
+response1 = "The first step for you is to stay put and not get into any dangerous situations. Can you do that?"
+response2 = "The first step for you is to make yourself useful and help us explore around the tunnel. Can you do that?"
+reacting_character1 = 3
+likes_1 = true
+reacting_character2 = 4
+likes_2 = true
+
+[node name="r1_1_1" parent="r1/r1_1" index="4" instance=ExtResource("1_hdxkl")]
+layout_mode = 2
+line = "I guess I can stay put."
+
+[node name="r1_1_2" parent="r1/r1_1" index="5" instance=ExtResource("1_hdxkl")]
+layout_mode = 2
+line = "OK that works for me. I like exploring!"
+
+[node name="r1_2" parent="r1" index="5" instance=ExtResource("1_hdxkl")]
+layout_mode = 2
+line = "I think I can manage listening to you guys for a little while if that’s what it takes to escape."
+response1 = "Good. While you’re listening, I need you to stay put and out of danger. Can you manage that?"
+response2 = "Good. While you’re listening, I need you to be helpful however you can. Be that exploring or finding useful scraps. Can you manage that?"
+reacting_character1 = 3
+likes_1 = true
+reacting_character2 = 4
+likes_2 = true
+
+[node name="r1_2_1" parent="r1/r1_2" index="4" instance=ExtResource("1_hdxkl")]
+layout_mode = 2
+line = "OK I guess I’ll stay put then."
+
+[node name="r1_2_2" parent="r1/r1_2" index="5" instance=ExtResource("1_hdxkl")]
+layout_mode = 2
+line = "Sure, I like exploring."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_hdxkl")]
+layout_mode = 2
+line = "I left my parents back at our campsite. They’re pretty far away so I guess they’re OK but they’re probably starting to get worried about me."
+response1 = "How about you? Are you feeling fine?"
+response2 = "Well just keep them in mind while you work. They can serve as encouragement when you need some."
+reacting_character8 = 4
+prod_up2 = true
+
+[node name="r2_1" parent="r2" index="4" instance=ExtResource("1_hdxkl")]
+layout_mode = 2
+line = "I’m feeling better now that I found you guys. I was near the water when the rocks fell and I thought maybe all the cars were crushed and I was the last one alive down here!"
+response1 = "Good, well stay safe and see if you can help out wherever you see fit then."
+
+[node name="r2_1_1" parent="r2/r2_1" index="4" instance=ExtResource("1_hdxkl")]
+layout_mode = 2
+line = "Alright!"
+
+[node name="r2_2" parent="r2" index="5" instance=ExtResource("1_hdxkl")]
+layout_mode = 2
+line = "Yeah I guess so. I just want to leave soon to get back to them."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_hdxkl")]
+layout_mode = 2
+line = "No. I was just going to be gone for a minute! Just to look at the stream I saw when we drove through here and then I was going right back. I promise!"
+response1 = "Ah, that’s a shame. Stick nearby and to safe spaces, alright?"
+response2 = "Not having any camping supplies is too bad but you can make up for it by scavenging. Can you do that?"
+reacting_character1 = 3
+likes_1 = true
+
+[node name="r3_1" parent="r3" index="4" instance=ExtResource("1_hdxkl")]
+layout_mode = 2
+line = "I’ll try to be safe."
+
+[node name="r3_2" parent="r3" index="5" instance=ExtResource("1_hdxkl")]
+layout_mode = 2
+line = "Will I have to go into any dark spaces to do that?"
+response1 = "Actually you’d better stay in the open where we can see you well. We’ll handle the more dangerous areas."
+response2 = "Yes but if you’re brave and careful you shouldn’t have any issues."
+reacting_character1 = 3
+likes_1 = true
+
+[node name="r3_2_1" parent="r3/r3_2" index="4" instance=ExtResource("1_hdxkl")]
+layout_mode = 2
+line = "I’ll stay in the open then if that’s what you guys want."
+
+[node name="r3_2_2" parent="r3/r3_2" index="5" instance=ExtResource("1_hdxkl")]
+layout_mode = 2
+line = "If I have to go into dark places to get out of here, I’ll go into dark places. I still don’t want to go alone though."

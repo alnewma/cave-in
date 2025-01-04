@@ -1,0 +1,25 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://b6m6fsg3natah"]
+
+[ext_resource type="FontFile" uid="uid://cmvis4l03ujqr" path="res://UI/PixelFont.ttf" id="1_wyx0o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4vbsx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iftqs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rha8n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8hhvq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6ql2a"]
+
+[resource]
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_focus_color = Color(0.301388, 0.30139, 0.30139, 1)
+Button/colors/font_hover_color = Color(0.301961, 0.301961, 0.301961, 1)
+Button/colors/font_hover_pressed_color = Color(0.301961, 0.301961, 0.301961, 1)
+Button/fonts/font = ExtResource("1_wyx0o")
+Button/styles/disabled = SubResource("StyleBoxEmpty_4vbsx")
+Button/styles/focus = SubResource("StyleBoxEmpty_iftqs")
+Button/styles/hover = SubResource("StyleBoxEmpty_rha8n")
+Button/styles/normal = SubResource("StyleBoxEmpty_8hhvq")
+Button/styles/pressed = SubResource("StyleBoxEmpty_6ql2a")

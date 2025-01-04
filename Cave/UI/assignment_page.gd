@@ -1,7 +1,7 @@
 extends Control
 
 @onready var button = preload("res://UI/menu_button_base.tscn")
-@onready var assignment_holder = $background/button_holder/scrollbox/assignment_holder
+@onready var assignment_holder = $background/button_holder/CenterContainer/scrollbox/assignment_holder
 
 func establish_assignments(location : Vector2):
 	for xbutton in assignment_holder.get_children():
@@ -31,9 +31,9 @@ func establish_assignments(location : Vector2):
 		var lButton = button.instantiate()
 		lButton.button_text = "Follow"
 		assignment_holder.add_child(lButton)
-		lButton.button_node.connect("pressed",assign_survivor)
+		lButton.button_node.connect("pressed",assign_survivor.bind(get_tree().get_first_node_in_group("player")))
 	
-func assign_survivor(object:Object, location = Vector2.ZERO, assignment = ""):
+func assign_survivor(object:Object, location = Vector2.ZERO, assignment = ""): # object is assigned location
 	visible = false
 	get_parent().current_survivor.assigned_location = location
 	if object:

@@ -92,7 +92,7 @@ func status_check(): # check status when one decreases
 func take_status_break(status:String): # take break to move to status area
 	state_machine.change_state(state_machine.movement)
 	if status == "thirst":
-		if self in get_node(target_assignment).assigned_survivors:
+		if target_assignment and self in get_node(target_assignment).assigned_survivors:
 			get_node(target_assignment).assigned_survivors.erase(self)
 		var hydrants = get_tree().get_nodes_in_group("hydrant")
 		var highest_hydrant = 0
@@ -164,3 +164,144 @@ func _on_health_changed(value):
 	health = value
 	if health <= 0:
 		state_machine.change_state(state_machine.death)
+
+enum remark_prompts {
+	TOOL,
+	HEALTH,
+	THIRST,
+	FOLLOWING,
+	HAPPY,
+	SAD,
+	ENEMY
+}
+
+@onready var remark_box = $remark
+@onready var remark_timer = $remark/remark_timer
+var remark_empty = true
+func _on_remark_timer_timeout() -> void:
+	remark_box.text = ""
+	remark_empty = true
+
+func queue_remark(prompt : remark_prompts):
+	if remark_empty:
+		remark_timer.start(10)
+		remark_box.text = remarks[survivor_type][prompt].pick_random()
+		if prompt == remark_prompts.TOOL:
+			for item in GameHandler.item_instances:
+				if item[1] == self:
+					remark_box.text.replace("XXXX",GameHandler.item_names[item[0]]) # if tool, replace placeholder with tool
+
+var remarks = {
+	survivor_types.OLDWOMAN : {
+		remark_prompts.TOOL : [
+			"I’ve got a XXXX",
+			"I’ve found me a XXXX"
+		],
+		remark_prompts.HEALTH : [
+			"I’m bleeding hard from that attack",
+			"Lord please heal me fast!"
+		],
+		remark_prompts.THIRST : [
+			"I’m parched!",
+			"Oh, for a glass of water!"
+		],
+		remark_prompts.FOLLOWING : [
+			"I’m trusting you to lead",
+			"I’ll follow you"
+		],
+		remark_prompts.SAD : [
+			"Get your heads straight!"
+		],
+		remark_prompts.HAPPY : [
+			"Wouldn’t want any other group"
+		],
+		remark_prompts.ENEMY : [
+			"Animal on the loose!",
+			"That thing looks dangerous!"
+		]
+	},
+	survivor_types.MAN : {
+		remark_prompts.TOOL : [
+			"I came across a XXXX",
+			"Just a guy with his trusty XXXX"
+		],
+		remark_prompts.HEALTH : [
+			"I’m not feeling too good",
+			"I’m struggling to even walk"
+		],
+		remark_prompts.THIRST : [
+			"I’m seriously thirsty",
+			"I need some water soon"
+		],
+		remark_prompts.FOLLOWING : [
+			"Oh boy, here we go",
+			"Right after you"
+		],
+		remark_prompts.SAD : [
+			"This is far from the dream team"
+		],
+		remark_prompts.HAPPY : [
+			"Things could be worse, I guess"
+		],
+		remark_prompts.ENEMY : [
+			"That thing doesn’t look friendly!",
+			"Animal nearby!"
+		]
+	},
+	survivor_types.OLDMAN : {
+		remark_prompts.TOOL : [
+			"I’m carrying a XXXX",
+			"Scavenged myself a XXXX"
+		],
+		remark_prompts.HEALTH : [
+			"Hope this cut is nothing...",
+			"More scars for the collection"
+		],
+		remark_prompts.THIRST : [
+			"Almost time for water",
+			"Need to watch dehydration..."
+		],
+		remark_prompts.FOLLOWING : [
+			"Teamwork is vital",
+			"Stick together"
+		],
+		remark_prompts.SAD : [
+			"Can’t say I’m pleased right now"
+		],
+		remark_prompts.HAPPY: [
+			"We’re doing good so far"
+		],
+		remark_prompts.ENEMY : [
+			"Get back!",
+			"Watch out for that thing!"
+		]
+	},
+	survivor_types.GIRL : {
+		remark_prompts.TOOL : [
+			"Check it out - a XXXX!",
+			"Guess who found a XXXX!"
+		],
+		remark_prompts.HEALTH : [
+			"That bite really hurts…",
+			"It hurts to move my arm!"
+		],
+		remark_prompts.THIRST : [
+			"I need some water",
+			"I’m getting thirsty"
+		],
+		remark_prompts.FOLLOWING : [
+			"Where are we going?",
+			"Let’s go"
+		],
+		remark_prompts.SAD : [
+			"This is awful"
+		],
+		remark_prompts.HAPPY: [
+			"At least I have you guys"
+		],
+		remark_prompts.ENEMY : [
+			"Big animal! Help!",
+			"Oh no!"
+		]
+	},
+}

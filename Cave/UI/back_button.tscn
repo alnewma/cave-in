@@ -1,24 +1,35 @@
-[gd_scene load_steps=3 format=3 uid="uid://bnlm43q5metkn"]
+[gd_scene load_steps=4 format=3 uid="uid://bnlm43q5metkn"]
 
-[ext_resource type="Texture2D" uid="uid://dyrxilj7ovacu" path="res://ArtAssets/UI/UIBack.png" id="1_0nqhc"]
 [ext_resource type="Script" path="res://UI/back_button.gd" id="1_ybyqw"]
+[ext_resource type="Texture2D" uid="uid://c42oiyfqa2p5i" path="res://ArtAssets/UI/arrow_resize.png" id="2_f54lb"]
+[ext_resource type="Texture2D" uid="uid://bk6uvj6o1amlq" path="res://ArtAssets/UI/arrow_resize_select.png" id="3_i5pd5"]
 
-[node name="MarginContainer" type="MarginContainer"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -105.0
-offset_top = -61.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_constants/margin_bottom = 15
+[node name="button_container" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 4.0
+offset_top = 50.0
+offset_right = 47.0
+offset_bottom = 60.0
 script = ExtResource("1_ybyqw")
 
 [node name="back_button" type="TextureButton" parent="."]
-layout_mode = 2
-texture_normal = ExtResource("1_0nqhc")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.5
+offset_top = -4.0
+offset_right = 15.5
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("2_f54lb")
+texture_pressed = ExtResource("3_i5pd5")
+texture_hover = ExtResource("3_i5pd5")
+texture_focused = ExtResource("3_i5pd5")
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 

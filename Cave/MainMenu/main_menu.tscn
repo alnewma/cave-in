@@ -6,31 +6,31 @@
 script = ExtResource("1_t0rvo")
 
 [node name="background" type="TextureRect" parent="."]
-offset_right = 1146.0
-offset_bottom = 573.0
+offset_right = 560.0
+offset_bottom = 360.0
 
 [node name="main_container" type="VBoxContainer" parent="background"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 200.0
+offset_bottom = 212.0
 
 [node name="new_game" type="Button" parent="background/main_container"]
-custom_minimum_size = Vector2(200, 50)
+custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 text = "New Game"
 
 [node name="load_game" type="Button" parent="background/main_container"]
-custom_minimum_size = Vector2(200, 50)
+custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 text = "Load Game"
 
 [node name="settings" type="Button" parent="background/main_container"]
-custom_minimum_size = Vector2(200, 50)
+custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 text = "Settings"
 
 [node name="quit" type="Button" parent="background/main_container"]
-custom_minimum_size = Vector2(200, 50)
+custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 text = "Quit"
 

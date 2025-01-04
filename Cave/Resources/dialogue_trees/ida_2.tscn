@@ -1,0 +1,128 @@
+[gd_scene load_steps=2 format=3 uid="uid://rn0aqhyho0kp"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_ekmb1"]
+
+[node name="ida_2" instance=ExtResource("1_ekmb1")]
+visible = true
+line = "How’s the cave been treating you?"
+line_requirement = "happy"
+line_alt = "How are you holding up honey?"
+response1 = "I’m doing alright considering the circumstances and all."
+response2 = "I’m a bit overwhelmed with everything we’re facing. There’s been no sign of help on the way."
+response3 = "It’s really the others I’m nervous about."
+response3_requirement = "mace"
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "Good, keep a clear head and I think you’ll do just fine."
+response1 = "Thanks, I appreciate the encouragement. It hasn’t been easy."
+response2 = "How about you? Still holding strong?"
+response3 = "Do you think we’re going to make it out of here Ida?"
+reacting_character2 = 1
+likes_2 = true
+
+[node name="r1_1" parent="r1" index="4" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "No problem, we’ve gotta keep each other going in times like these. Some of us are better at that than others… but I hope we’re all making an effort nonetheless."
+
+[node name="r1_2" parent="r1" index="5" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "I’ve got faith in a good path showing itself to us. I'm just dandy."
+line_requirement = "religion_argument"
+line_alt = "Oh I’m pushing through."
+
+[node name="r1_3" parent="r1" index="6" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "Losing faith is the first step to failure. If nothing else, keep faith that success is on its way. That’s been working for me!"
+line_requirement = "skepticism"
+line_alt = "You know what I said about bad mindsets… we’ve been making good progress I think. I know we’re about to find an escape."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "I understand, these are trying times for all of us. Just remember, this is a trial for us to pass."
+line_requirement = "religion_argument"
+line_alt = "I understand, these are trying times for all of us. Just remember, this is a trial for us to pass. I know you don’t like that but it’s true and acknowledging it will give you the strength to succeed, I promise."
+response1 = "What if I’m not contributing enough? I don’t want to be the reason we end up stuck here."
+response2 = "Do you have any suggestions on staying calm? I wish I could manage like you."
+response3 = "I’m worried about us working together. Everyone is stressed and there are disagreements all over."
+
+[node name="r2_1" parent="r2" index="4" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "First off, I think you’re doing great honey. But if you want more practical advice, go have a chat with Wesley. He’s been telling me about his survivalist skills! Maybe he could give you a tip or two about contributing if that’s what you think you need."
+response1 = "You’re right, I keep feeling so alone- I’ve got to remember I’m not."
+response2_requirement = "wesley_disagreement"
+response2_alt = "We had a disagreement earlier. I’m not sure we work together great."
+
+[node name="r2_1_1" parent="r2/r2_1" index="4" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "‘But woe to him that is alone when he falleth; for he hath not another to help him up!’"
+
+[node name="r2_1_2" parent="r2/r2_1" index="5" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "Life is about finding a balance sometimes. You aren’t going to feel good about everything, but you can’t let that stop your efforts altogether. Relationships are complicated, that’s one thing I know for certain."
+
+[node name="r2_2" parent="r2" index="5" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "Tried and true deep breaths and a prayer. I’d be happy to give you company if you need it. Wanting to be alone is fine too of course."
+line_requirement = "religion_argument"
+line_alt = "Deep breaths. Deep breaths. Wanting to be alone is fine too of course."
+
+[node name="r2_3" parent="r2" index="6" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "You’re a great talker. That’s one thing I noticed immediately about you. Just appeal to their personality and you’ll get along just fine. People love being buttered up!"
+response1 = "It would help if you were more active if I’m honest. Part of the issue is that not everyone is working period."
+response2 = "Thank you, Ida thank you more if I could."
+reacting_character2 = 1
+likes_2 = true
+reacting_character7 = 1
+prod_up1 = true
+
+[node name="r2_3_1" parent="r2/r2_3" index="4" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "Don’t misuse the tools you’re handed; I’m doing the best I can. I’ll see what I can do though, I know we’re strapped for hands."
+
+[node name="r2_3_2" parent="r2/r2_3" index="5" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "That’s a good start sugar, that’s a good start."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "That’s very noble sweetie, care is strength. But you have to care for yourself before you can start lifting others. ‘First cast out the beam out of thine own eye; and then shalt thou see clearly to cast out the mote out of thy brother's eye..’"
+line_requirement = "religion_argument"
+line_alt = "That’s very noble sweetie, care is strength. But you have to care for yourself before you can start lifting others."
+response1 = "Getting the right balance of care is hard enough in a perfect world! I’ll try my best but don’t expect much while we’re caged like this."
+response2 = "Are you sure everything’s going fine? It feels like people are constantly at odds with each other, and I don’t know how to help it."
+response2_requirement = "wesley_disagreement"
+response2_alt = "Are you sure everything’s going fine? It feels like people are constantly at odds with each other, myself included sometimes, and I don’t know how to help it."
+response3 = "That sounds a lot easier said than done. What about you, how are you managing that?"
+
+[node name="r3_1" parent="r3" index="4" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "Well, that’s not fantastic news but I suppose it’s a good start."
+
+[node name="r3_2" parent="r3" index="5" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "Disagreements or not, I’ve talked with everyone here and I think they all have good intentions at heart. We all approach life differently and stress just magnifies our differences, but it can also magnify our similarities if we play our cards right."
+
+[node name="r3_3" parent="r3" index="6" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "Oh, you know me by this point. A few deep breaths and a quick prayer can get me through anything! You should try it out for yourself."
+response1 = "Maybe I will! I really am thankful to be stuck here with someone like you- everyone here seems to have a niche, and yours is preserving my sanity apparently."
+response2 = "Ida, that’s nice but I’m not very religious so I don’t know how useful that is to me."
+response3 = "Once again, God’s graciousness comes to help us out. I really can’t be thankful enough."
+reacting_character1 = 1
+likes_1 = true
+reacting_character3 = 1
+likes_3 = true
+
+[node name="r3_3_1" parent="r3/r3_3" index="4" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "Well I’m thankful that you stepped up with your leadership, so it looks like we’re even."
+
+[node name="r3_3_2" parent="r3/r3_3" index="5" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "It’s the action that counts whether you truly believe or not. There’ll be plenty of time for soul searching once we escape if you decide you want to."
+
+[node name="r3_3_3" parent="r3/r3_3" index="6" instance=ExtResource("1_ekmb1")]
+layout_mode = 2
+line = "You and me both."

@@ -47,6 +47,7 @@ func _unhandled_input(event):
 ## Map Setup ##
 
 func setup_map():
+	$CanvasModulate.show()
 	create_locations()
 
 func create_locations():

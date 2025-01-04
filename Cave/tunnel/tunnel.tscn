@@ -1,0 +1,152 @@
+[gd_scene load_steps=23 format=4 uid="uid://dbt6aj80ujt3x"]
+
+[ext_resource type="Script" path="res://tunnel/tunnel.gd" id="1_esspt"]
+[ext_resource type="TileSet" uid="uid://4d5lfppjykax" path="res://GameMap/TileMaps/SewerMap.tres" id="1_jpvxj"]
+[ext_resource type="Texture2D" uid="uid://b8ocphljvedwk" path="res://ArtAssets/Raft.png" id="2_sytn6"]
+[ext_resource type="Texture2D" uid="uid://5srnmkncvwrc" path="res://ArtAssets/boat_water.png" id="3_2wtuk"]
+[ext_resource type="Texture2D" uid="uid://dv0w0p8g2q137" path="res://ArtAssets/BlockedGate.png" id="3_p4vk8"]
+[ext_resource type="PackedScene" uid="uid://bsrbrnqvx2mpa" path="res://Player/Player.tscn" id="5_dwkph"]
+[ext_resource type="Texture2D" uid="uid://csu1axfm8ed70" path="res://ArtAssets/raft_engine.png" id="5_jqqnc"]
+[ext_resource type="PackedScene" uid="uid://dwmc5vrgevot5" path="res://Survivors/man_survivor.tscn" id="7_5lghp"]
+[ext_resource type="PackedScene" uid="uid://cgs33ypljrcev" path="res://Survivors/old_man_survivor.tscn" id="8_7xlc5"]
+[ext_resource type="PackedScene" uid="uid://cimeurx3tlf36" path="res://Survivors/old_woman_survivor.tscn" id="9_wggvp"]
+[ext_resource type="PackedScene" uid="uid://dvx2j0q542f3" path="res://Survivors/girl_survivor.tscn" id="10_3g804"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4nw5j"]
+atlas = ExtResource("3_2wtuk")
+region = Rect2(0, 0, 30, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ro6j"]
+atlas = ExtResource("3_2wtuk")
+region = Rect2(30, 0, 30, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6468s"]
+atlas = ExtResource("3_2wtuk")
+region = Rect2(60, 0, 30, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oe5q3"]
+atlas = ExtResource("3_2wtuk")
+region = Rect2(90, 0, 30, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_efjc0"]
+atlas = ExtResource("3_2wtuk")
+region = Rect2(120, 0, 30, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_42kxb"]
+atlas = ExtResource("3_2wtuk")
+region = Rect2(150, 0, 30, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_beecg"]
+atlas = ExtResource("3_2wtuk")
+region = Rect2(180, 0, 30, 14)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0ekxl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4nw5j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ro6j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6468s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oe5q3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_efjc0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_42kxb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_beecg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rkb4k"]
+size = Vector2(36, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s1yij"]
+size = Vector2(36, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ovph7"]
+size = Vector2(4, 35)
+
+[node name="tunnel" type="Node2D"]
+script = ExtResource("1_esspt")
+
+[node name="tunnel_background" type="TileMapLayer" parent="."]
+position = Vector2(0, -257)
+tile_map_data = PackedByteArray("AAAAAAAAAAAIAAQAAEAAAAEAAAAIAAQAAGAAAAIAAAAIAAQAAEAAAAMAAAAIAAQAAEAAAAQAAAAHAAQAAGAAAAUAAAAIAAQAAGAAAAYAAAAAAAQAAGAAAAcAAAAIAAQAAEAAAAgAAAAHAAQAAGAAAAkAAAAAAAQAAGAAAAoAAAABAAQAAGAAAAsAAAAHAAQAAEAAAAwAAAAIAAQAAGAAAA0AAAAIAAQAAEAAAA4AAAABAAQAAGAAAA8AAAAHAAQAAEAAABAAAAAAAAQAAGAAABEAAAAHAAQAAGAAABIAAAAIAAQAAEAAABMAAAAIAAQAAGAAABQAAAABAAQAAEAAABUAAAAHAAQAAGAAABYAAAABAAQAAGAAABcAAAAIAAQAAGABAAAAAAAIAAcAADABAAEAAAAIAAcAADABAAIAAAAIAAcAADABAAMAAAAIAAcAADABAAQAAAAIAAcAADABAAUAAAAIAAcAADABAAYAAAAIAAcAADABAAcAAAAIAAcAADABAAgAAAAIAAcAADABAAkAAAAIAAcAADABAAoAAAAIAAcAADABAAsAAAAIAAcAADABAAwAAAAIAAcAADABAA0AAAAIAAcAADABAA4AAAAIAAcAADABAA8AAAAIAAcAADABABAAAAAIAAcAADABABEAAAAIAAcAADABABIAAAAIAAcAADABABMAAAAIAAcAADABABQAAAAIAAcAADABABUAAAAIAAcAADABABYAAAAIAAcAADABABcAAAAIAAcAADACAAAAAAAJAAgAAAACAAEAAAAJAAgAAAACAAIAAAAJAAgAAAACAAMAAAAJAAgAAAACAAQAAAAJAAgAAAACAAUAAAAJAAgAAAACAAYAAAAJAAgAAAACAAcAAAAJAAgAAAACAAgAAAAJAAgAAAACAAkAAAAJAAgAAAACAAoAAAAJAAgAAAACAAsAAAAJAAgAAAACAAwAAAAJAAgAAAACAA0AAAAJAAgAAAACAA4AAAAJAAgAAAACAA8AAAAJAAgAAAACABAAAAAJAAgAAAACABEAAAAJAAgAAAACABIAAAAJAAgAAAACABMAAAAJAAgAAAACABQAAAAJAAgAAAACABUAAAAJAAgAAAACABYAAAAJAAgAAAACABcAAAAJAAgAAAADAAAAAAAIAAcAAAADAAEAAAAIAAcAAAADAAIAAAAIAAcAAAADAAMAAAAIAAcAAAADAAQAAAAIAAcAAAADAAUAAAAIAAcAAAADAAYAAAAIAAcAAAADAAcAAAAIAAcAAAADAAgAAAAIAAcAAAADAAkAAAAIAAcAAAADAAoAAAAIAAcAAAADAAsAAAAIAAcAAAADAAwAAAAIAAcAAAADAA0AAAAIAAcAAAADAA4AAAAIAAcAAAADAA8AAAAIAAcAAAADABAAAAAIAAcAAAADABEAAAAIAAcAAAADABIAAAAIAAcAAAADABMAAAAIAAcAAAADABQAAAAIAAcAAAADABUAAAAIAAcAAAADABYAAAAIAAcAAAADABcAAAAIAAcAAAAEAAAAAAAIAAQAAFAEAAEAAAABAAQAAFAEAAIAAAAIAAQAAFAEAAMAAAAIAAQAAFAEAAQAAAABAAQAAFAEAAUAAAAAAAQAAFAEAAYAAAAHAAQAAFAEAAcAAAAAAAQAAFAEAAgAAAAIAAQAAFAEAAkAAAAIAAQAAHAEAAoAAAAHAAQAAFAEAAsAAAAAAAQAAFAEAAwAAAAIAAQAAHAEAA0AAAAAAAQAAFAEAA4AAAAAAAQAAFAEAA8AAAAIAAQAAHAEABAAAAAIAAQAAFAEABEAAAAAAAQAAFAEABIAAAAIAAQAAFAEABMAAAAIAAQAAFAEABQAAAABAAQAAFAEABUAAAAHAAQAAFAEABYAAAAIAAQAAFAEABcAAAABAAQAAFAAABgAAAAIAAQAAGABABgAAAAIAAcAADACABgAAAAJAAgAAAADABgAAAAIAAcAAAAEABgAAAAHAAQAAFAAAPj/AAAHAAQAAGAAAPn/AAAIAAQAAEAAAPr/AAAIAAQAAGAAAPv/AAAJAAMAAGAAAPz/AAAJAAMAAGAAAP3/AAAJAAMAAGAAAP7/AAAIAAQAAEAAAP//AAAIAAQAAGABAPj/AAAIAAcAADABAPn/AAAIAAcAADABAPr/AAAIAAcAADABAPv/AAAIAAcAADABAPz/AAAIAAcAADABAP3/AAAIAAcAADABAP7/AAAIAAcAADABAP//AAAIAAcAADACAPj/AAAJAAgAAAACAPn/AAAJAAgAAAACAPr/AAAJAAgAAAACAPv/AAAJAAgAAAACAPz/AAAJAAgAAAACAP3/AAAJAAgAAAACAP7/AAAJAAgAAAACAP//AAAJAAgAAAADAPj/AAAIAAcAAAADAPn/AAAIAAcAAAADAPr/AAAIAAcAAAADAPv/AAAIAAcAAAADAPz/AAAIAAcAAAADAP3/AAAIAAcAAAADAP7/AAAIAAcAAAADAP//AAAIAAcAAAAEAPj/AAAAAAQAAFAEAPn/AAAIAAQAAFAEAPr/AAAIAAQAAFAEAPv/AAAJAAMAAGAEAPz/AAAJAAMAAFAEAP3/AAAJAAMAAFAEAP7/AAAIAAQAAFAEAP//AAAHAAQAAFAAABkAAAAIAAQAAGAAABoAAAAIAAQAAEAAABsAAAABAAQAAGAAABwAAAAHAAQAAEAAAB0AAAAAAAQAAGAAAB4AAAAHAAQAAGAAAB8AAAAIAAQAAEABABkAAAAIAAcAADABABoAAAAIAAcAADABABsAAAAIAAcAADABABwAAAAIAAcAADABAB0AAAAIAAcAADABAB4AAAAIAAcAADABAB8AAAAIAAcAADACABkAAAAJAAgAAAACABoAAAAJAAgAAAACABsAAAAJAAgAAAACABwAAAAJAAgAAAACAB0AAAAJAAgAAAACAB4AAAAJAAgAAAACAB8AAAAJAAgAAAADABkAAAAIAAcAAAADABoAAAAIAAcAAAADABsAAAAIAAcAAAADABwAAAAIAAcAAAADAB0AAAAIAAcAAAADAB4AAAAIAAcAAAADAB8AAAAIAAcAAAAEABkAAAAIAAQAAHAEABoAAAAAAAQAAFAEABsAAAAAAAQAAFAEABwAAAAIAAQAAHAEAB0AAAAIAAQAAFAEAB4AAAAAAAQAAFAEAB8AAAAIAAQAAFA=")
+tile_set = ExtResource("1_jpvxj")
+collision_enabled = false
+
+[node name="gate" type="Sprite2D" parent="tunnel_background"]
+position = Vector2(40, -39)
+texture = ExtResource("3_p4vk8")
+hframes = 2
+
+[node name="boat" type="Sprite2D" parent="."]
+position = Vector2(40, 100)
+texture = ExtResource("2_sytn6")
+
+[node name="boat_water" type="AnimatedSprite2D" parent="boat"]
+position = Vector2(0, 18.5)
+sprite_frames = SubResource("SpriteFrames_0ekxl")
+autoplay = "default"
+frame_progress = 0.769821
+
+[node name="StaticBody2D" type="StaticBody2D" parent="boat"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="boat/StaticBody2D"]
+position = Vector2(0, -24.5)
+shape = SubResource("RectangleShape2D_rkb4k")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="boat/StaticBody2D"]
+position = Vector2(0, 14)
+shape = SubResource("RectangleShape2D_s1yij")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="boat/StaticBody2D"]
+position = Vector2(-16, -5.5)
+shape = SubResource("RectangleShape2D_ovph7")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="boat/StaticBody2D"]
+position = Vector2(16, -5.5)
+shape = SubResource("RectangleShape2D_ovph7")
+
+[node name="engine" type="Sprite2D" parent="boat"]
+z_index = 1
+position = Vector2(0, 10)
+texture = ExtResource("5_jqqnc")
+
+[node name="Player" parent="." instance=ExtResource("5_dwkph")]
+position = Vector2(39, 86)
+
+[node name="man_survivor" parent="." instance=ExtResource("7_5lghp")]
+position = Vector2(45, 106)
+
+[node name="old_man_survivor" parent="." instance=ExtResource("8_7xlc5")]
+position = Vector2(34, 92)
+
+[node name="old_woman_survivor" parent="." instance=ExtResource("9_wggvp")]
+position = Vector2(50, 92)
+
+[node name="girl_survivor" parent="." instance=ExtResource("10_3g804")]
+position = Vector2(32, 107)
+
+[node name="rock_timer1" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="rock_timer2" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="rock_timer1" to="." method="_on_rock_timer_1_timeout"]
+[connection signal="timeout" from="rock_timer2" to="." method="_on_rock_timer_2_timeout"]

@@ -1,0 +1,67 @@
+[gd_scene load_steps=2 format=3 uid="uid://clxfle3snga12"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_d460q"]
+
+[node name="wesley_3" instance=ExtResource("1_d460q")]
+visible = true
+line = "Times like this I’m happy I spent so much time practicing survivalism early in life."
+response1 = "Survivalism, like the hardcore camping type?"
+response2 = "Is survivalism really that similar to being stuck in a road tunnel? I mean, we don’t have forests or a lot of space or anything."
+response3 = "I can tell it’s been coming in handy. I’m glad to have you on the team."
+reacting_character3 = 3
+likes_3 = true
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_d460q")]
+layout_mode = 2
+line = "Yessir, like camping without all the frills. Taught me a lot about actual physical skills like foraging as well as strengthening my general mindset when I don’t have much to work with."
+response1 = "Well now’s a good chance to demonstrate some of that acquired skill."
+response2 = "Your skill has definitely been shining. I could tell you must have some prior experience you were drawing from."
+reacting_character7 = 3
+prod_up1 = true
+
+[node name="r1_1" parent="r1" index="4" instance=ExtResource("1_d460q")]
+layout_mode = 2
+line = "Absolutely plan on it. Just keep an eye on me and follow my lead."
+
+[node name="r1_2" parent="r1" index="5" instance=ExtResource("1_d460q")]
+layout_mode = 2
+line = "Really? That’s interesting because you’ve been doing a poor job of showing that appreciation questioning me all the time."
+line_requirement = "happy"
+line_alt = "You’ve been doing an admirable job yourself."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_d460q")]
+layout_mode = 2
+line = "There’s enough overlap that you’d be foolish not to take advantage of it. You’ve been questioning me this whole time- it’s not too late to turn things around."
+line_requirement = "happy"
+line_alt = "There’s enough overlap that you’d be foolish not to take advantage of it."
+response1 = "You’ve been leading us in a clearly wrong direction with your disagreeability and constantly limiting Kate’s usefulness."
+response2 = "You’re right, let’s stop talking and get back to escaping so you can put that knowledge to use."
+response3 = "Thanks for stepping up with that knowledge and being so confident. You’re an important part of this group."
+reacting_character4 = 3
+dislikes_1 = true
+reacting_character2 = 3
+likes_2 = true
+reacting_character3 = 3
+likes_3 = true
+
+[node name="r2_1" parent="r2" index="4" instance=ExtResource("1_d460q")]
+layout_mode = 2
+line = "Keep pushing things and I’ll step down. I’m trying to do the right thing here but I’m not willing to fight over it if you guys refuse help."
+line_requirement = "wesley_disagreement"
+line_alt = "Fine. I told you before- I’m willing to step down and I will. You won’t hear anymore from me."
+
+[node name="r2_2" parent="r2" index="5" instance=ExtResource("1_d460q")]
+layout_mode = 2
+line = "That’s a good way of thinking. Let’s get back to work."
+
+[node name="r2_3" parent="r2" index="6" instance=ExtResource("1_d460q")]
+layout_mode = 2
+line = "We’re all stressed out here, I’m just trying to be the productive teammate I need to be."
+line_requirement = "confidence_conversation"
+line_alt = "You know what I said about confidence! It’s a game-changer. Now let’s get back to work."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_d460q")]
+layout_mode = 2
+line = "You have a very poor way of showing your appreciation. It’s hard to be helpful with you questioning and criticizing my decisions. Still, I’ll do my best to contribute."
+line_requirement = "happy"
+line_alt = "I’m glad I can contribute to the group to the best of my ability."

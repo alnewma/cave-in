@@ -1,0 +1,77 @@
+[gd_scene load_steps=12 format=3 uid="uid://qlnbjhu7utxw"]
+
+[ext_resource type="Texture2D" uid="uid://1unxco3tckiy" path="res://ArtAssets/puff.png" id="1_s1rth"]
+[ext_resource type="Script" path="res://GameMap/smoke_puff.gd" id="2_gyi5t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0wppr"]
+atlas = ExtResource("1_s1rth")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nxqlr"]
+atlas = ExtResource("1_s1rth")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k23kv"]
+atlas = ExtResource("1_s1rth")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fnpto"]
+atlas = ExtResource("1_s1rth")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5auno"]
+atlas = ExtResource("1_s1rth")
+region = Rect2(0, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_otpck"]
+atlas = ExtResource("1_s1rth")
+region = Rect2(8, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4lnsb"]
+atlas = ExtResource("1_s1rth")
+region = Rect2(16, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nl83g"]
+atlas = ExtResource("1_s1rth")
+region = Rect2(24, 8, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tksjs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0wppr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nxqlr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k23kv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fnpto")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5auno")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_otpck")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4lnsb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nl83g")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="smoke_puff" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_tksjs")
+autoplay = "default"
+frame = 5
+frame_progress = 0.143826
+script = ExtResource("2_gyi5t")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

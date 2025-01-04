@@ -1,0 +1,111 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6j08xp4x3hgq"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_c0jmn"]
+
+[node name="mace_3" instance=ExtResource("1_c0jmn")]
+visible = true
+line = "I think it’s ironic that the most talking I’ve done in a while is miles from civilization isolated in a tunnel."
+response1 = "Well I’ve been enjoying the company. Your stories act as a form of escapism for me."
+response2 = "Have any of the conversations given you a Eureka moment for getting out of this place?"
+response3 = "Sharing is a powerful tool that brings people closer. I appreciate any chance we get."
+reacting_character1 = 2
+likes_1 = true
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_c0jmn")]
+layout_mode = 2
+line = "Really? It’s nice to hear I tell good stories then."
+response1 = "If you have any more pent up inside of you, I would love to hear another!"
+response2 = "Definitely. Have you heard any good stories from the others?"
+response3 = "Yeah well, it’s not a talent everyone has so I’d definitely be thankful."
+
+[node name="r1_1" parent="r1" index="4" instance=ExtResource("1_c0jmn")]
+layout_mode = 2
+line = "Hm, there was that time I climbed one of the big oaks in the woods behind our house. My friend’s cousin was in town visiting and I was rushing up the tree to impress her… the climb did not end well. I guess it’s a funny story now though."
+line_requirement = "stream_conversation"
+line_alt = "Hm, there was that time I climbed one of the big oaks in the woods behind our house. The area with the stream I told you about earlier. My friend’s cousin was in town visiting and I was rushing up the tree to impress her… the climb did not end well. I guess it’s a funny story now though."
+response1 = "I’m not sure I saw the ending coming. Truly a rollercoaster of a story."
+response2 = "I hope you learned your lesson after that."
+reacting_character1 = 2
+likes_1 = true
+reacting_character2 = 1
+likes_2 = true
+
+[node name="r1_1_1" parent="r1/r1_1" index="4" instance=ExtResource("1_c0jmn")]
+layout_mode = 2
+line = "Yeah, I didn’t have a bad childhood now that I think about it. Maybe I could write a memoir!"
+
+[node name="r1_1_2" parent="r1/r1_1" index="5" instance=ExtResource("1_c0jmn")]
+layout_mode = 2
+line = "I did learn a lesson actually in a very roundabout way. After breaking my leg falling, I had to impress my friend’s cousin with words instead because my hobbling around wasn’t very impressive I guess. I’m out of practice now but it really is nice genuinely talking with people. I should probably try it with Ida if I’m honest."
+line_requirement = "ida_mentioned"
+line_alt = "I did learn a lesson actually in a very roundabout way. After breaking my leg falling, I had to impress my friend’s cousin with words instead because my hobbling around wasn’t very impressive I guess. I’m out of practice now but it really is nice genuinely talking with people. I’ll admit I should probably try that with Ida like you said."
+
+[node name="r1_2" parent="r1" index="5" instance=ExtResource("1_c0jmn")]
+layout_mode = 2
+line = "Ida started telling me this long one about her grand-nephew. The woman really likes her family."
+response1 = "That’s nice to hear. I noticed you two haven’t been getting along perfectly."
+response2 = "Oh, I haven’t had a conversation with her yet but she seems nice."
+response2_requirement = "ida"
+response2_alt = "Oh, she is super nice."
+
+[node name="r1_2_1" parent="r1/r1_2" index="4" instance=ExtResource("1_c0jmn")]
+layout_mode = 2
+line = "She keeps saying everything is fine and ‘happening for a reason.’ Maybe that logic is enough for some people, but all it does is annoy me."
+response1 = "We don’t have time for personal issues impeding our way out of here. This is hurting all of us and you need to find a way to fix it fast."
+response2 = "Take your time with things, I guess there’s still time."
+reacting_character4 = 2
+dislikes_1 = true
+reacting_character7 = 2
+prod_up1 = true
+
+[node name="r1_2_1_1" parent="r1/r1_2/r1_2_1" index="4" instance=ExtResource("1_c0jmn")]
+layout_mode = 2
+line = "Damn, you could have a little trust in me. I wouldn’t willingly sabotage us and this issue really isn’t my fault in the first place so I think you have the wrong target here."
+
+[node name="r1_2_1_2" parent="r1/r1_2/r1_2_1" index="5" instance=ExtResource("1_c0jmn")]
+layout_mode = 2
+line = "You know I wouldn’t willingly sabotage us. I’m being a team player as best as I can right now."
+
+[node name="r1_3" parent="r1" index="6" instance=ExtResource("1_c0jmn")]
+layout_mode = 2
+line = "I think telling stories is like trial and error sometimes. Maybe I’ve been getting lucky that they’re all hitting recently… speaking of trial and error, that outpost door over there is locked with a keypad. Enough random guessing could get us in- maybe it’s a storage room with emergency supplies!"
+line_requirement = "through_door"
+line_alt = "I think telling stories is like trial and error sometimes. Maybe I’ve been getting lucky that they’re all hitting recently."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_c0jmn")]
+layout_mode = 2
+line = "As far as materials go, we have a lot of tires and metal. Maybe if we had the right tools we could make something useful. Like a bulldozer."
+line_requirement = "stream_conversation"
+line_alt = "I’m still thinking about our boat races from my childhood. I distinctly remembering tires floating- they were a godsend for us shipwrights. We could make a makeshift raft if we found the tools for it."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_c0jmn")]
+layout_mode = 2
+line = "I’ve definitely found trading stories helpful while we’ve been struggling together. There are limits though."
+response1 = "Good thing liking each other isn’t a requirement for working together then."
+response2 = "Why does it sound like there’s a specific person you’re referring to?"
+response3 = "We should try to group up more if we can manage it."
+
+[node name="r3_1" parent="r3" index="4" instance=ExtResource("1_c0jmn")]
+layout_mode = 2
+line = "You make a fair point, I’ll keep that in mind."
+
+[node name="r3_2" parent="r3" index="5" instance=ExtResource("1_c0jmn")]
+layout_mode = 2
+line = "I’m sorry, I just can’t stand Ida sometimes. Her insistence on this having a greater purpose and biblical references drive me up the wall."
+response1 = "Maybe you can find some common ground."
+response1_requirement = "casserole_conversation"
+response1_alt = "Maybe you can find some common ground. I heard she likes casserole?"
+response2 = "That’s something you need to overcome. I don’t really care how, just that you work together and stop wasting our time and possibly our lives."
+reacting_character5 = 2
+dislikes_2 = true
+reacting_character8 = 2
+prod_up2 = true
+response1_fulfilled_req = "mace_food"
+
+[node name="r3_2_1" parent="r3/r3_2" index="4" instance=ExtResource("1_c0jmn")]
+layout_mode = 2
+line = "I wouldn’t mind a distracting story about food right now. I could use some escapism."
+
+[node name="r3_2_2" parent="r3/r3_2" index="5" instance=ExtResource("1_c0jmn")]
+layout_mode = 2
+line = "I’ll see."

@@ -1,16 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://com1f41jayn4w"]
+[gd_scene load_steps=7 format=3 uid="uid://com1f41jayn4w"]
 
 [ext_resource type="PackedScene" uid="uid://bjiwhknxcx6xk" path="res://UI/interaction_base.tscn" id="1_aewd2"]
 [ext_resource type="Script" path="res://UI/assignment_page.gd" id="2_oejc8"]
 [ext_resource type="PackedScene" uid="uid://b13m7ybp1isac" path="res://UI/title_holder.tscn" id="3_krxuj"]
 [ext_resource type="Texture2D" uid="uid://c1wv18vpvs6d0" path="res://ArtAssets/UI/assignment_icon.png" id="3_le6dt"]
 [ext_resource type="PackedScene" uid="uid://bnlm43q5metkn" path="res://UI/back_button.tscn" id="4_b74a8"]
+[ext_resource type="Theme" uid="uid://dhfh8ip3erkc0" path="res://UI/scroll_theme.tres" id="5_sivsy"]
 
 [node name="assignment_page" instance=ExtResource("1_aewd2")]
 script = ExtResource("2_oejc8")
 
 [node name="icon" type="TextureRect" parent="background/button_holder" index="0"]
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(8, 11)
 layout_mode = 2
 texture = ExtResource("3_le6dt")
 stretch_mode = 5
@@ -21,26 +22,19 @@ layout_mode = 2
 [node name="Label" parent="background/button_holder/title_holder/TitleBanner" index="0"]
 text = "Assignments"
 
-[node name="scrollbox" type="ScrollContainer" parent="background/button_holder" index="2"]
-custom_minimum_size = Vector2(0, 335)
+[node name="CenterContainer" type="CenterContainer" parent="background/button_holder" index="2"]
 layout_mode = 2
 
-[node name="assignment_holder" type="VBoxContainer" parent="background/button_holder/scrollbox" index="0"]
-custom_minimum_size = Vector2(400, 0)
+[node name="scrollbox" type="ScrollContainer" parent="background/button_holder/CenterContainer" index="0"]
+custom_minimum_size = Vector2(40, 20)
 layout_mode = 2
+theme = ExtResource("5_sivsy")
 
-[node name="MarginContainer" parent="background" index="1" instance=ExtResource("4_b74a8")]
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 105.0
-offset_bottom = 61.0
-grow_horizontal = 1
-grow_vertical = 1
+[node name="assignment_holder" type="VBoxContainer" parent="background/button_holder/CenterContainer/scrollbox" index="0"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="button_container" parent="background" index="1" instance=ExtResource("4_b74a8")]
 
 [editable path="background/button_holder/title_holder"]

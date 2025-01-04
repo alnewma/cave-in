@@ -1,0 +1,65 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0gyrccwrdu4v"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_6l2vm"]
+
+[node name="kate_3" instance=ExtResource("1_6l2vm")]
+visible = true
+line = "I’ll race you out of here!"
+response1 = "Are you sure you want to race me here? The area is pretty dark…"
+response2 = "Only if racing will make us escape faster!"
+response3 = "We should probably save our energy for times when we actually need it."
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_6l2vm")]
+layout_mode = 2
+line = "You’re right, I’m not sure racing is such a good idea actually."
+line_requirement = "nothing_to_be_scared_of_conversation"
+line_alt = "You said there’s nothing to be scared of in the dark though!"
+response1 = "Fine. Ready. Set. Go!"
+response2 = "I know I said that but racing is already dangerous enough when you can see where you’re going. I don’t want you falling or anything."
+response2_requirement = "food_conversation"
+response2_alt = "We can have fun in other ways. Why don’t you flip some mud pies like your dad’s does with burgers at the cookouts?"
+response3 = "Focus on helping us escape and we can race once we’re outside!"
+reacting_character1 = 4
+likes_1 = true
+reacting_character2 = 3
+likes_2 = true
+reacting_character6 = 4
+dislikes_3 = true
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_6l2vm")]
+layout_mode = 2
+line = "Of course racing will make us faster dummy. That’s the whole point of a race!"
+response1 = "I suppose I wouldn’t mind the fun."
+response2 = "Alright then we can race. Just be careful while you’re running around."
+response2_requirement = "wesley"
+response2_alt = "Alright then we can race. Just be careful while you’re running around. Wesley would kill me if he found out you got hurt like that."
+reacting_character1 = 4
+likes_1 = true
+reacting_character2 = 4
+likes_2 = true
+
+[node name="r2_1" parent="r2" index="4" instance=ExtResource("1_6l2vm")]
+layout_mode = 2
+line = "I told you so!"
+
+[node name="r2_2" parent="r2" index="5" instance=ExtResource("1_6l2vm")]
+layout_mode = 2
+line = "Ugh, fine!"
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_6l2vm")]
+layout_mode = 2
+line = "But Wesley said I could race as long as I stay near someone!"
+response1 = "You probably shouldn’t race at all. Running around in such a dark place is just asking to get hurt!"
+response2 = "I think Wesley has a good rule. Just follow that and I’m also fine with you racing."
+reacting_character4 = 4
+dislikes_1 = true
+reacting_character2 = 4
+likes_2 = true
+
+[node name="r3_1" parent="r3" index="4" instance=ExtResource("1_6l2vm")]
+layout_mode = 2
+line = "Ugh, you’re no fun."
+
+[node name="r3_2" parent="r3" index="5" instance=ExtResource("1_6l2vm")]
+layout_mode = 2
+line = "Fine, whatever. Now let’s do this!"

@@ -1,0 +1,104 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdvtudtygqoql"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_so4iv"]
+
+[node name="mace_1" instance=ExtResource("1_so4iv")]
+visible = true
+line = "Wow. Just wow. I spend all my life stuck in my dead-end insurance rep job and when something finally happens to shake things up? Still stuck!"
+response1 = "Well, things could be worse. Are you feeling OK otherwise?"
+response2 = "Insurance sales? Like home or car or what?"
+response3 = "Insurance sales? I always wondered what you degenerates look like behind the phone."
+reacting_character6 = 2
+dislikes_3 = true
+reacting_character9 = 2
+prod_up3 = true
+response1_fulfilled_req = "mace"
+response2_fulfilled_req = "mace"
+response3_fulfilled_req = "mace"
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_so4iv")]
+layout_mode = 2
+line = "No, I’m feeling awful enough without any broken bones. Maybe this is karma, for all the houses I’ve laid to waste for a quick bonus."
+response1 = "Listen, if you didn’t do it, someone else would. Hopefully things can change in the future but now isn’t the time for a single man to worry himself sick about it."
+response2 = "That’s disgusting to hear. It’s a shame we’re trapped here together, that’s for sure."
+reacting_character1 = 2
+likes_1 = true
+reacting_character5 = 2
+dislikes_2 = true
+reacting_character8 = 2
+prod_up2 = true
+
+[node name="r1_1" parent="r1" index="4" instance=ExtResource("1_so4iv")]
+layout_mode = 2
+line = "That’s a nice thing to hear."
+
+[node name="r1_2" parent="r1" index="5" instance=ExtResource("1_so4iv")]
+layout_mode = 2
+line = "We all do stuff for money, that’s how life works. And besides, look where we’ve all ended up. The exact same place! So what does it matter?"
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_so4iv")]
+layout_mode = 2
+line = "Yep, home insurance adjustment. Pull into your driveway one day and see a smoldering heap in the place of your house? You call me."
+response1 = "Call you to find out your house and all your belongings are suddenly half their previous value?"
+response2 = "I’m sure it’s a tough line of work. You’ve gotta have lots of mental resilience to face angry customers all day. Glad to have you here with us."
+response3 = "How does one become an insurance adjuster in the first place?"
+reacting_character2 = 2
+likes_2 = true
+reacting_character8 = 2
+prod_up2 = true
+
+[node name="r2_1" parent="r2" index="4" instance=ExtResource("1_so4iv")]
+layout_mode = 2
+line = "Losing money is just how the world works. Sure I may be the one physically pressing the keys in this case, but it’s going to happen one way or another. I may as well benefit from the process."
+response1 = "I don’t suppose you learned anything from that job that could help us escape?"
+response2 = "That’s a very nihilistic view on life that I can’t say I approve of."
+reacting_character2 = 2
+likes_2 = true
+reacting_character7 = 2
+prod_up1 = true
+
+[node name="r2_1_1" parent="r2/r2_1" index="4" instance=ExtResource("1_so4iv")]
+layout_mode = 2
+line = "Yes, I did actually. Bad shit is going to happen. Make sure you’re the one that dishes it out rather than receives it."
+
+[node name="r2_1_2" parent="r2/r2_1" index="5" instance=ExtResource("1_so4iv")]
+layout_mode = 2
+line = "Nihilistic. I guess that does describe me pretty well. I appreciate your composure, it’s hard to have genuine conversations about this since I’m normally being yelled at."
+
+[node name="r2_2" parent="r2" index="5" instance=ExtResource("1_so4iv")]
+layout_mode = 2
+line = "Thanks for understanding. I’ll try my best to apply myself here. For all of our sake."
+
+[node name="r2_3" parent="r2" index="6" instance=ExtResource("1_so4iv")]
+layout_mode = 2
+line = "I didn’t seek the position out, really. The opportunity just came to me and realistically, who would refuse a stable job? Even if it is a bit soul-sucking."
+response1 = "There weren’t any alternatives?"
+response2 = "Well did you learn any lessons in that job that could help us out now?"
+reacting_character8 = 2
+prod_up2 = true
+
+[node name="r2_3_1" parent="r2/r2_3" index="4" instance=ExtResource("1_so4iv")]
+layout_mode = 2
+line = "Trust me, I’ve thought long and hard about this. I’m in too deep at this point. You can’t just make spontaneous career changes. I don’t want to think about this anymore."
+
+[node name="r2_3_2" parent="r2/r2_3" index="5" instance=ExtResource("1_so4iv")]
+layout_mode = 2
+line = "Yes, I did actually. Always have a backup plan. I didn’t and now here I am."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_so4iv")]
+layout_mode = 2
+line = "It’s hard enough to be a contributing member to this group without you insulting me at every turn. Maybe we can just focus on escape?"
+response1 = "Fine you’re right; I guess we can work together. For what it’s worth, you don’t look quite as bad as I imagined you would."
+response2 = "We can work together but know this doesn’t change any opinions on you."
+reacting_character1 = 2
+likes_1 = true
+reacting_character5 = 2
+dislikes_2 = true
+
+[node name="r3_1" parent="r3" index="4" instance=ExtResource("1_so4iv")]
+layout_mode = 2
+line = "Thanks? I guess."
+
+[node name="r3_2" parent="r3" index="5" instance=ExtResource("1_so4iv")]
+layout_mode = 2
+line = "I’m not afraid to completely step back if you really want me to. Do you want to lose a member just like that?"

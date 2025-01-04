@@ -49,5 +49,3 @@ func creation_process(flag_placeholder : AnimatedSprite2D):
 	placeholder = flag_placeholder
 	get_parent().get_parent().add_child(flag_placeholder)
 	placeholder.peri.visible = true
-
-

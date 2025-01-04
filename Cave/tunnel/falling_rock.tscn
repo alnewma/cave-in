@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://4jxjqavcy2pm"]
+
+[ext_resource type="Script" path="res://tunnel/falling_rock.gd" id="1_56kgf"]
+[ext_resource type="Texture2D" uid="uid://do4fw0f8q7rto" path="res://ArtAssets/falling_rocks.png" id="1_nhf4q"]
+[ext_resource type="Texture2D" uid="uid://god4db3ojsid" path="res://ArtAssets/water_ripple.png" id="3_it130"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jm5g"]
+atlas = ExtResource("3_it130")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wlrjt"]
+atlas = ExtResource("3_it130")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_11hwu"]
+atlas = ExtResource("3_it130")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5p5g0"]
+atlas = ExtResource("3_it130")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b4g7y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jm5g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wlrjt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_11hwu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5p5g0")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="falling_rock" type="StaticBody2D"]
+z_index = 1
+script = ExtResource("1_56kgf")
+
+[node name="bottom_rock" type="Sprite2D" parent="."]
+position = Vector2(0, 2.25)
+texture = ExtResource("1_nhf4q")
+hframes = 4
+vframes = 8
+frame = 12
+
+[node name="ripple" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_b4g7y")
+frame_progress = 0.17878
+
+[node name="top_rock" type="Sprite2D" parent="."]
+position = Vector2(0, -3.25)
+texture = ExtResource("1_nhf4q")
+hframes = 4
+vframes = 8
+frame = 8
+
+[connection signal="animation_finished" from="ripple" to="." method="_on_ripple_animation_finished"]

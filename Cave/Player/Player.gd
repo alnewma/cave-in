@@ -10,6 +10,9 @@ var health = 100
 @onready var man = $man_sprite
 @onready var woman = $woman_sprite
 @onready var animation_tree = $AnimationTree
+
+@onready var assigned_survivors = [] # survivors following player
+
 func _ready():
 	man.visible = male
 	woman.visible = not male

@@ -6,6 +6,7 @@
 [node name="interaction_base" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+scale = Vector2(4, 4)
 script = ExtResource("1_d6l75")
 
 [node name="background" type="TextureRect" parent="."]
@@ -13,8 +14,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 502.0
-offset_bottom = 648.0
+offset_right = 48.0
+offset_bottom = 62.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_j6n1p")
@@ -23,13 +24,8 @@ stretch_mode = 5
 
 [node name="button_holder" type="VBoxContainer" parent="background"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 80.0
-offset_top = 40.0
-offset_right = -45.75
-offset_bottom = 40.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 20
+offset_left = 3.0
+offset_top = 2.0
+offset_right = 47.0
+offset_bottom = 60.0
+theme_override_constants/separation = 1

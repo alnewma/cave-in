@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b13m7ybp1isac" path="res://UI/title_holder.tscn" id="2_b0ch3"]
 [ext_resource type="Script" path="res://UI/establish_location.gd" id="2_rrprg"]
 [ext_resource type="PackedScene" uid="uid://lisxvkd8i4da" path="res://UI/menu_button_base.tscn" id="3_agwr4"]
-[ext_resource type="Texture2D" uid="uid://ngi6dsmnf7gs" path="res://ArtAssets/UI/UIBanner.png" id="4_1y26e"]
+[ext_resource type="Texture2D" uid="uid://c1qxget4jv7yg" path="res://ArtAssets/UI/button_resize.png" id="4_lmw1g"]
 [ext_resource type="Theme" uid="uid://brnwg1k0lrtsw" path="res://UI/line_edit_theme.tres" id="5_u2aw7"]
 
 [node name="establish_location" instance=ExtResource("1_pu425")]
@@ -13,9 +13,6 @@ script = ExtResource("2_rrprg")
 [node name="title_holder" parent="background/button_holder" index="0" instance=ExtResource("2_b0ch3")]
 layout_mode = 2
 
-[node name="TitleBanner" parent="background/button_holder/title_holder" index="0"]
-custom_minimum_size = Vector2(400, 100)
-
 [node name="Label" parent="background/button_holder/title_holder/TitleBanner" index="0"]
 text = "Establish
 Location?"
@@ -23,25 +20,26 @@ Location?"
 [node name="CenterContainer" type="CenterContainer" parent="background/button_holder" index="1"]
 layout_mode = 2
 
-[node name="NinePatchRect" type="NinePatchRect" parent="background/button_holder/CenterContainer" index="0"]
-custom_minimum_size = Vector2(200, 40)
+[node name="NinePatchRect" type="TextureRect" parent="background/button_holder/CenterContainer" index="0"]
+custom_minimum_size = Vector2(22, 10)
 layout_mode = 2
-texture = ExtResource("4_1y26e")
-patch_margin_left = 3
-patch_margin_top = 3
-patch_margin_right = 3
-patch_margin_bottom = 3
+texture = ExtResource("4_lmw1g")
 
 [node name="name_entry" type="LineEdit" parent="background/button_holder/CenterContainer/NinePatchRect" index="0"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("5_u2aw7")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_placeholder_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 3
 placeholder_text = "Enter name..."
 alignment = 1
 max_length = 10
@@ -54,21 +52,17 @@ button_text = "Confirm"
 disabled = true
 text = "Confirm"
 
-[node name="close_button" parent="background/button_holder" index="3" instance=ExtResource("3_agwr4")]
+[node name="button_holder" parent="background/button_holder" index="3" instance=ExtResource("3_agwr4")]
 layout_mode = 2
 button_text = "Close"
 
-[node name="NinePatchRect" parent="background/button_holder/close_button" index="0"]
-custom_minimum_size = Vector2(180, 30)
-
-[node name="Button" parent="background/button_holder/close_button/NinePatchRect" index="0"]
-theme_override_font_sizes/font_size = 20
+[node name="Button" parent="background/button_holder/button_holder/NinePatchRect" index="0"]
 text = "Close"
 
 [connection signal="text_changed" from="background/button_holder/CenterContainer/NinePatchRect/name_entry" to="." method="_on_name_entry_text_changed"]
 [connection signal="pressed" from="background/button_holder/confirm_button/NinePatchRect/Button" to="." method="_on_button_pressed" binds= ["Confirm"]]
-[connection signal="pressed" from="background/button_holder/close_button/NinePatchRect/Button" to="." method="_on_button_pressed" binds= ["Close"]]
+[connection signal="pressed" from="background/button_holder/button_holder/NinePatchRect/Button" to="." method="_on_button_pressed" binds= ["Close"]]
 
 [editable path="background/button_holder/title_holder"]
 [editable path="background/button_holder/confirm_button"]
-[editable path="background/button_holder/close_button"]
+[editable path="background/button_holder/button_holder"]

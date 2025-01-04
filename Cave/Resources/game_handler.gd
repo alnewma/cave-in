@@ -31,8 +31,12 @@ func save_data(path : String = SAVE_DIR + SAVE_FILE_NAME):
 				"locations": GameHandler.player_data.map_data.locations
 			},
 			"survivor_data":{
-				
-			}
+				"ida": GameHandler.player_data.survivor_data.ida,
+				"mace": GameHandler.player_data.survivor_data.mace,
+				"wesley": GameHandler.player_data.survivor_data.wesley,
+				"kate": GameHandler.player_data.survivor_data.kate
+			},
+			"conversation_flags":GameHandler.player_data.conversation_flags
 		}
 	}
 	var json_string = JSON.stringify(data,"\t")
@@ -61,6 +65,8 @@ func load_data(path : String):
 		GameHandler.player_data.map_data = data.player_data.map_data
 		# sync survivor data
 		GameHandler.player_data.survivor_data = data.player_data.survivor_data
+		
+		GameHandler.player_data.conversation_flags = data.player_data.conversation_flags
 		save_data(path)
 	else:
 		printerr("Cannot open non-existent file at %s!" % [path])
@@ -88,7 +94,8 @@ enum items {
 	WELDER,
 	TIRE,
 	ENGINE,
-	PROPELLER
+	PROPELLER,
+	JERRYCAN,
 }
 const item_names = {
 	items.FLASHLIGHT : "Flashlight",
@@ -101,6 +108,7 @@ const item_names = {
 	items.TIRE : "Tire",
 	items.ENGINE : "Engine",
 	items.PROPELLER : "Makeshift Propeller",
+	items.JERRYCAN : "Jerrycan"
 }
 const item_images = {
 	items.FLASHLIGHT : preload("res://ArtAssets/Items/Flashlight.png"),
@@ -113,6 +121,15 @@ const item_images = {
 	items.TIRE : preload("res://ArtAssets/Tire.png"),
 	items.ENGINE : preload("res://ArtAssets/Engine.png"),
 	items.PROPELLER : preload("res://ArtAssets/Propeller.png"),
+	items.JERRYCAN : preload("res://ArtAssets/Items/gas_can.png"),
+}
+const item_images_small = {
+	items.FLASHLIGHT : preload("res://ArtAssets/Items/flashlight_small.png"),
+	items.WELDER : preload("res://ArtAssets/Items/welder_small.png"),
+	items.TIRE : preload("res://ArtAssets/Items/tire_small.png"),
+	items.ENGINE : preload("res://ArtAssets/Items/engine_small.png"),
+	items.PROPELLER : preload("res://ArtAssets/Items/propeller_small.png"),
+	items.JERRYCAN : preload("res://ArtAssets/Items/gas_can_small.png"),
 }
 var item_instances = [ # all items in game. [1] is the survivor it is assigned to
 	[items.FLASHLIGHT, null],
@@ -146,7 +163,12 @@ var item_instances = [ # all items in game. [1] is the survivor it is assigned t
 	[items.TIRE, null],
 	[items.TIRE, null],
 	[items.TIRE, null],
-	[items.TIRE, null]
+	[items.TIRE, null],
+	[items.TIRE, null],
+	[items.TIRE, null],
+	[items.ENGINE, null],
+	[items.PROPELLER, null],
+	[items.JERRYCAN, null],
 ]
 
 func damage_target(origin:CharacterBody2D,target:CharacterBody2D,damage:int):
@@ -180,3 +202,11 @@ func spawn_enemy(type:enemies,location:Vector2):
 			enemy_instance = spider_base.instantiate()
 	get_tree().get_current_scene().call_deferred("add_child",enemy_instance)
 	enemy_instance.global_position = location
+
+func get_survivor_data_from_object(object : Object):
+	match object.survivor_type:
+		0: return GameHandler.player_data.survivor_data.kate
+		1: return null
+		2: return GameHandler.player_data.survivor_data.mace
+		3: return GameHandler.player_data.survivor_data.ida
+		4: return GameHandler.player_data.survivor_data.wesley

@@ -1,0 +1,136 @@
+[gd_scene load_steps=2 format=3 uid="uid://olxy356vmq45"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_wj5xr"]
+
+[node name="wesley_2" instance=ExtResource("1_wj5xr")]
+line = "Times like these are when I appreciate my grandson’s finesse. Things would be a lot easier if he was here."
+response1 = "I guess your grandson is pretty capable?"
+response2 = "I sure hope you can get back to him but things are looking rough in here."
+response3 = "I bet. He isn’t though, so we should really focus on our plan of action."
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "Sure is. He was an Eagle Scout in high school and is currently in basic training for the navy. Hard not to be proud when he’s doing better than I ever did, difficulty relating to him or otherwise."
+response1 = "You were never in the military? I kind of assumed you were."
+response2 = "I definitely sympathize with difficulty relating to people. Still running into that issue even in this cave."
+response3 = "Maybe he’s doing better, but you clearly did something right in life. You’re practically a keystone to our escape efforts right now."
+
+[node name="r1_1" parent="r1" index="4" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "Not quite. I tried out, but I have asthma which stopped them from recruiting me. I found my way into hobby survivalism instead."
+response1 = "I don’t think you could’ve picked a more convenient pastime for our situation!"
+response2 = "I hope you don’t let that weigh on you too much. From the short time I’ve known you, I’ve already been impressed by your dedication and what you can do."
+response2_fulfilled_req = "confidence_conversation"
+
+[node name="r1_1_1" parent="r1/r1_1" index="4" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "I’ve certainly found my hobby experience acting useful here. Now enough talk- let’s put it to use further by getting out of here."
+
+[node name="r1_1_2" parent="r1/r1_1" index="5" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "I’m pleased to hear that. It’s my opinion that exuding confidence is the most beneficial trait a team member can have."
+response1 = "That’s a good point. I’ll try to mirror your confidence."
+response2 = "I don’t know if I can match your confidence, but I’ll try to contribute overwhelming effort and coordination. Maybe this is a problem that can be outworked."
+reacting_character1 = 3
+likes_1 = true
+reacting_character8 = 3
+prod_up2 = true
+
+[node name="r1_1_2_1" parent="r1/r1_1/r1_1_2" index="4" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "If you can manage that, we’ll be on a good track to success."
+
+[node name="r1_1_2_2" parent="r1/r1_1/r1_1_2" index="5" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "As long as you’re contributing to the best of your ability, I suppose there are worse things that could be happening."
+
+[node name="r1_2" parent="r1" index="5" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "We’re facing hard times here but lesser men have made it out of far worse. Keeping a strong attitude is the first step toward success."
+response1 = "I don’t know. Maybe we should acknowledge that we’re a bit stuck here. It could help us form a realistic plan."
+response2 = "A strong attitude. Right, I think I can do that."
+reacting_character4 = 3
+dislikes_1 = true
+
+[node name="r1_2_1" parent="r1/r1_2" index="4" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "I don’t need you second guessing me. Not when there are lives on the line."
+line_requirement = "second_guessed"
+line_alt = "Listen. This is the second time you’ve questioned what I’m saying and the second time you’ve wasted all of our time when we need it most. You need to make some different decisions here."
+
+[node name="r1_3" parent="r1" index="6" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "Sure, one person being capable doesn’t need to bring the rest of us down. That’s the opposite mindset of what gets you through life."
+response1 = "I’m sure your grandson is going to love hearing how we fought through this."
+response2 = "I like that idea. You have been bringing Kate down because of your own capability though."
+reacting_character1 = 3
+likes_1 = true
+
+[node name="r1_3_1" parent="r1/r1_3" index="4" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "I’m sure he will. I’ll make telling him a priority for when we return. Maybe you can come along and help tell the tale- you two would like each other."
+
+[node name="r1_3_2" parent="r1/r1_3" index="5" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "Catchall phrases are nice, but there are always qualifiers. In this case, Kate is a vulnerable party and there’s no reason to risk her when we have perfectly capable adults."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "I’ve got experience in situations like this. Just follow my lead and we’ll have a good chance of coming out in good shape."
+response1 = "I trust that you’ll pull us through this then."
+response2 = "To be honest, I haven’t seen much of following your lead panning out so far. A few of us aren’t big fans actually."
+response3_requirement = "plan_conversation"
+response3_alt = "After all, we’re aware of the first rule of survival: making a plan."
+reacting_character3 = 3
+likes_3 = true
+
+[node name="r2_1" parent="r2" index="4" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "I hope you’ll still be this loyal when the time for harder decisions comes."
+
+[node name="r2_2" parent="r2" index="5" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "I know my insistence that Kate stays safe is for some reason controversial. I can’t help it if you guys can’t understand why I’m doing this. She’s a child. We have no reason to risk her injury for a little saved time."
+response1 = "How can you know we don’t need that saved time?"
+response2 = "I see the logic there. I’ll support your decision."
+response3 = "I don’t think you’re a good fit to be our group’s leader. You need to represent all of our best interests."
+reacting_character2 = 3
+likes_2 = true
+reacting_character6 = 3
+dislikes_3 = true
+response3_fulfilled_req = "wesley_disagreement"
+
+[node name="r2_2_1" parent="r2/r2_2" index="4" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "No decisions are made easily in times of emergency. There’s no way of knowing but I’m making the best decision with the information we have."
+
+[node name="r2_2_2" parent="r2/r2_2" index="5" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "I’m glad we’re on the same page here."
+
+[node name="r2_2_3" parent="r2/r2_2" index="6" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "Don’t you understand? I am representing everyone’s best interests here. But by all means, I’ll step back if you insist. I won’t fight to help you guys."
+
+[node name="r2_3" parent="r2" index="6" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "Exactly. Now let’s figure out what our next steps are to get out of this tunnel."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "You’re right, I’ll have plenty of time to focus on my grandson when I see him in person in a few days. You should meet him too- you have very similar personalities."
+response1 = "I’d be happy to. It would feel wrong to just go separate ways after an ordeal like this."
+response2 = "We could meet each other sooner if we had all hands on deck, but you’ve been restricting Kate way too much."
+reacting_character5 = 3
+dislikes_2 = true
+reacting_character8 = 4
+prod_up2 = true
+response2_fulfilled_req = "wesley_disagreement"
+
+[node name="r3_1" parent="r3" index="4" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "That it would. I’m already looking forward to firing up the grill again."
+
+[node name="r3_2" parent="r3" index="5" instance=ExtResource("1_wj5xr")]
+layout_mode = 2
+line = "I don’t understand what’s so hard to understand about keeping a child safe but frankly I’m not going to keep fighting you guys about it. By all means, go ahead."

@@ -1,17 +1,18 @@
 extends CanvasLayer
 
 @onready var start_page = $interaction_page
+@onready var speech_page = $dialogue_page
 @onready var status_page = $status_page
 @onready var location_page = $location_page
 @onready var assignment_page = $assignment_page
-var current_survivor
+var current_survivor : Node
 var page_list : Array
 
 func _ready():
-	page_list = [start_page,status_page,location_page,assignment_page]
+	page_list = [start_page,speech_page,status_page,location_page,assignment_page]
 	for node in get_tree().get_nodes_in_group("button"):
 		if node.is_in_group("button"):
-			node.pressed.connect(_on_button_pressed.bind(node.text))
+			node.pressed.connect(_on_button_pressed.bind(node.get_node("Label").text))
 	hide_pages()
 
 func hide_pages():
@@ -32,7 +33,7 @@ func change_page(page,_opening = false):
 func _on_button_pressed(source_text):
 	match source_text:
 		"Speak":
-			pass#change_page(speak_page)
+			change_page(speech_page)
 		"Status":
 			change_page(status_page)
 		"Assign":

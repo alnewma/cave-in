@@ -11,33 +11,25 @@ script = ExtResource("2_8e7uu")
 [node name="title_holder" parent="background/button_holder" index="0" instance=ExtResource("3_v8x66")]
 layout_mode = 2
 
-[node name="TitleBanner" parent="background/button_holder/title_holder" index="0"]
-custom_minimum_size = Vector2(400, 100)
-
 [node name="Label" parent="background/button_holder/title_holder/TitleBanner" index="0"]
 text = "Location Name"
 
-[node name="confirm_button" parent="background/button_holder" index="1" instance=ExtResource("4_53gtr")]
+[node name="remove_button" parent="background/button_holder" index="1" instance=ExtResource("4_53gtr")]
 layout_mode = 2
+button_text = "Remove?"
 
-[node name="Button" parent="background/button_holder/confirm_button/NinePatchRect" index="0"]
-theme_override_font_sizes/font_size = 20
-text = "Remove Location?"
+[node name="Button" parent="background/button_holder/remove_button/NinePatchRect" index="0"]
+autowrap_mode = 3
 
 [node name="close_button" parent="background/button_holder" index="2" instance=ExtResource("4_53gtr")]
 layout_mode = 2
-button_text = "Close"
 
-[node name="NinePatchRect" parent="background/button_holder/close_button" index="0"]
-custom_minimum_size = Vector2(180, 30)
+[node name="Label" parent="background/button_holder/close_button/NinePatchRect/Button" index="0"]
+text = " Close"
 
-[node name="Button" parent="background/button_holder/close_button/NinePatchRect" index="0"]
-theme_override_font_sizes/font_size = 20
-text = "Close"
-
-[connection signal="pressed" from="background/button_holder/confirm_button/NinePatchRect/Button" to="." method="_on_button_pressed" binds= ["Confirm"]]
+[connection signal="pressed" from="background/button_holder/remove_button/NinePatchRect/Button" to="." method="_on_button_pressed" binds= ["Confirm"]]
 [connection signal="pressed" from="background/button_holder/close_button/NinePatchRect/Button" to="." method="_on_button_pressed" binds= ["Close"]]
 
 [editable path="background/button_holder/title_holder"]
-[editable path="background/button_holder/confirm_button"]
+[editable path="background/button_holder/remove_button"]
 [editable path="background/button_holder/close_button"]

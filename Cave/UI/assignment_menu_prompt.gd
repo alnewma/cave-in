@@ -25,8 +25,12 @@ func _on_input_event(viewport, event, _shape_idx):
 		var location = get_parent()
 		menu_instance.location.text = location.display_name
 		menu_instance.assignment.text = "Assignment: " + location.assignment
-		if location.has_required_tool:
-			menu_instance.requirements.text = "Tool Requirements: " + GameHandler.items.keys()[location.required_tool].capitalize()
+		if location.required_tools > 0:
+			menu_instance.requirements.text = "Tool Requirements: "
+			for tool in range(location.required_tools):
+				menu_instance.requirements.text += GameHandler.items.keys()[location.required_tool[tool]].capitalize()
+				if location.required_tools != 1 and tool != location.required_tools-1:
+					menu_instance.requirements.text += ", "
 		for item in location.available_items:
 			var item_sprite = TextureRect.new()
 			item_sprite.custom_minimum_size = Vector2(95,95)

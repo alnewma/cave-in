@@ -6,46 +6,52 @@
 
 [node name="interaction_page" instance=ExtResource("1_mbxeh")]
 
+[node name="button_holder" parent="background" index="0"]
+offset_bottom = 136.0
+
 [node name="title_holder" parent="background/button_holder" index="0" instance=ExtResource("2_5d4bo")]
 layout_mode = 2
 
-[node name="TitleBanner" parent="background/button_holder/title_holder" index="0"]
-custom_minimum_size = Vector2(400, 100)
-
 [node name="Label" parent="background/button_holder/title_holder/TitleBanner" index="0"]
-text = "Survivor
-Interactions"
+custom_minimum_size = Vector2(20, 8)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -5.0
+offset_right = 10.0
+offset_bottom = 4.0
+text = "Survivor Interactions"
+autowrap_mode = 2
 
 [node name="speak_button" parent="background/button_holder" index="1" instance=ExtResource("4_yw3ks")]
 layout_mode = 2
 
-[node name="Button" parent="background/button_holder/speak_button/NinePatchRect" index="0"]
+[node name="Label" parent="background/button_holder/speak_button/NinePatchRect/Button" index="0"]
 text = "Speak"
 
 [node name="status_button" parent="background/button_holder" index="2" instance=ExtResource("4_yw3ks")]
 layout_mode = 2
 
-[node name="Button" parent="background/button_holder/status_button/NinePatchRect" index="0"]
+[node name="Label" parent="background/button_holder/status_button/NinePatchRect/Button" index="0"]
 text = "Status"
 
-[node name="assignment_button" parent="background/button_holder" index="3" instance=ExtResource("4_yw3ks")]
+[node name="assign_button" parent="background/button_holder" index="3" instance=ExtResource("4_yw3ks")]
 layout_mode = 2
 
-[node name="Button" parent="background/button_holder/assignment_button/NinePatchRect" index="0"]
+[node name="Label" parent="background/button_holder/assign_button/NinePatchRect/Button" index="0"]
 text = "Assign"
 
-[node name="button_holder" parent="background/button_holder" index="4" instance=ExtResource("4_yw3ks")]
+[node name="close_button" parent="background/button_holder" index="4" instance=ExtResource("4_yw3ks")]
 layout_mode = 2
 
-[node name="NinePatchRect" parent="background/button_holder/button_holder" index="0"]
-custom_minimum_size = Vector2(180, 30)
-
-[node name="Button" parent="background/button_holder/button_holder/NinePatchRect" index="0"]
-theme_override_font_sizes/font_size = 20
+[node name="Label" parent="background/button_holder/close_button/NinePatchRect/Button" index="0"]
 text = "Close"
 
 [editable path="background/button_holder/title_holder"]
 [editable path="background/button_holder/speak_button"]
 [editable path="background/button_holder/status_button"]
-[editable path="background/button_holder/assignment_button"]
-[editable path="background/button_holder/button_holder"]
+[editable path="background/button_holder/assign_button"]
+[editable path="background/button_holder/close_button"]

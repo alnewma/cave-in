@@ -189,7 +189,7 @@ height = 8.0
 
 [node name="spider_base" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 8
-collision_mask = 7
+collision_mask = 15
 script = ExtResource("1_60e7a")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

@@ -1,0 +1,18 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://xh71h8idcrhm"]
+
+[ext_resource type="Texture2D" uid="uid://bkkyrcbqqtv7h" path="res://ArtAssets/UI/scroll_horizontal_bg.png" id="1_r2sln"]
+[ext_resource type="Texture2D" uid="uid://cfq04pvbyj4u8" path="res://ArtAssets/UI/thirst_bar.png" id="2_cknu4"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_33aho"]
+texture = ExtResource("1_r2sln")
+texture_margin_left = 3.0
+texture_margin_right = 3.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x8ekl"]
+texture = ExtResource("2_cknu4")
+texture_margin_left = 2.0
+texture_margin_right = 2.0
+
+[resource]
+ProgressBar/styles/background = SubResource("StyleBoxTexture_33aho")
+ProgressBar/styles/fill = SubResource("StyleBoxTexture_x8ekl")

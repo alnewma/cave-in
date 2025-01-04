@@ -1,0 +1,143 @@
+[gd_scene load_steps=2 format=3 uid="uid://bepaw1nhrrms4"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_8s4is"]
+
+[node name="kate_2" instance=ExtResource("1_8s4is")]
+visible = true
+line = "The cave is really dark further away from the road."
+response1 = "There’s nothing to be scared of in the dark. Just little animals that won’t get to you while we’re around."
+response2 = "We’ll keep you safe, darkness or not darkness."
+response3 = "Can you think of something else to take your mind off of the darkness?"
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "How can you be so sure that there’s nothing to be scared of?"
+response1 = "We’re together. As a team we’re capable of anything this miserable tunnel can throw at us!"
+response2 = "I’m sure everyone here has talents that’ll help us out. I haven’t talked to everyone yet but maybe you can find out by meeting them!"
+response2_requirement = "mace"
+response2_alt = "Everyone here is super talented in a bunch of different ways. You’re a good explorer and Mace is good at analyzing the situation."
+reacting_character1 = 4
+likes_1 = true
+
+[node name="r1_1" parent="r1" index="4" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "Teamwork does make the dream work!"
+
+[node name="r1_2" parent="r1" index="5" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "I don’t really have experience exploring. I tried exploring just this one time and look how I ended up."
+response1 = "You don’t need experience to be helpful. People succeed at new things all the time."
+response2 = "Just think about all the good experience you’ll get from this though. More than most people get in a lifetime!"
+reacting_character1 = 4
+likes_1 = true
+reacting_character2 = 4
+likes_2 = true
+
+[node name="r1_2_1" parent="r1/r1_2" index="4" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "You’re right. I’ll try my best and maybe things will work out."
+
+[node name="r1_2_2" parent="r1/r1_2" index="5" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "Yeah that’s one way to describe things."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "So you guys aren’t scared?"
+response1 = "Of course we’re scared. But we’re brave at the same time. That’s how you get through life."
+response2 = "I think we’re all a little scared. But being scared doesn’t matter when you’re together."
+response3 = "No, I’m not scared. I’m confident we’re going to make it out of here safe and sound."
+reacting_character1 = 4
+likes_1 = true
+reacting_character2 = 4
+likes_2 = true
+reacting_character3 = 4
+likes_3 = true
+response2_fulfilled_req = "nothing_to_be_scared_conversation"
+response3_fulfilled_req = "nothing_to_be_scared_conversation"
+
+[node name="r2_1" parent="r2" index="4" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "I guess I can try that."
+
+[node name="r2_2" parent="r2" index="5" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "Being with you guys definitely does make me less scared… I guess I get what you’re saying."
+
+[node name="r2_3" parent="r2" index="6" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "I’m glad you’re here."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "Think of other things like what? I can’t think of anything but darkness!"
+response1 = "Tell me about your friends. Do you have any adventures like this?"
+response2 = "Tell me about your favorite food."
+response2_requirement = "casserole_conversation"
+response2_alt = "Tell me about your favorite food. I know Ida told me she cooks a mean casserole!"
+response3 = "Do you have any pets back home?"
+reacting_character2 = 4
+likes_2 = true
+response2_fulfilled_req = "food_conversation"
+
+[node name="r3_1" parent="r3" index="4" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "I love exploring with my friends! This would be a lot better if they were here…"
+response1 = "I’ll be your friend here until you can get back to your other friends."
+response2 = "Think about the crazy story you’ll be able to tell them when you get back!"
+reacting_character1 = 4
+likes_1 = true
+
+[node name="r3_1_1" parent="r3/r3_1" index="4" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "That’s nice. I guess you’ll do for now."
+
+[node name="r3_1_2" parent="r3/r3_1" index="5" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "I’ll tell them about this but I don’t think they’ll believe me. You’d better come for proof!"
+response1 = "I don’t think a random dude showing up would help as proof, or that they’d like that. You’ll be on your own for this one."
+response2 = "Oh alright I think I can show up. Having proof is definitely important."
+reacting_character4 = 4
+dislikes_1 = true
+reacting_character2 = 4
+likes_2 = true
+
+[node name="r3_1_2_1" parent="r3/r3_1/r3_1_2" index="4" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "I think you’re wrong but fine."
+
+[node name="r3_1_2_2" parent="r3/r3_1/r3_1_2" index="5" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "Yay! Also you have to remind me if I forget any details when I tell the story to them!"
+
+[node name="r3_2" parent="r3" index="5" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "I love the burgers my dad cooks when we have cookouts. Everyone we know comes so you’d better come to the next one!"
+response1 = "Sorry, I’m missing work while I’m here and need to get back ASAP. I’m sure your family will be happy enough just getting you back in the first place."
+response2 = "OK I’ll come but only if we all can come."
+reacting_character4 = 4
+dislikes_1 = true
+reacting_character2 = 4
+likes_2 = true
+
+[node name="r3_2_1" parent="r3/r3_2" index="4" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "Even Wesley the Grump? Fine it’s a deal."
+
+[node name="r3_3" parent="r3" index="6" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "I have a dog named Brook. I bet he misses me. I miss him."
+response1 = "You’ll get back to him soon enough."
+response2 = "Well the more helpful you are, the faster we can get out and you can see him!"
+reacting_character1 = 4
+likes_1 = true
+reacting_character8 = 4
+prod_up2 = true
+
+[node name="r3_3_1" parent="r3/r3_3" index="4" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "I sure hope so."
+
+[node name="r3_3_2" parent="r3/r3_3" index="5" instance=ExtResource("1_8s4is")]
+layout_mode = 2
+line = "I guess you’re right. I’ll work harder."

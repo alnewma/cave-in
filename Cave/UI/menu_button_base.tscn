@@ -1,29 +1,51 @@
-[gd_scene load_steps=4 format=3 uid="uid://lisxvkd8i4da"]
+[gd_scene load_steps=5 format=3 uid="uid://lisxvkd8i4da"]
 
-[ext_resource type="Texture2D" uid="uid://ngi6dsmnf7gs" path="res://ArtAssets/UI/UIBanner.png" id="1_llm0t"]
 [ext_resource type="Script" path="res://UI/menu_button_base.gd" id="1_x0s1h"]
 [ext_resource type="Theme" uid="uid://c0w38urtirqsi" path="res://UI/button_theme.tres" id="2_vgx6l"]
+[ext_resource type="Texture2D" uid="uid://c1qxget4jv7yg" path="res://ArtAssets/UI/button_resize.png" id="2_wdmaw"]
+[ext_resource type="Theme" uid="uid://bgr6frj5j5a2w" path="res://UI/label_theme.tres" id="4_bjxik"]
 
 [node name="button_holder" type="CenterContainer" groups=["menu_button"]]
 script = ExtResource("1_x0s1h")
 
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
-custom_minimum_size = Vector2(200, 40)
+[node name="NinePatchRect" type="TextureRect" parent="."]
 layout_mode = 2
-texture = ExtResource("1_llm0t")
-patch_margin_left = 3
-patch_margin_top = 3
-patch_margin_right = 3
-patch_margin_bottom = 3
+texture = ExtResource("2_wdmaw")
 
 [node name="Button" type="Button" parent="NinePatchRect" groups=["button"]]
 texture_filter = 1
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -11.0
+offset_top = -5.0
+offset_right = 11.0
+offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_vgx6l")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 3
+
+[node name="Label" type="Label" parent="NinePatchRect/Button"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -2.0
+offset_right = 6.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_bjxik")
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 3
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

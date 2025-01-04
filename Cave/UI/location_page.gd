@@ -1,7 +1,7 @@
 extends "res://UI/interaction_base.gd"
 
 @onready var button_base = preload("res://UI/menu_button_base.tscn")
-@onready var button_holder = $background/button_holder/scrollbox/location_holder
+@onready var button_holder = $background/button_holder/CenterContainer/scrollbox/location_holder
 
 func _ready():
 	initiate()
@@ -28,4 +28,5 @@ func initiate():
 		create_assignment(location["name"],location["position"])
 
 func _on_visibility_changed():
-	initiate()
+	if visible:
+		initiate()

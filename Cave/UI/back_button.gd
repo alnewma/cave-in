@@ -1,4 +1,4 @@
-extends MarginContainer
+extends Control
 
 @export var previous_page : NodePath
 

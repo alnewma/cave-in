@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d185j6h1es4ps"]
+[gd_scene load_steps=13 format=3 uid="uid://d185j6h1es4ps"]
 
 [ext_resource type="Script" path="res://Survivors/survivor_base.gd" id="1_21p5d"]
 [ext_resource type="Script" path="res://Survivors/finite_state_machine.gd" id="2_861pe"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Survivors/survivor_movement_state.gd" id="5_h0sfs"]
 [ext_resource type="Script" path="res://Survivors/survivor_defense_state.gd" id="6_432de"]
 [ext_resource type="Script" path="res://Survivors/survivor_death_state.gd" id="7_fd67k"]
+[ext_resource type="Theme" uid="uid://bgr6frj5j5a2w" path="res://UI/label_theme.tres" id="9_7edol"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bnvq1"]
 radius = 4.0
@@ -21,6 +22,7 @@ radius = 136.719
 [node name="SurvivorBase" type="CharacterBody2D" groups=["survivor"]]
 scale = Vector2(0.5, 0.5)
 collision_layer = 4
+collision_mask = 5
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_21p5d")
@@ -90,6 +92,20 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="danger_area"]
 shape = SubResource("CircleShape2D_7vnyp")
 
+[node name="remark" type="Label" parent="."]
+offset_left = -26.0
+offset_top = -38.0
+offset_right = 26.0
+offset_bottom = -30.0
+theme = ExtResource("9_7edol")
+theme_override_font_sizes/font_size = 3
+text = "Dialogue Remark Here"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="remark_timer" type="Timer" parent="remark"]
+one_shot = true
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="actor_reached_target" from="FiniteStateMachine/SurvivorMovementState" to="." method="_on_survivor_movement_state_actor_reached_target"]
 [connection signal="input_event" from="interaction_area" to="." method="_on_interaction_area_input_event"]
@@ -98,3 +114,4 @@ shape = SubResource("CircleShape2D_7vnyp")
 [connection signal="timeout" from="thirst_timer" to="." method="_on_thirst_timer_timeout"]
 [connection signal="body_entered" from="danger_area" to="." method="_on_danger_area_body_entered"]
 [connection signal="body_exited" from="danger_area" to="." method="_on_danger_area_body_exited"]
+[connection signal="timeout" from="remark/remark_timer" to="." method="_on_remark_timer_timeout"]

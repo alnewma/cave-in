@@ -1,16 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://b13esoyuiywak"]
+[gd_scene load_steps=7 format=3 uid="uid://b13esoyuiywak"]
 
 [ext_resource type="PackedScene" uid="uid://bjiwhknxcx6xk" path="res://UI/interaction_base.tscn" id="1_i0d4b"]
 [ext_resource type="Script" path="res://UI/location_page.gd" id="2_g6wai"]
 [ext_resource type="Texture2D" uid="uid://d0nrqq3qlmijk" path="res://ArtAssets/UI/UIAssignmentIcon.png" id="3_j4ia6"]
 [ext_resource type="PackedScene" uid="uid://b13m7ybp1isac" path="res://UI/title_holder.tscn" id="4_gxwg3"]
+[ext_resource type="Theme" uid="uid://dhfh8ip3erkc0" path="res://UI/scroll_theme.tres" id="5_ayij3"]
 [ext_resource type="PackedScene" uid="uid://bnlm43q5metkn" path="res://UI/back_button.tscn" id="5_se74y"]
 
 [node name="location_page" instance=ExtResource("1_i0d4b")]
 script = ExtResource("2_g6wai")
 
 [node name="icon" type="TextureRect" parent="background/button_holder" index="0"]
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(8, 11)
 layout_mode = 2
 texture = ExtResource("3_j4ia6")
 stretch_mode = 5
@@ -21,16 +22,21 @@ layout_mode = 2
 [node name="Label" parent="background/button_holder/title_holder/TitleBanner" index="0"]
 text = "Locations"
 
-[node name="scrollbox" type="ScrollContainer" parent="background/button_holder" index="2"]
-custom_minimum_size = Vector2(0, 335)
+[node name="CenterContainer" type="CenterContainer" parent="background/button_holder" index="2"]
 layout_mode = 2
 
-[node name="location_holder" type="VBoxContainer" parent="background/button_holder/scrollbox" index="0"]
-custom_minimum_size = Vector2(400, 0)
+[node name="scrollbox" type="ScrollContainer" parent="background/button_holder/CenterContainer" index="0"]
+custom_minimum_size = Vector2(40, 21)
 layout_mode = 2
+theme = ExtResource("5_ayij3")
 
-[node name="MarginContainer" parent="background" index="1" instance=ExtResource("5_se74y")]
-layout_mode = 1
-metadata/_edit_use_anchors_ = true
+[node name="location_holder" type="VBoxContainer" parent="background/button_holder/CenterContainer/scrollbox" index="0"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="button_container" parent="background" index="1" instance=ExtResource("5_se74y")]
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 
 [editable path="background/button_holder/title_holder"]

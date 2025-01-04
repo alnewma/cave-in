@@ -1,0 +1,63 @@
+[gd_scene load_steps=2 format=3 uid="uid://sn0nbq18ygx4"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_yd74p"]
+
+[node name="wesley_1" instance=ExtResource("1_yd74p")]
+visible = true
+line = "Hey there. That sure was a rough cave-in, are you feeling alright?"
+response1 = "I got through intact. How are you feeling?"
+response2 = "I’m feeling a bit disoriented, I’m sure we all are."
+response3 = "I’m feeling good enough to work on finding a way through those rocks and out of here."
+reacting_character3 = 3
+likes_3 = true
+response1_fulfilled_req = "wesley"
+response2_fulfilled_req = "wesley"
+response3_fulfilled_req = "wesley"
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_yd74p")]
+layout_mode = 2
+line = "I got flung into the steering wheel when my car swerved but it’s nothing I can’t walk off."
+response1 = "Are you sure you can just walk that off? I’m fine with you needing a break."
+response2 = "There are a lot of cars that had rough stops. Recovering and getting our bearings should definitely be top priorities."
+reacting_character4 = 3
+dislikes_1 = true
+reacting_character2 = 3
+likes_2 = true
+response1_fulfilled_req = "second_guessed"
+
+[node name="r1_1" parent="r1" index="4" instance=ExtResource("1_yd74p")]
+layout_mode = 2
+line = "Listen, one thing you need to know about me is I don’t like wasting time. I said I’m fine. Now you go take care of the others. This could mean life or death for us."
+
+[node name="r1_2" parent="r1" index="5" instance=ExtResource("1_yd74p")]
+layout_mode = 2
+line = "Good, I like where your head's at. Now go check on the others and hope we don’t need any emergency triage."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_yd74p")]
+layout_mode = 2
+line = "Yeah. Well, I sure hope a little disorientation is all anyone’s feeling. You go check on them while I get started on a survival plan."
+response1 = "Are you sure you’re OK? Your arm is bruising up a lot."
+response2 = "I appreciate the clearheadedness in a time like this."
+reacting_character4 = 3
+dislikes_1 = true
+reacting_character2 = 3
+likes_2 = true
+response1_fulfilled_req = "second_guessed"
+response2_fulfilled_req = "plan_conversation"
+
+[node name="r2_1" parent="r2" index="4" instance=ExtResource("1_yd74p")]
+layout_mode = 2
+line = "Listen, I said I’m OK. My car swerved and I got my arm bent but nothing seems to be broken. The others could be worse, so why don’t you go check on them like I asked."
+
+[node name="r2_2" parent="r2" index="5" instance=ExtResource("1_yd74p")]
+layout_mode = 2
+line = "‘The first step toward success is having a good plan.’ That motto has gotten me far in life and I don’t plan to stop using it now."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_yd74p")]
+layout_mode = 2
+line = "Getting started on a plan is always a good first step. I like your thinking. When you get a chance, we should check on the other survivors too. Not everyone may have fared as well as we did in the accident."
+response1 = "Speaking of which, how are you feeling? I see your arm is a bit bruised."
+
+[node name="r3_1" parent="r3" index="4" instance=ExtResource("1_yd74p")]
+layout_mode = 2
+line = "I got smacked around a little when a boulder landed straight on the hood of my car but I was fortunate enough not to be crushed. Now back to the mission at hand…"

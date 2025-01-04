@@ -1,0 +1,124 @@
+[gd_scene load_steps=2 format=3 uid="uid://slus8pnjmiab"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_lu1p4"]
+
+[node name="ida_3" instance=ExtResource("1_lu1p4")]
+visible = true
+line = "You know what’s been on my mind recently? Casserole. It’s funny how your mind works sometimes ain’t it."
+response1 = "Casserole? Like just the dish in general or in a certain context or what?"
+response2 = "Any idea why you’d think of that now? It does seem pretty random."
+response3 = "If only there was a way you could make that thought helpful to us escaping."
+reacting_character9 = 1
+prod_up3 = true
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "Well you see, it’s my signature dish I always bring to family gatherings. It has to be flavorful enough to appeal to the adults while basic enough for those picky children to bear. A delicate art, really!"
+response1 = "Are you missing those gatherings right now?"
+response2 = "Oh man, you’ve got me salivating just like that. The second I get out of here I’m finding a place serving casseroles."
+response3 = "Maybe if you’re resourceful you can make one here. Lets see, we’ve got a vaguely tin-shaped hubcap.. Some dead rats.."
+reacting_character3 = 1
+likes_3 = true
+response2_fulfilled_req = "casserole_conversation"
+
+[node name="r1_1" parent="r1" index="4" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "I suppose I miss the people that I see at the gatherings. I know we’re going to make it out fine and all, but having even the slightest thought of leaving them without a word tugs at my heart a bit."
+
+[node name="r1_2" parent="r1" index="5" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "There’s no need to find a place that serves them! Just come on over to my place. I’m holding a gathering just so I can brag to Martha that I’m toughing it out more at 65 than she ever was. All in good fun of course!"
+
+[node name="r1_3" parent="r1" index="6" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "I like your positive attitude, maybe I can learn a thing or two from you!"
+line_requirement = "skepticism"
+line_alt = "Way to take my advice on having a positive mindset. You’ve embraced it far more than I ever expected, that’s for sure!"
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "Just the Lord reminding me of my motivation for pushing through this challenge I suppose. The motivation being family–of course–not casserole as much as I do enjoy eating it."
+response1 = "I wouldn’t mind having comforting memories randomly drift into my head now and then. Sounds nice."
+response2 = "Aw, so you aren’t about to say you secretly had some casserole in your car or something. That’s disappointing."
+response3 = "I hope you get along better with your family than with us."
+response3_requirement = "happy"
+reacting_character6 = 1
+dislikes_3 = true
+
+[node name="r2_1" parent="r2" index="4" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "If it’s comforting memories you lack, family gatherings are the finest place to make some. I’ll be hosting one for my family once we escape, maybe you can host one for yours."
+line_requirement = "happy"
+line_alt = "If it’s comforting memories you lack, family gatherings are the finest place to make some. Tell you what, maybe I’ll host one once we escape. It’ll help me unwind after all this and you can come and officially become part of the family!"
+response1 = "I like the sound of a family gathering– it’s a plan."
+response2_requirement = "happy"
+response2_alt = "If your family is anything like you, I bet you’re all extremely close. I’m not sure I’d fit into such a tight-knit group."
+reacting_character1 = 1
+likes_1 = true
+
+[node name="r2_1_1" parent="r2/r2_1" index="4" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "You’ll have a ball, I just know it!"
+
+[node name="r2_1_2" parent="r2/r2_1" index="5" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "Oh don’t say that! The tight-knit gloves will grasp hands stronger. What I’m saying is you’ll be just fine."
+response1 = "No, I’m sorry but I just don’t see myself attending a family gathering like that. I need to focus on escaping and plans like that may motivate you but they’re just distractions to me."
+response2 = "How can I refuse to attend when you’re insisting so much? I look forward to meeting your family then."
+reacting_character2 = 1
+likes_2 = true
+reacting_character7 = 1
+prod_up1 = true
+
+[node name="r2_1_2_1" parent="r2/r2_1/r2_1_2" index="4" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "I see. I don’t agree with how you’re coping but still I understand it. Let's focus on escape then in our own ways."
+
+[node name="r2_1_2_2" parent="r2/r2_1/r2_1_2" index="5" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "You’re going to have a ball, trust me!"
+
+[node name="r2_2" parent="r2" index="5" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "No, I don’t think I have any surprise casserole unfortunately. I’ll double check but it’s hard to forget something like that."
+response1_requirement = "mace_food"
+response1_alt = "Mace mentioned liking all sorts of food earlier. He’d be ecstatic. If only.."
+
+[node name="r2_2_1" parent="r2/r2_2" index="4" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "It’s so hard to relate to that man/woman. I suppose it shouldn’t be a surprise that we have something in common, we’re all human after all."
+response1 = "I appreciate you trying to relate at least. For the good of the group."
+
+[node name="r2_2_1_1" parent="r2/r2_2/r2_2_1" index="4" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "Oh I’m trying. For the good of the group."
+
+[node name="r2_3" parent="r2" index="6" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "Strangely enough I get along with most people just fine. It’s just you and Mace that are the odd ones out. I wonder who that says more about. Me? Or you."
+response1 = "That comment isn’t very helpful is it? Regardless of what it says, the problem still exists."
+response2 = "I’m having the same realization myself. I get along with most people just fine; you’re the odd one out."
+reacting_character7 = 1
+prod_up1 = true
+reacting_character8 = 1
+prod_up2 = true
+
+[node name="r2_3_1" parent="r2/r2_3" index="4" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "You’re right, talking is for once in my life getting us nowhere. I think this highlights the importance of focusing on a way out rather than dilly dallying with each other like we are now."
+
+[node name="r2_3_2" parent="r2/r2_3" index="5" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "Clearly we aren’t meant to be friends. Which is fine. All the more reason to focus on escape."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "Well honey thinking of my casserole certainly motivates me to escape so there’s at least some connection to be found."
+response1 = "That’s a fair way to find a connection. I guess you’re right."
+response2 = "Thinking of casserole is a good start then. Is there anything that can motivate you more so we can get out of here even faster?"
+reacting_character5 = 1
+dislikes_2 = true
+
+[node name="r3_2" parent="r3" index="4" instance=ExtResource("1_lu1p4")]
+layout_mode = 2
+line = "You don’t have to boss willing people around. Not everything has to be bossed around at peak efficiency."

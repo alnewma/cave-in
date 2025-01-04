@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=3 uid="uid://cd0fcycabalgg"]
+
+[ext_resource type="Script" path="res://UI/dialogue_line.gd" id="1_u40vr"]
+[ext_resource type="Theme" uid="uid://bgr6frj5j5a2w" path="res://UI/label_theme.tres" id="2_wohbc"]
+[ext_resource type="Theme" uid="uid://c0w38urtirqsi" path="res://UI/button_theme.tres" id="3_gnyya"]
+
+[node name="dialogue_line" type="VBoxContainer"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 1
+script = ExtResource("1_u40vr")
+
+[node name="line" type="Label" parent="."]
+custom_minimum_size = Vector2(76, 0)
+layout_mode = 2
+theme = ExtResource("2_wohbc")
+theme_override_font_sizes/font_size = 3
+autowrap_mode = 3
+
+[node name="response1" type="Button" parent="."]
+custom_minimum_size = Vector2(76, 0)
+layout_mode = 2
+theme = ExtResource("3_gnyya")
+theme_override_colors/font_disabled_color = Color(0.830335, 0.830335, 0.830335, 1)
+theme_override_font_sizes/font_size = 3
+alignment = 0
+autowrap_mode = 3
+
+[node name="response2" type="Button" parent="."]
+custom_minimum_size = Vector2(76, 0)
+layout_mode = 2
+theme = ExtResource("3_gnyya")
+theme_override_colors/font_disabled_color = Color(0.831373, 0.831373, 0.831373, 1)
+theme_override_font_sizes/font_size = 3
+alignment = 0
+autowrap_mode = 3
+
+[node name="response3" type="Button" parent="."]
+custom_minimum_size = Vector2(76, 0)
+layout_mode = 2
+theme = ExtResource("3_gnyya")
+theme_override_colors/font_disabled_color = Color(0.831373, 0.831373, 0.831373, 1)
+theme_override_font_sizes/font_size = 3
+alignment = 0
+autowrap_mode = 3
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

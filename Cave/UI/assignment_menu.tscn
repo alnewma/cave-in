@@ -15,9 +15,8 @@ script = ExtResource("1_nvwk8")
 
 [node name="background" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 502.0
-offset_bottom = 648.0
-scale = Vector2(0.1, 0.1)
+offset_right = 48.0
+offset_bottom = 62.0
 texture = ExtResource("1_ixgaj")
 
 [node name="button_holder" type="VBoxContainer" parent="background"]
@@ -25,16 +24,16 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 80.0
-offset_top = 40.0
-offset_right = -45.75
-offset_bottom = 40.0
+offset_left = 4.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 1
 
 [node name="icon" type="TextureRect" parent="background/button_holder"]
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(8, 11)
 layout_mode = 2
 texture = ExtResource("2_42khg")
 stretch_mode = 5
@@ -43,37 +42,42 @@ stretch_mode = 5
 layout_mode = 2
 
 [node name="Label" parent="background/button_holder/title_holder/TitleBanner" index="0"]
-text = "Location Name"
+text = "Location name"
 
 [node name="assignment" type="Label" parent="background/button_holder"]
 texture_filter = 1
 layout_mode = 2
 theme = ExtResource("4_jr2u4")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 3
 text = "Assignment: None"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="requirements" type="Label" parent="background/button_holder"]
 texture_filter = 1
 layout_mode = 2
 theme = ExtResource("4_jr2u4")
-theme_override_font_sizes/font_size = 30
+theme_override_constants/line_spacing = 1
+theme_override_font_sizes/font_size = 3
 text = "Tool Requirements: None"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="output_title" type="Label" parent="background/button_holder"]
+visible = false
 texture_filter = 1
 layout_mode = 2
 theme = ExtResource("4_jr2u4")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 3
 text = "Available Output:"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="scrollbox" type="ScrollContainer" parent="background/button_holder"]
-custom_minimum_size = Vector2(0, 180)
+visible = false
 layout_mode = 2
 
 [node name="GridContainer" type="GridContainer" parent="background/button_holder/scrollbox"]

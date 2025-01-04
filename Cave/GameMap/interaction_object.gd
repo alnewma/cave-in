@@ -11,8 +11,12 @@ var using_survivors = []
 var available_items = []
 @export var display_name : String = "Placeholder"
 @export var assignment : String = "Placeholder"
-@export var has_required_tool = false
-@export var required_tool : GameHandler.items
+@export var required_tools = 0
+var required_tool = []
+@export var required_tool1 : GameHandler.items
+@export var required_tool2 : GameHandler.items
+@export var required_tool3 : GameHandler.items
+@export var required_tool4 : GameHandler.items
 @export var completed = false : set = _on_completed
 var completion_status = 0 : set = _on_completion_status_changed
 @onready var depletion_timer = $depletion_timer
@@ -41,6 +45,7 @@ func completion_routine(): # to be overwritten per object
 	pass
 
 func _ready():
+	required_tool = [required_tool1,required_tool2,required_tool3,required_tool4]
 	var potential_available_items = [available_item1,available_item2,available_item3,available_item4]
 	var ps_used = 0
 	for p in potential_available_items: # create list of items produced from assignment
@@ -64,11 +69,27 @@ func manual_depletion(amount):
 		return false
 
 func _on_progression_timer_timeout():
+	if assigned_survivors.size() > 0:
+		spawn_smoke_if_applicable()
+	
+	# check if all required tools are provided
+	var required_tools_accounted_for = true
+	var tools_being_used = []
 	for survivor in assigned_survivors:
 		if survivor.state_machine.state == survivor.state_machine.activity: # if survivor is currently working
-			print("progression: " + str(completion_status))
-			if completion_status <= 99:
-				completion_status += 1
+			for item in GameHandler.item_instances:
+				if typeof(item[1]) == TYPE_OBJECT and item[1] == survivor:
+					tools_being_used.append(item[0])
+	for tool in required_tool:
+		if tool and not tools_being_used.has(tool): # if a required tool isn't being used
+			required_tools_accounted_for = false
+	
+	for survivor in assigned_survivors:
+		if survivor.state_machine.state == survivor.state_machine.activity: # if survivor is currently working
+			print(name + " progression: " + str(completion_status))
+			if completion_status < 100 and required_tools_accounted_for: # increase progress based on productivity level and tools
+				var progress_inc = pow(1.5,GameHandler.get_survivor_data_from_object(survivor).productivity)
+				completion_status += progress_inc
 
 @onready var dropped_item_base = preload("res://GameMap/dropped_item.tscn")
 func give_item(items : Array):
@@ -101,3 +122,16 @@ func random_radius():
 	var radius = randf_range(1,15)
 	var angle = randf_range(0,2*PI)
 	return Vector2(int(cos(angle)*radius),int(sin(angle)*radius))
+
+@onready var smoke = preload("res://GameMap/smoke_puff.tscn")
+func spawn_smoke_if_applicable():
+	if completion_status != 100:
+		var smoke_positions = []
+		for child in get_children():
+			if "smoke" in child.name:
+				smoke_positions.append(child)
+		if smoke_positions.size() > 0:
+			var smoke_instance = smoke.instantiate()
+			get_tree().current_scene.add_child(smoke_instance)
+			@warning_ignore("integer_division")
+			smoke_instance.global_position = smoke_positions.pick_random().global_position + Vector2(randi_range(-12/4,12/4),randi_range(-12/4,12/4))

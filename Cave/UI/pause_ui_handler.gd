@@ -9,7 +9,8 @@ func pause_setup():
 	for item in GameHandler.item_instances:
 		if item[1] is Node2D and item[1] == player:
 			var item_button = inventory_item.instantiate()
-			item_button.texture = get(item)
+			item_button.get_node("item_image").texture = GameHandler.item_images_small[item[0]]
+			item_button.get_node("item_name").text = GameHandler.item_names[item[0]]
 			inventory_grid.add_child(item_button)
 	
 func _process(_delta):
@@ -18,8 +19,8 @@ func _process(_delta):
 
 var inventory_item = preload("res://UI/inventory_item.tscn")
 @onready var inventory_grid = $background/inventory_container/GridContainer
-@onready var exit_button = $background/VBoxContainer/exit_button
-@onready var exit_timer = $background/VBoxContainer/exit_button/exit_timer
+@onready var exit_button = $background/right_container/VBoxContainer/exit_button
+@onready var exit_timer = $background/right_container/VBoxContainer/exit_button/exit_timer
 var exit_started = false
 func _on_exit_button_pressed():
 	if exit_started:
@@ -43,6 +44,10 @@ func _on_save_button_pressed():
 func _on_resume_button_pressed():
 	visible = false
 
-@onready var notes = $background/notes_edit
+@onready var notes = $background/right_container/notes_edit
 func _on_notes_edit_text_changed():
 	GameHandler.player_data.player_character_stats["notes"] = notes.text
+
+func _on_visibility_changed() -> void:
+	if visible:
+		pause_setup()

@@ -1,0 +1,81 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0ve2fqc3yjp7"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_2tlkp"]
+
+[node name="mace_2" instance=ExtResource("1_2tlkp")]
+visible = true
+line = "Exploring like this reminds me of my childhood days. I’d meet up with a couple other boys that lived nearby and we’d explore the thick woods near our houses for hours on end."
+response1 = "What’d you guys find? Anything resembling what we’ve got here?"
+response2 = "So technically you’ve got experience in situations like this one. Would you happen to know anything useful?"
+response3 = "I bet a lot of the group could relate with that story. I know I had something similar, though my woods weren’t very dense at all."
+reacting_character8 = 2
+prod_up2 = true
+response1_fulfilled_req = "stream_conversation"
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_2tlkp")]
+layout_mode = 2
+line = "There was a stream a half mile out that we discovered pretty early on. We used to make little boats and race them out of the woods- I even won a couple times. Back in the glory days."
+response1 = "I had a stream like that too I used to play in. We didn’t race boats but still, the stream was definitely one of the more popular hangouts in my little town growing up."
+response2 = "Did your parents know you were just running off like that into the unknown?"
+reacting_character1 = 2
+likes_1 = true
+
+[node name="r1_1" parent="r1" index="4" instance=ExtResource("1_2tlkp")]
+layout_mode = 2
+line = "Hm. I guess it’s easy to forget how similar we all are sometimes. Our lives overlap in the most random ways."
+response1 = "I wish you could keep that in mind when talking to Ida. I’ve noticed how often you guys argue with each other."
+reacting_character1 = 1
+likes_1 = true
+response1_fulfilled_req = "ida_mentioned"
+
+[node name="r1_1_1" parent="r1/r1_1" index="4" instance=ExtResource("1_2tlkp")]
+layout_mode = 2
+line = "I think I overlap with Ida considerably less. She’s so hopeful all the time and somehow hasn’t realized yet that hope gets us nowhere in life. I see your point though, I’ll try to work with Ida despite her misconceptions."
+
+[node name="r1_2" parent="r1" index="5" instance=ExtResource("1_2tlkp")]
+layout_mode = 2
+line = "My parents definitely knew and cared that I was wandering off, but I think they also believed in me enough that they didn’t stop me. I appreciate that really."
+response1 = "Well if they’re like most parents I bet they still do believe in you. They are still alive, right?"
+response2 = "You make a good point. Maybe the same strategy could help encourage Kate? I know this experience has been tough on her."
+reacting_character1 = 2
+likes_1 = true
+reacting_character2 = 4
+likes_2 = true
+
+[node name="r1_2_1" parent="r1/r1_2" index="4" instance=ExtResource("1_2tlkp")]
+layout_mode = 2
+line = "Yes they are still alive and I guess they do still believe in me. Even with how my life has gone so far."
+
+[node name="r1_2_2" parent="r1/r1_2" index="5" instance=ExtResource("1_2tlkp")]
+layout_mode = 2
+line = "Belief and freedom did help me a lot, I’m sure it would help her. I didn’t really care before-and still don’t to be honest-but I guess I can encourage her when I get a chance."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_2tlkp")]
+layout_mode = 2
+line = "Sure, I guess something that stuck out to me was when someone wasn’t playing along. Having a weak link in the group really brought the whole game to a boring halt."
+response1 = "I appreciate that insight but you do realize you and Ida are weak links around each other, right?"
+response2 = "I definitely get where that piece of advice comes from. Thanks for being here."
+reacting_character1 = 1
+likes_1 = true
+reacting_character2 = 2
+likes_2 = true
+
+[node name="r2_1" parent="r2" index="4" instance=ExtResource("1_2tlkp")]
+layout_mode = 2
+line = "I see your point I guess. I’ll move to fix work better with her, for what good that does."
+
+[node name="r2_2" parent="r2" index="5" instance=ExtResource("1_2tlkp")]
+layout_mode = 2
+line = "Sure. Now let’s focus on a way out of here."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_2tlkp")]
+layout_mode = 2
+line = "Wesley did mention being a survivalist as a hobby. I wouldn’t mind trading stories with him but he’s not the most approachable guy, you know?"
+response1 = "I definitely see what you’re saying. I’ll still try talking to him though, there’s no reason to think he isn’t nice once you’ve actually met each other."
+response1_requirement = "wesley"
+response1_alt = "I get that from an outside perspective but he’s pretty warm when you talk to him."
+response2 = "If you do, maybe you could nudge him a bit toward letting Kate act more freely. We could really use another hand around the tunnel and I think Wesley is being a bit overly cautious with what he wants her doing."
+
+[node name="r3_2" parent="r3" index="4" instance=ExtResource("1_2tlkp")]
+layout_mode = 2
+line = "I don’t really have a horse in that race, sorry. Don’t get the wrong idea, I want to escape faster. But I really don’t need a child getting hurt on my conscience too."

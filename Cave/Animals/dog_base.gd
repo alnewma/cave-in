@@ -23,6 +23,7 @@ func _ready():
 	await get_tree().process_frame
 	set_physics_process(true)
 
+var old_velocities = []
 func _physics_process(_delta):
 	var dir
 	match state:
@@ -45,14 +46,17 @@ func _physics_process(_delta):
 		states.DEAD:
 			pass
 	var velN = velocity.length_squared()
+	old_velocities.append(velocity.x)
 	if state != states.DEAD:
-		if velN > .01:
+		if velN > .01: # flip to face moving direciton if direciton is sustained for 3 frames
 			if sprite.animation != "attack":
 				sprite.play("walk")
-			if velocity.x > 0:
-				sprite.flip_h = false
-			else:
-				sprite.flip_h = true
+			if old_velocities.size() > 2:
+				var old_vel = old_velocities.pop_back()
+				if velocity.x > 0 and old_vel > 0:
+					sprite.flip_h = false
+				elif velocity.x < 0 and old_vel < 0:
+					sprite.flip_h = true
 		else:
 			if sprite.animation != "attack":
 				sprite.play("idle")

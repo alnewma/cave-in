@@ -1,0 +1,95 @@
+[gd_scene load_steps=2 format=3 uid="uid://dp84a5asqxk2w"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_6t1x6"]
+
+[node name="ida1" instance=ExtResource("1_6t1x6")]
+visible = true
+line = "Oh my what a scare, I nearly had a heart attack when I heard those rocks crashing down. I’m thanking the Lord no one seems to be hurt."
+response1 = "Oh, I completely agree."
+response2 = "I know! How are you yourself feeling?"
+response3 = "I don't suppose the Lord has a way out for us with all his graciousness?"
+response1_fulfilled_req = "ida"
+response2_fulfilled_req = "ida"
+response3_fulfilled_req = "ida"
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_6t1x6")]
+layout_mode = 2
+line = "Well I suppose we should just keep calm and we’ll figure a way out of this mess."
+response1 = "Do you have any thoughts on a way out so far?"
+response2 = "A way out? There are a thousand tons of dirt between us and the only exit, not to mention 100 miles outside of that to the nearest city!"
+response3 = "That sounds like a good plan to get started at least."
+reacting_character5 = 1
+dislikes_2 = true
+reacting_character3 = 1
+likes_3 = true
+response2_fulfilled_req = "skepticism"
+
+[node name="r1_1" parent="r1" index="4" instance=ExtResource("1_6t1x6")]
+layout_mode = 2
+line = "I’m not much for tactics and survival, but I’ve always been good at helping a group find unity and trust."
+response1 = "Group skills are always useful, and they’ve sure been working so far. Glad to have you with us."
+
+[node name="r1_2" parent="r1" index="5" instance=ExtResource("1_6t1x6")]
+layout_mode = 2
+line = "Now honey, don’t you think it’s a bit early to be bringing that kind of mindset in? You’d do good not to poison the rest of the group too, yeah?"
+response1 = "Just trying to stay pragmatic here. Good attitudes don’t move stones unless you’re Jesus."
+response2 = "Sorry, we’re in a tough situation and I guess I let the nerves get to me."
+reacting_character2 = 1
+likes_2 = true
+
+[node name="r1_2_1" parent="r1/r1_2" index="4" instance=ExtResource("1_6t1x6")]
+layout_mode = 2
+line = "Oh believe me, I understand. I’m glad you apologized, it’s important to recognize bad habits like that in order to overcome them. ‘Confess your faults one to another, and pray one for another, that ye may be healed.’"
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_6t1x6")]
+layout_mode = 2
+line = "Oh my old bones are holding on, don’t you worry about me. You don’t get far collapsing at slight frights."
+response1 = "Do you have any thoughts on a way out so far?"
+response2 = "I think you and I are feeling about the same then. Here’s to hope we keep holding on eh?"
+reacting_character2 = 1
+likes_2 = true
+
+[node name="r2_1" parent="r2" index="4" instance=ExtResource("1_6t1x6")]
+layout_mode = 2
+line = "I’m not much for tactics and survival, but I’ve always been good at helping a group find unity and trust."
+response1 = "Group skills are always useful, I’m glad to have you on board old bones and all."
+
+[node name="r2_2" parent="r2" index="5" instance=ExtResource("1_6t1x6")]
+layout_mode = 2
+line = "Trust me, I had a fall a few years ago that was much worse than this little spiff. Had me in the hospital for a week! We’ll get through this just fine darlin’."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_6t1x6")]
+layout_mode = 2
+line = "I fear this is a trial he’s given us to overcome. It looks like we’re gonna be on our own for this one honey."
+response1 = "Well, let me know if you come up with any ideas. Us being on our own means every scrap is useful."
+response2 = "That’s alright, all we need is each other anyways. We’ll never really be on our own as a group."
+response3 = "Well that isn’t very helpful of God, is it?"
+reacting_character2 = 1
+likes_2 = true
+reacting_character6 = 1
+dislikes_3 = true
+response3_fulfilled_req = "religion_argument"
+
+[node name="r3_1" parent="r3" index="4" instance=ExtResource("1_6t1x6")]
+layout_mode = 2
+line = "I’ll be close by- couldn’t move away even if I wanted! I’ll pass any ideas I come across right along, don’t you worry."
+
+[node name="r3_2" parent="r3" index="5" instance=ExtResource("1_6t1x6")]
+layout_mode = 2
+line = "Oh I love that! Completely agree."
+
+[node name="r3_3" parent="r3" index="6" instance=ExtResource("1_6t1x6")]
+layout_mode = 2
+line = "Listen, fighting over this isn’t going to help anyone, is it? So why don’t you turn your focus to a more productive endeavor?"
+response1 = "Sorry, the stakes are high and I guess the pressure got to me a bit."
+response2 = "I think that would be a good idea for both of us. Get us out of here a bit sooner maybe."
+reacting_character5 = 1
+dislikes_2 = true
+reacting_character8 = 1
+prod_up2 = true
+
+[node name="r3_3_1" parent="r3/r3_3" index="4" instance=ExtResource("1_6t1x6")]
+layout_mode = 2
+line = "At least you’ve got plenty of years left to learn better."
+
+[editable path="r1"]
