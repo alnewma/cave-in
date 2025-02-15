@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://dnc4avblvug66"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_4ahl5"]
+
+[node name="ida_0" instance=ExtResource("1_4ahl5")]
+visible = true
+line = "These walls are fixin’ to crush us any second now. If there’s time for anyone to shimmy through, we’ve gotta act now!"
+response1 = "Who should go first?"
+response2 = "You should go first."
+response3 = "I should go first."
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_4ahl5")]
+layout_mode = 2
+line = "Well, darlin’, I think Kate should. The rest of us, we’ve had time to find some peace, come to terms with the world and what lies beyond. But Kate... she’s young, still searchin’, still figuring it all out. I wouldn’t want her to miss that chance."
+line_requirement = "kate_dead"
+line_alt = "Well, darlin’, these things are never easy. But that’s just a fact of life, no one’s judging you for facing that. Now make your choice as you see fit. I’m sure it’ll be the right one."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_4ahl5")]
+layout_mode = 2
+line = "Sugar, you and I both know that’s not the right choice. I’m old and slow. If there isn’t time for us all to make it out, I’ll just be holding us up."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_4ahl5")]
+layout_mode = 2
+line = "If that’s what you think is best, I’m in no shape to stop ya. But think carefully ‘cause the way it’s looking, you might be the only one making it out."

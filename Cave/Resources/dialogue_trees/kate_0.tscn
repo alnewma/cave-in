@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://b776qbi8c7ppx"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_f3yfb"]
+
+[node name="kate_0" instance=ExtResource("1_f3yfb")]
+visible = true
+line = "This is getting bad. The whole tunnel is falling down on us and that hole looks barely big enough to fit someone through!"
+response1 = "Who should go first?"
+response2 = "You should go first."
+response3 = "I should go first."
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_f3yfb")]
+layout_mode = 2
+line = "I don’t know. What if I go first and get stuck? But I don’t want to be here any longer! I don’t know!"
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_f3yfb")]
+layout_mode = 2
+line = "Are you sure? I will if you tell me to. But only if you guys promise to come right after."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_f3yfb")]
+layout_mode = 2
+line = "Ok. I trust you. Just promise to pull me out fast once you get through!"

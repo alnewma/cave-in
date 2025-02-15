@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://co35thc3wnjgf"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_ivqkr"]
+
+[node name="ida_00" instance=ExtResource("1_ivqkr")]
+visible = true
+line = "Made up your mind?"
+response1 = "Ida, you go first."
+response1_fulfilled_req = "ida_chosen"
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_ivqkr")]
+layout_mode = 2
+line = "I don’t know how I feel about that… but I’ll trust you. Look for me on the other side."

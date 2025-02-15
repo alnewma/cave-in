@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 
-const SPEED = 120
+var speed = 120
 var health = 100
 @export var male = true
 @export var attack_cooldown = 1.5
@@ -36,7 +36,7 @@ func movement(_delta):
 	if Input.is_action_pressed("move_up"):
 		velocity += Vector2(0,-1)
 	if velocity != Vector2.ZERO:
-		velocity = SPEED * velocity.normalized()
+		velocity = speed * velocity.normalized()
 	if velocity.dot(Vector2(cos(PI+attack_area.rotation),sin(PI+attack_area.rotation))) < 0:
 		velocity *= .5
 	move_and_slide()

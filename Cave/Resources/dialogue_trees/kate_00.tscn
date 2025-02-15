@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bm0qwtunk5o16"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_m20ou"]
+
+[node name="kate_00" instance=ExtResource("1_m20ou")]
+visible = true
+line = "Who are you sending first?"
+response1 = "Kate, you go first."
+response1_fulfilled_req = "kate_chosen"
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_m20ou")]
+layout_mode = 2
+line = "I’ll be quick! I can’t wait until we’re all safe, I’ve never had friends like you."

@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3f31t5sojom8"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_t4l6k"]
+
+[node name="wesley_0" instance=ExtResource("1_t4l6k")]
+visible = true
+line = "We don’t have long before this whole tunnel collapses on us! We’re wasting valuable time every moment we aren’t squeezing through there."
+response1 = "Who should go first?"
+response2 = "You should go first."
+response3 = "I should go first."
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_t4l6k")]
+layout_mode = 2
+line = "We've wasted too much time already, and this tunnel isn’t standing much longer. Seconds, maybe. We can't all make it, and we both know that. Kate—she's got so much more life ahead of her. We've lived our years, and it's her turn. She needs to go first."
+line_requirement = "kate_dead"
+line_alt = "We've wasted too much time already, and this tunnel isn’t standing much longer. Seconds, maybe. We can't all make it, and we both know that. Use whatever heuristic you want: age, purity, your own personal feelings. Then just accept what’s to come."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_t4l6k")]
+layout_mode = 2
+line = "No. We’re in this time crunch because I didn’t push us harder, didn’t act faster. None of us did when we should have. Kate is the only truly innocent one among us. She deserves to go first. You know that."
+line_requirement = "kate_dead"
+line_alt = "That cave is collapsing before we all get out, we both know that. Let’s not kid ourselves then. I shouldn’t be the priority here. Then again, Kate was, and that didn’t make us any more competent. Maybe none of us deserve to leave this hole..."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_t4l6k")]
+layout_mode = 2
+line = "I respect you despite your flaws. But volunteering yourself first when we only have seconds left? That’s reprehensible. Kate is going first. We both know she deserves it more than anyone - she’s just a child."
+line_requirement = "kate_dead"
+line_alt = "I’m sorry to say I’m past caring. You make the decisions you want, then you either live or die with them. I’m stepping back from this one."

@@ -1,0 +1,288 @@
+[gd_scene load_steps=19 format=3 uid="uid://dgkjjd823055m"]
+
+[ext_resource type="Shader" path="res://Resources/erase_texture.gdshader" id="1_7g6pc"]
+[ext_resource type="Texture2D" uid="uid://cb0ktfkd2lhd4" path="res://ArtAssets/PeopleSprites2/2 Old_woman/Old_woman_idle.png" id="1_62v5u"]
+[ext_resource type="Texture2D" uid="uid://bgcovra73kxmn" path="res://ArtAssets/PeopleSprites2/2 Old_woman/Old_woman_walk.png" id="3_nyxe5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gfdi2"]
+shader = ExtResource("1_7g6pc")
+shader_parameter/percentage = 0.98
+shader_parameter/angle = 0.0
+shader_parameter/line_width = 0.0
+shader_parameter/line_color = Color(1, 1, 1, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a85jl"]
+atlas = ExtResource("1_62v5u")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yerhe"]
+atlas = ExtResource("1_62v5u")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kamno"]
+atlas = ExtResource("1_62v5u")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iekp0"]
+atlas = ExtResource("1_62v5u")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wy5ns"]
+atlas = ExtResource("3_nyxe5")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ohdkm"]
+atlas = ExtResource("3_nyxe5")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ckpo1"]
+atlas = ExtResource("3_nyxe5")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f4nnm"]
+atlas = ExtResource("3_nyxe5")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xm17t"]
+atlas = ExtResource("3_nyxe5")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h5vik"]
+atlas = ExtResource("3_nyxe5")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8nbkj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a85jl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yerhe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kamno")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iekp0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wy5ns")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ohdkm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ckpo1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f4nnm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xm17t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h5vik")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_2p417"]
+resource_name = "exit"
+length = 9.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1.5, 2.4, 3.33333, 4.23333, 5.2, 6.56667, 6.76667, 6.96667, 7.16667, 7.36667, 7.56667, 7.76667, 7.96667, 8.16667, 8.36667, 8.56667, 8.76667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [2, 3, 2, 3, 2, 0, 1, 3, 2, 4, 5, 0, 1, 3, 2, 4, 5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.466667, 0.866667, 1.06667, 1.73333, 5.66667, 6.03333, 6.36667, 6.76667, 9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -24), Vector2(0, -24), Vector2(0, -29), Vector2(0, -26), Vector2(0, -26), Vector2(0, -37), Vector2(0, -33), Vector2(0, -33), Vector2(0, -41.75), Vector2(6, -51)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:shader_parameter/percentage")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.933333, 1, 1.03333, 1.06667, 5.66667, 5.73333, 5.8, 5.9, 5.96667, 6.03333, 6.36667, 6.43333, 6.5, 6.53333, 6.56667, 6.6, 6.63333, 6.66667, 6.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1.0, 0.98, 0.97, 0.95, 0.93, 0.93, 0.91, 0.89, 0.88, 0.87, 0.85, 0.85, 0.87, 0.89, 0.91, 0.93, 0.95, 0.97, 0.98, 1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:animation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 7.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"default", &"run"]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 7.6, 8.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:z_index")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 4.13333, 6.23333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 3, 0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.866667, 1.06667, 1.43333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0.46, 0.46), Vector2(0.5, 0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_n588c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:shader_parameter/percentage")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.98]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:animation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:z_index")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_duts7"]
+_data = {
+"RESET": SubResource("Animation_n588c"),
+"exit": SubResource("Animation_2p417")
+}
+
+[node name="idaStandIn" type="AnimatedSprite2D"]
+material = SubResource("ShaderMaterial_gfdi2")
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_8nbkj")
+autoplay = "default"
+offset = Vector2(0, -24)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_duts7")
+}

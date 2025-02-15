@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://caixvp8v1sq85"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_tygvp"]
+
+[node name="wesley_00" instance=ExtResource("1_tygvp")]
+visible = true
+line = "What’s your call?"
+response1 = "Wesley, you go first."
+response1_fulfilled_req = "wesley_chosen"
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_tygvp")]
+layout_mode = 2
+line = "No. I don’t know what’s going through your head but I’m superceding it. Kate goes."
+line_requirement = "kate_dead"
+line_alt = "Very well. Let’s hurry and get through this."

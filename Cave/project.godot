@@ -31,6 +31,9 @@ window/stretch/mode="canvas_items"
 interaction_UI_handler=""
 dialogue_scroll_container=""
 player=""
+survivor=""
+fog_layer=""
+tunnel_scene=""
 
 [input]
 
@@ -80,3 +83,4 @@ attack={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+viewport/transparent_background=true

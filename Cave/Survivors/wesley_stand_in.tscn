@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://0bofj0ott8oh"]
+
+[ext_resource type="Texture2D" uid="uid://dcrl6g7jqmuqc" path="res://ArtAssets/PeopleSprites2/1 Old_man/Old_man_idle.png" id="1_jci6d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_poy6d"]
+atlas = ExtResource("1_jci6d")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86hfj"]
+atlas = ExtResource("1_jci6d")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vlbr0"]
+atlas = ExtResource("1_jci6d")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6a4u"]
+atlas = ExtResource("1_jci6d")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fodqp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_poy6d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86hfj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vlbr0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q6a4u")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="wesleyStandIn" type="AnimatedSprite2D"]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_fodqp")
+autoplay = "default"
+offset = Vector2(0, -24)

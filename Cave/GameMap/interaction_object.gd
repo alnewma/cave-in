@@ -107,6 +107,7 @@ func give_item(items : Array):
 						if not item_dispensed:
 							item_dispensed = true
 							item_instance[1] = survivor
+							survivor.queue_remark(survivor.remark_prompts.TOOL)
 		if not item_dispensed:
 			item_dispensed = true
 			var item_drop = dropped_item_base.instantiate()

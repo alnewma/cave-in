@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfo4pcekkvi5c"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_8jo8u"]
+
+[node name="mace_0" instance=ExtResource("1_8jo8u")]
+visible = true
+line = "I’m not sure how much longer this tunnel’s going to stay up. More rocks are falling by the second and that gap is only getting smaller!"
+response1 = "Who should go first?"
+response2 = "You should go first."
+response3 = "I should go first."
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_8jo8u")]
+layout_mode = 2
+line = "To tell the truth, I think it should be you. We could use an able-bodied person on the other side, pulling people out. And if there’s only time for one of us to make it out... Well, you deserve it a lot more than I do."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_8jo8u")]
+layout_mode = 2
+line = "You think so? I’m not my first pick, that’s for sure, but I could help pull people out on the other side. It’s just, what if only three of us have time to make it out and I’m taking the fourth person’s place? I guess I’ll leave the decision to you."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_8jo8u")]
+layout_mode = 2
+line = "I agree. You’re strong and could help pull people out on the other side. And let’s face it, you’re our de facto leader despite what Wesley may have said. Go for it, just be fast."

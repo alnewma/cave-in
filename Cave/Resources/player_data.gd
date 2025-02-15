@@ -64,5 +64,10 @@ class_name PlayerData
 	"plan_conversation" = false,
 	"confidence_conversation" = false,
 	"nothing_to_be_scared_of_conversation" = false,
-	"food_conversation" = false
+	"food_conversation" = false,
+	"kate_dead" = false,
+	"ida_chosen" = false,
+	"mace_chosen" = false,
+	"wesley_chosen" = false,
+	"kate_chosen" = false,
 }

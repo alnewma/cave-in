@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3 uid="uid://bsrbrnqvx2mpa"]
+[gd_scene load_steps=94 format=3 uid="uid://bsrbrnqvx2mpa"]
 
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_moy0r"]
 [ext_resource type="Texture2D" uid="uid://ckg0j0y0o2km1" path="res://ArtAssets/MCSprites1/2 Punk/Attack.png" id="1_msnrt"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://djbrlerxt58re" path="res://ArtAssets/MCSprites3/Talk.png" id="7_6txqx"]
 [ext_resource type="Texture2D" uid="uid://vpxv5cura0lo" path="res://ArtAssets/MCSprites3/Use.png" id="8_ktigj"]
 [ext_resource type="Texture2D" uid="uid://0e0i2yqvqru8" path="res://ArtAssets/Woman_spritesheet.png" id="10_7047o"]
+[ext_resource type="Script" path="res://Player/camera_2d.gd" id="10_skwot"]
 [ext_resource type="Texture2D" uid="uid://dveosuce1lq60" path="res://ArtAssets/Man_spritesheet.png" id="11_mnxuv"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y77d4"]
@@ -366,6 +367,8 @@ animations = [{
 "name": &"Use",
 "speed": 5.0
 }]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qyebk"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dhxrq"]
 animation = &"attack_left"
@@ -1000,6 +1003,8 @@ animation = &"Use"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
+script = ExtResource("10_skwot")
+noise = SubResource("FastNoiseLite_qyebk")
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_8i62s")

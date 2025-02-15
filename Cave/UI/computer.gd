@@ -2,6 +2,8 @@ extends Control
 
 @export var locked = true
 
+@onready var fog = get_tree().get_first_node_in_group("fog_layer")
+
 @onready var start_screen = $Base/start_text
 @onready var logs_screen = $Base/logs_text
 @onready var doors_screen = $Base/doors_text
@@ -21,6 +23,7 @@ func hide_screens():
 		screen.hide()
 
 func open_computer():
+	fog.hide()
 	hide_screens()
 	if locked:
 		password_screen.show()
@@ -57,6 +60,7 @@ func _on_back_button_l_pressed():
 	logs_screen.show()
 
 func _on_exit_button_pressed():
+	fog.show()
 	visible = false
 
 func _on_door_2_button_pressed(): # blast door opened

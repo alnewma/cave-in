@@ -200,6 +200,7 @@ func travel_destination(destination_button): # once reponse button is clicked
 		response1T:
 			if response1_fulfilled_req:
 				GameHandler.player_data.conversation_flags[response1_fulfilled_req] = true
+				get_tree().get_first_node_in_group("interaction_UI_handler").emit_signal("updated_conversation_flag")
 			if dislikes_1:
 				print(characters_to_react.keys()[reacting_character4].capitalize() + "dislikes")
 				var temp_updater = update_node.instantiate()
@@ -235,6 +236,7 @@ func travel_destination(destination_button): # once reponse button is clicked
 		response2T:
 			if response2_fulfilled_req:
 				GameHandler.player_data.conversation_flags[response2_fulfilled_req] = true
+				get_tree().get_first_node_in_group("interaction_UI_handler").emit_signal("updated_conversation_flag")
 			if dislikes_2:
 				print(characters_to_react.keys()[reacting_character5].capitalize() + "dislikes")
 				var temp_updater = update_node.instantiate()
@@ -270,6 +272,7 @@ func travel_destination(destination_button): # once reponse button is clicked
 		response3T:
 			if response3_fulfilled_req:
 				GameHandler.player_data.conversation_flags[response3_fulfilled_req] = true
+				get_tree().get_first_node_in_group("interaction_UI_handler").emit_signal("updated_conversation_flag")
 			if dislikes_3:
 				print(characters_to_react.keys()[reacting_character6].capitalize() + "dislikes")
 				var temp_updater = update_node.instantiate()

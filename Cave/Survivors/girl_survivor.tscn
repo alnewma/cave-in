@@ -180,3 +180,7 @@ animations = [{
 [node name="AnimatedSprite2D" parent="." index="1"]
 sprite_frames = SubResource("SpriteFrames_pxymr")
 animation = &"attack"
+
+[node name="remark" parent="." index="9"]
+offset_top = -34.0
+offset_bottom = -26.0

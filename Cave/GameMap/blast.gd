@@ -3,9 +3,12 @@ extends "res://GameMap/interaction_object.gd"
 @onready var sprite1 = $blast
 @onready var gas_sprite = $gas
 @onready var gas_coll = $gas_can/CollisionShape2D
+@onready var animation_explode = $explosionAnim
 
 func completion_routine():
 		sprite1.visible = true
+		animation_explode.show()
+		animation_explode.play()
 
 func ready_status_changed():
 	_update_gas()
@@ -33,3 +36,8 @@ func _update_gas():
 		gas_coll.disabled = false
 	else:
 		gas_coll.disabled = true
+
+
+func _on_explosion_anim_animation_finished() -> void:
+	if animation_explode:
+		animation_explode.queue_free()

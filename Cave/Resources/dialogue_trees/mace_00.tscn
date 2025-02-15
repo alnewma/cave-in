@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxdgavw6md0d0"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_r5541"]
+
+[node name="mace_00" instance=ExtResource("1_r5541")]
+visible = true
+line = "Who’s it going to be?"
+response1 = "Mace, you go first."
+response1_fulfilled_req = "mace_chosen"
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_r5541")]
+layout_mode = 2
+line = "Good call, I think. I’ll be ready to start pulling you guys out once I’m through. I won’t fail you. I promise."

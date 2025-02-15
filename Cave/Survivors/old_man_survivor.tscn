@@ -181,3 +181,7 @@ survivor_type = 4
 [node name="AnimatedSprite2D" parent="." index="1"]
 sprite_frames = SubResource("SpriteFrames_dgrnl")
 animation = &"attack"
+
+[node name="remark" parent="." index="9"]
+offset_top = -42.0
+offset_bottom = -34.0

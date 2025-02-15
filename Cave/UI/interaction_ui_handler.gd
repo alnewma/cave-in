@@ -5,6 +5,13 @@ extends CanvasLayer
 @onready var status_page = $status_page
 @onready var location_page = $location_page
 @onready var assignment_page = $assignment_page
+
+@export var tunnel_scene = false
+var reached_tunnel_end = false
+
+signal updated_conversation_flag
+signal menu_closed
+
 var current_survivor : Node
 var page_list : Array
 
@@ -40,3 +47,4 @@ func _on_button_pressed(source_text):
 			change_page(location_page)
 		"Close":
 			hide_pages()
+			emit_signal("menu_closed")

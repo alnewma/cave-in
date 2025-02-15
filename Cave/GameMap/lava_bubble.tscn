@@ -1,0 +1,61 @@
+[gd_scene load_steps=10 format=3 uid="uid://dvfy4rmn2xhu4"]
+
+[ext_resource type="Texture2D" uid="uid://mdkocatjukfs" path="res://ArtAssets/lavaBubble.png" id="1_ywtda"]
+[ext_resource type="Script" path="res://GameMap/lava_bubble.gd" id="2_8547w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wcvex"]
+atlas = ExtResource("1_ywtda")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lv4pu"]
+atlas = ExtResource("1_ywtda")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_21gfo"]
+atlas = ExtResource("1_ywtda")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q51ug"]
+atlas = ExtResource("1_ywtda")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rhqe4"]
+atlas = ExtResource("1_ywtda")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lkhn7"]
+atlas = ExtResource("1_ywtda")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jpy1j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wcvex")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lv4pu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_21gfo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q51ug")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rhqe4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lkhn7")
+}],
+"loop": false,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="lavaBubble" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_jpy1j")
+autoplay = "default"
+script = ExtResource("2_8547w")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

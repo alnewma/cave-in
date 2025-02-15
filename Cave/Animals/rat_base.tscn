@@ -160,6 +160,8 @@ height = 20.0
 radius = 55.3263
 
 [node name="rat_base" type="CharacterBody2D" groups=["enemy"]]
+z_index = 1
+y_sort_enabled = true
 collision_layer = 8
 collision_mask = 15
 script = ExtResource("1_jt35k")

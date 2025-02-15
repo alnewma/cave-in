@@ -20,7 +20,7 @@ func _ready() -> void:
 	global_position.x = target.x
 
 var target_reached = false
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not target_reached:
 		if global_position.y >= target.y: # hide stone if reached target
 			target_reached = true

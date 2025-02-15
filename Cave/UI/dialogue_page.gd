@@ -3,20 +3,30 @@ extends Control
 @onready var tree_holder = $TextureRect/ScrollContainer
 @onready var update_holder = get_parent().get_node("update_holder")
 
+var ida00 = preload("res://Resources/dialogue_trees/ida_00.tscn")
+var ida0 = preload("res://Resources/dialogue_trees/ida_0.tscn")
 var ida1 = preload("res://Resources/dialogue_trees/ida_1.tscn")
 var ida2 = preload("res://Resources/dialogue_trees/ida_2.tscn")
 var ida3 = preload("res://Resources/dialogue_trees/ida_3.tscn")
+var mace00 = preload("res://Resources/dialogue_trees/mace_00.tscn")
+var mace0 = preload("res://Resources/dialogue_trees/mace_0.tscn")
 var mace1 = preload("res://Resources/dialogue_trees/mace_1.tscn")
 var mace2 = preload("res://Resources/dialogue_trees/mace_2.tscn")
 var mace3 = preload("res://Resources/dialogue_trees/mace_3.tscn")
+var wesley00 = preload("res://Resources/dialogue_trees/wesley_00.tscn")
+var wesley0 = preload("res://Resources/dialogue_trees/wesley_0.tscn")
 var wesley1 = preload("res://Resources/dialogue_trees/wesley_1.tscn")
 var wesley2 = preload("res://Resources/dialogue_trees/wesley_2.tscn")
 var wesley3 = preload("res://Resources/dialogue_trees/wesley_3.tscn")
+var kate00 = preload("res://Resources/dialogue_trees/kate_00.tscn")
+var kate0 = preload("res://Resources/dialogue_trees/kate_0.tscn")
 var kate1 = preload("res://Resources/dialogue_trees/kate_1.tscn")
 var kate2 = preload("res://Resources/dialogue_trees/kate_2.tscn")
 var kate3 = preload("res://Resources/dialogue_trees/kate_3.tscn")
 
 @onready var ui_label = preload("res://UI/ui_label.tscn")
+
+var survivors_talked_to_during_end = []
 
 func _on_visibility_changed() -> void:
 	if visible:
@@ -31,7 +41,14 @@ func _on_visibility_changed() -> void:
 			var total_convo_points = ida_pts + mace_pts + wesley_pts + kate_pts
 			match get_parent().current_survivor.survivor_type:
 				0: # Kate
-					if total_convo_points >= 0 and kate_pts == 0:
+					if get_parent().tunnel_scene:
+						if get_parent().reached_tunnel_end:
+							if not "Kate" in survivors_talked_to_during_end: # tunnel scene
+								tree_holder.add_child(kate0.instantiate())
+								survivors_talked_to_during_end.append("Kate")
+							else:
+								tree_holder.add_child(kate00.instantiate())
+					elif total_convo_points >= 0 and kate_pts == 0:
 						tree_holder.add_child(kate1.instantiate())
 					elif total_convo_points >= 2 and kate_pts == 1:
 						tree_holder.add_child(kate2.instantiate())
@@ -47,7 +64,14 @@ func _on_visibility_changed() -> void:
 				1: # None
 					pass
 				2: # Mace
-					if total_convo_points >= 0 and mace_pts == 0:
+					if get_parent().tunnel_scene:
+						if get_parent().reached_tunnel_end:
+							if not "Mace" in survivors_talked_to_during_end: # tunnel scene
+								tree_holder.add_child(mace0.instantiate())
+								survivors_talked_to_during_end.append("Mace")
+							else:
+								tree_holder.add_child(mace00.instantiate())
+					elif total_convo_points >= 0 and mace_pts == 0:
 						tree_holder.add_child(mace1.instantiate())
 					elif total_convo_points >= 2 and mace_pts == 1:
 						tree_holder.add_child(mace2.instantiate())
@@ -61,7 +85,14 @@ func _on_visibility_changed() -> void:
 						else:
 							holder.text = "Mace: " + mace_busy_neutral.pick_random()
 				3: # Ida
-					if total_convo_points >= 0 and ida_pts == 0:
+					if get_parent().tunnel_scene:
+						if get_parent().reached_tunnel_end:
+							if not "Ida" in survivors_talked_to_during_end: # tunnel scene
+								tree_holder.add_child(ida0.instantiate())
+								survivors_talked_to_during_end.append("Ida")
+							else:
+								tree_holder.add_child(ida00.instantiate())
+					elif total_convo_points >= 0 and ida_pts == 0:
 						tree_holder.add_child(ida1.instantiate())
 					elif total_convo_points >= 2 and ida_pts == 1:
 						tree_holder.add_child(ida2.instantiate())
@@ -75,7 +106,14 @@ func _on_visibility_changed() -> void:
 						else:
 							holder.text = "Ida: " + ida_busy_neutral.pick_random()
 				4: # Wesley
-					if total_convo_points >= 0 and wesley_pts == 0:
+					if get_parent().tunnel_scene:
+						if get_parent().reached_tunnel_end:
+							if not "Wesley" in survivors_talked_to_during_end: # tunnel scene
+								tree_holder.add_child(wesley0.instantiate())
+								survivors_talked_to_during_end.append("Wesley")
+							else:
+								tree_holder.add_child(wesley00.instantiate())
+					elif total_convo_points >= 0 and wesley_pts == 0:
 						tree_holder.add_child(wesley1.instantiate())
 					elif total_convo_points >= 2 and wesley_pts == 1:
 						tree_holder.add_child(wesley2.instantiate())

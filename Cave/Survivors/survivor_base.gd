@@ -26,6 +26,7 @@ enum survivor_types {
 
 func _ready():
 	player = get_tree().get_nodes_in_group("player")[0]
+	set_up_remark_system()
 
 func _physics_process(_delta: float) -> void:
 	var absVel = abs(velocity)
@@ -92,6 +93,7 @@ func status_check(): # check status when one decreases
 func take_status_break(status:String): # take break to move to status area
 	state_machine.change_state(state_machine.movement)
 	if status == "thirst":
+		queue_remark(remark_prompts.WATER)
 		if target_assignment and self in get_node(target_assignment).assigned_survivors:
 			get_node(target_assignment).assigned_survivors.erase(self)
 		var hydrants = get_tree().get_nodes_in_group("hydrant")
@@ -113,20 +115,23 @@ func take_status_break(status:String): # take break to move to status area
 func _on_thirst_timer_timeout():
 	if thirst != 0:
 		thirst -= 1
+		if thirst == 40:
+			queue_remark(remark_prompts.THIRST)
 		status_check()
 
 var returning_from_status_break = false
 func _on_survivor_movement_state_actor_reached_target():
 	if status_break:
-		if get_node(target_usage).manual_depletion(30):
-			print("drink completed")
-			thirst = 100
-			if self in get_node(target_usage).assigned_survivors:
-				get_node(target_usage).assigned_survivors.erase(self)
-			status_break = false
-			returning_from_status_break = true
-			navigation_agent.target_position = get_node(target_assignment).global_position
-			# return to prior occupation
+		if get_node(target_usage):
+			if get_node(target_usage).manual_depletion(30):
+				print("drink completed")
+				thirst = 100
+				if self in get_node(target_usage).assigned_survivors:
+					get_node(target_usage).assigned_survivors.erase(self)
+				status_break = false
+				returning_from_status_break = true
+				navigation_agent.target_position = get_node(target_assignment).global_position
+				# return to prior occupation
 		else:
 			# add to hydrant occupation
 			if self not in get_node(target_usage).assigned_survivors:
@@ -147,8 +152,8 @@ func _on_survivor_movement_state_actor_reached_target():
 
 var enemies_nearby : Array = []
 func _on_danger_area_body_entered(body):
-	print("enemy entered")
 	if body.is_in_group("enemy") and not enemies_nearby.has(body):
+		queue_remark(remark_prompts.ENEMY)
 		enemies_nearby.append(body)
 		state_machine.change_state(state_machine.defense)
 
@@ -164,6 +169,20 @@ func _on_health_changed(value):
 	health = value
 	if health <= 0:
 		state_machine.change_state(state_machine.death)
+	elif health <= 40:
+		queue_remark(remark_prompts.HEALTH)
+
+func _on_survivor_death_state_death() -> void:
+	if survivor_type == survivor_types.GIRL:
+		GameHandler.player_data.conversation_flags["kate_dead"] = true
+
+@onready var interaction_shape = $interaction_area/CollisionShape2D
+func _on_visibility_changed() -> void:
+	if interaction_shape:
+		if not visible:
+			interaction_shape.disabled = true
+		else:
+			interaction_shape.disabled = false
 
 enum remark_prompts {
 	TOOL,
@@ -172,24 +191,47 @@ enum remark_prompts {
 	FOLLOWING,
 	HAPPY,
 	SAD,
-	ENEMY
+	ENEMY,
+	WATER,
+	FALLING,
+	BLOCKED1,
+	BLOCKED2,
+	BLOCKED3
 }
 
 @onready var remark_box = $remark
 @onready var remark_timer = $remark/remark_timer
+
+func set_up_remark_system():
+	emotion_timer.start(randi_range(30,180))
+
 var remark_empty = true
 func _on_remark_timer_timeout() -> void:
 	remark_box.text = ""
 	remark_empty = true
 
+var ending_sequence = false
 func queue_remark(prompt : remark_prompts):
-	if remark_empty:
+	if remark_empty and not ending_sequence:
 		remark_timer.start(10)
 		remark_box.text = remarks[survivor_type][prompt].pick_random()
 		if prompt == remark_prompts.TOOL:
 			for item in GameHandler.item_instances:
+				print(item)
 				if item[1] == self:
-					remark_box.text.replace("XXXX",GameHandler.item_names[item[0]]) # if tool, replace placeholder with tool
+					remark_box.text = remark_box.text.replace("XXXX",GameHandler.item_names[item[0]]) # if tool, replace placeholder with tool
+	elif ending_sequence and (prompt == remark_prompts.FALLING or prompt == remark_prompts.BLOCKED1 or prompt == remark_prompts.BLOCKED2):
+		remark_timer.start(10)
+		remark_box.text = remarks[survivor_type][prompt].pick_random() # ending lines
+
+@onready var emotion_timer = $remark/emotion_timer
+func _on_emotion_timer_timeout() -> void:
+	emotion_timer.start(randi_range(30,180))
+	var convo_happiness = GameHandler.get_survivor_data_from_object(self).conversation_happiness
+	if convo_happiness < 0: # sad
+		queue_remark(remark_prompts.SAD)
+	elif convo_happiness > 0: # happy
+		queue_remark(remark_prompts.HAPPY)
 
 var remarks = {
 	survivor_types.OLDWOMAN : {
@@ -217,8 +259,25 @@ var remarks = {
 		],
 		remark_prompts.ENEMY : [
 			"Animal on the loose!",
-			"That thing looks dangerous!"
-		]
+			"That thing looks dangerous!",
+			""
+		],
+		remark_prompts.WATER : [
+			"Gonna pump some water for myself",
+			"I’ll be back- need water"
+		],
+		remark_prompts.FALLING : [
+			"Lord, this tunnel’s crumbling fast"
+		],
+		remark_prompts.BLOCKED1 : [
+			"I suppose this is the end"
+		],
+		remark_prompts.BLOCKED2 : [
+			"The end is blocked off!"
+		],
+		remark_prompts.BLOCKED3 : [
+			"Oh lord, this is it"
+		],
 	},
 	survivor_types.MAN : {
 		remark_prompts.TOOL : [
@@ -245,7 +304,24 @@ var remarks = {
 		],
 		remark_prompts.ENEMY : [
 			"That thing doesn’t look friendly!",
-			"Animal nearby!"
+			"Animal nearby!",
+			""
+		],
+		remark_prompts.WATER : [
+			"Alright, water break",
+			"Can’t keep working without water"
+		],
+		remark_prompts.FALLING : [
+			"We've got mere minutes..."
+		],
+		remark_prompts.BLOCKED1 : [
+			"Looks like the sewer exit"
+		],
+		remark_prompts.BLOCKED2 : [
+			"The landslide covered the exit!"
+		],
+		remark_prompts.BLOCKED3 : [
+			"Last chance to get out"
 		]
 	},
 	survivor_types.OLDMAN : {
@@ -273,7 +349,24 @@ var remarks = {
 		],
 		remark_prompts.ENEMY : [
 			"Get back!",
-			"Watch out for that thing!"
+			"Watch out for that thing!",
+			""
+		],
+		remark_prompts.WATER : [
+			"Let’s get some water",
+			"Headed to the pump"
+		],
+		remark_prompts.FALLING : [
+			"We need to move it"
+		],
+		remark_prompts.BLOCKED1 : [
+			"The tunnel stops here"
+		],
+		remark_prompts.BLOCKED2 : [
+			"We need to get through somehow"
+		],
+		remark_prompts.BLOCKED3 : [
+			"We need to move NOW!"
 		]
 	},
 	survivor_types.GIRL : {
@@ -301,7 +394,24 @@ var remarks = {
 		],
 		remark_prompts.ENEMY : [
 			"Big animal! Help!",
-			"Oh no!"
+			"Oh no!",
+			""
+		],
+		remark_prompts.WATER : [
+			"I’m getting water",
+			"Water pump time!"
+		],
+		remark_prompts.FALLING : [
+			"The ceiling is gonna fall soon!"
+		],
+		remark_prompts.BLOCKED1 : [
+			"It doesn’t go on!"
+		],
+		remark_prompts.BLOCKED2 : [
+			"How are we gonna get through?"
+		],
+		remark_prompts.BLOCKED3 : [
+			"The ceiling is falling down!"
 		]
 	},
 }

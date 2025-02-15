@@ -93,21 +93,33 @@ collision_mask = 8
 shape = SubResource("CircleShape2D_7vnyp")
 
 [node name="remark" type="Label" parent="."]
+z_index = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 offset_left = -26.0
-offset_top = -38.0
+offset_top = -4.0
 offset_right = 26.0
-offset_bottom = -30.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("9_7edol")
 theme_override_font_sizes/font_size = 3
-text = "Dialogue Remark Here"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="remark_timer" type="Timer" parent="remark"]
 one_shot = true
 
+[node name="emotion_timer" type="Timer" parent="remark"]
+one_shot = true
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="actor_reached_target" from="FiniteStateMachine/SurvivorMovementState" to="." method="_on_survivor_movement_state_actor_reached_target"]
+[connection signal="death" from="FiniteStateMachine/SurvivorDeathState" to="." method="_on_survivor_death_state_death"]
 [connection signal="input_event" from="interaction_area" to="." method="_on_interaction_area_input_event"]
 [connection signal="mouse_entered" from="interaction_area" to="." method="_on_interaction_area_mouse_entered"]
 [connection signal="mouse_exited" from="interaction_area" to="." method="_on_interaction_area_mouse_exited"]
@@ -115,3 +127,4 @@ one_shot = true
 [connection signal="body_entered" from="danger_area" to="." method="_on_danger_area_body_entered"]
 [connection signal="body_exited" from="danger_area" to="." method="_on_danger_area_body_exited"]
 [connection signal="timeout" from="remark/remark_timer" to="." method="_on_remark_timer_timeout"]
+[connection signal="timeout" from="remark/emotion_timer" to="." method="_on_emotion_timer_timeout"]
