@@ -38,7 +38,6 @@ position = Vector2(0, -24)
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 5.0
 avoidance_enabled = true
-debug_enabled = true
 
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
 script = ExtResource("2_861pe")

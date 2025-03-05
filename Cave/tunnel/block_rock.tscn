@@ -1,0 +1,88 @@
+[gd_scene load_steps=13 format=3 uid="uid://b3682f051bhwe"]
+
+[ext_resource type="Shader" path="res://Resources/erase_texture.gdshader" id="1_c3qbh"]
+[ext_resource type="Texture2D" uid="uid://cuh5h5m8bljjg" path="res://ArtAssets/rocks_fallen.png" id="2_6cxuk"]
+[ext_resource type="Script" path="res://tunnel/block_rock.gd" id="3_8gg7q"]
+[ext_resource type="Texture2D" uid="uid://2nvhcqh6s8ls" path="res://ArtAssets/water_splash1.png" id="4_nopnd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xoh1m"]
+resource_local_to_scene = true
+shader = ExtResource("1_c3qbh")
+shader_parameter/percentage = 1.0
+shader_parameter/angle = 0.0
+shader_parameter/line_width = 0.04
+shader_parameter/line_color = Color(0.211765, 0.309804, 0.266667, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tn4k0"]
+atlas = ExtResource("4_nopnd")
+region = Rect2(0, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2jp74"]
+atlas = ExtResource("4_nopnd")
+region = Rect2(48, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3bg6h"]
+atlas = ExtResource("4_nopnd")
+region = Rect2(96, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qcg40"]
+atlas = ExtResource("4_nopnd")
+region = Rect2(144, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lf6t2"]
+atlas = ExtResource("4_nopnd")
+region = Rect2(192, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bu3rq"]
+atlas = ExtResource("4_nopnd")
+region = Rect2(240, 0, 48, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mu51c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tn4k0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2jp74")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3bg6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qcg40")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lf6t2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bu3rq")
+}],
+"loop": false,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="block_rock" type="Sprite2D"]
+z_index = 3
+z_as_relative = false
+material = SubResource("ShaderMaterial_xoh1m")
+texture = ExtResource("2_6cxuk")
+hframes = 3
+script = ExtResource("3_8gg7q")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(-0.165, -2.5)
+sprite_frames = SubResource("SpriteFrames_mu51c")
+offset = Vector2(0, -5)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8388608
+collision_mask = 8388608
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(5, -4, -3, -8, -8, -12, -14, -6, -16, -1, -16, 6, -11, 12, -9, 12, -4, 10, 12, 10, 16, 7, 14, 6, 14, 0)
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

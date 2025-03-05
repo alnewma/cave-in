@@ -62,14 +62,16 @@ func find_target_area(input_location):
 
 func get_point_in_target_area() -> Vector2:
 	var point_within_location
-	while true:
+	while true and get_node(target_area):
 		var random_angle = randf_range(0,2*PI)
 		var random_radius = randf_range(0,get_node(target_area).location_area_shape.shape.radius)
 		point_within_location = Vector2(random_radius*cos(random_angle),random_radius*sin(random_angle)) + get_node(target_area).global_position
 		var closest = NavigationServer2D.map_get_closest_point(get_tree().get_first_node_in_group("navigation_region").get_navigation_map(),point_within_location)
 		if point_within_location.distance_to(closest) < .1:
 			break
-	return point_within_location
+	if point_within_location:
+		return point_within_location
+	else: return Vector2.ZERO
 	#return poly_point_gen.get_random_point(get_node(target_area).location_area_shape.polygon) + get_node(target_area).global_position
 
 signal survivor_clicked
@@ -132,17 +134,17 @@ func _on_survivor_movement_state_actor_reached_target():
 				returning_from_status_break = true
 				navigation_agent.target_position = get_node(target_assignment).global_position
 				# return to prior occupation
-		else:
-			# add to hydrant occupation
-			if self not in get_node(target_usage).assigned_survivors:
-				get_node(target_usage).assigned_survivors.append(self)
-				state_machine.change_state(state_machine.activity)
-			#print("waiting for progress")
-			#var delay_timer = Timer.new()
-			#delay_timer.wait_time = 3
-			#delay_timer.autostart = true
-			#delay_timer.connect("timeout",_on_survivor_movement_state_actor_reached_target)
-			#delay_timer.connect("timeout",queue_free)
+			else:
+				# add to hydrant occupation
+				if self not in get_node(target_usage).assigned_survivors:
+					get_node(target_usage).assigned_survivors.append(self)
+					state_machine.change_state(state_machine.activity)
+				#print("waiting for progress")
+				#var delay_timer = Timer.new()
+				#delay_timer.wait_time = 3
+				#delay_timer.autostart = true
+				#delay_timer.connect("timeout",_on_survivor_movement_state_actor_reached_target)
+				#delay_timer.connect("timeout",queue_free)
 	elif returning_from_status_break:
 		returning_from_status_break = false
 		state_machine.change_state(state_machine.activity)

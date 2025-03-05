@@ -1,92 +1,202 @@
-[gd_scene load_steps=2 format=3 uid="uid://slxdkui1guxf"]
+[gd_scene load_steps=12 format=3 uid="uid://slxdkui1guxf"]
 
 [ext_resource type="Script" path="res://MainMenu/main_menu.gd" id="1_t0rvo"]
+[ext_resource type="Texture2D" uid="uid://rbxupuk0gxyq" path="res://ArtAssets/tabletop.png" id="2_1b6bn"]
+[ext_resource type="Theme" uid="uid://c0w38urtirqsi" path="res://UI/button_theme.tres" id="2_6mbmi"]
+[ext_resource type="Theme" uid="uid://bgr6frj5j5a2w" path="res://UI/label_theme.tres" id="3_4p1n0"]
+[ext_resource type="Script" path="res://MainMenu/background_image.gd" id="3_r0asr"]
+[ext_resource type="Texture2D" uid="uid://x2japhrhvelp" path="res://ArtAssets/light_mask.png" id="4_6kp6w"]
+[ext_resource type="Theme" uid="uid://brnwg1k0lrtsw" path="res://UI/line_edit_theme.tres" id="4_rc6gv"]
+[ext_resource type="Theme" uid="uid://dhfh8ip3erkc0" path="res://UI/scroll_theme.tres" id="5_2gfa4"]
+[ext_resource type="Texture2D" uid="uid://3y1ur874ymtp" path="res://ArtAssets/candle_flame.png" id="5_k5ytu"]
+[ext_resource type="PackedScene" uid="uid://nmfgotssstbe" path="res://MainMenu/save_button_base.tscn" id="5_wghpq"]
 
-[node name="main_menu" type="CanvasLayer"]
+[sub_resource type="Curve2D" id="Curve2D_r3pwd"]
+_data = {
+"points": PackedVector2Array(224.17, -53.3289, -224.17, 53.3289, -86, -837, 140.165, -231.721, -140.165, 231.721, -516, -575, -199.219, -143.66, 199.219, 143.66, -363, 57, -94.8807, 134.08, 94.8807, -134.08, 72, 96, -158.58, 153.68, 158.58, -153.68, 107, -311, -75.2809, 212.479, 75.2809, -212.479, 518, -428, 137.806, 46.2498, -137.806, -46.2498, 279, -859, 66.5431, -8.96681, -66.5431, 8.96681, -86, -837)
+}
+point_count = 8
+
+[node name="main_menu" type="Node2D"]
 script = ExtResource("1_t0rvo")
 
-[node name="background" type="TextureRect" parent="."]
-offset_right = 560.0
-offset_bottom = 360.0
+[node name="backgroundImage" type="Sprite2D" parent="."]
+position = Vector2(0, -128)
+scale = Vector2(4, 4)
+texture = ExtResource("2_1b6bn")
+script = ExtResource("3_r0asr")
 
-[node name="main_container" type="VBoxContainer" parent="background"]
-layout_mode = 0
-offset_right = 200.0
-offset_bottom = 212.0
+[node name="PointLight2D" type="PointLight2D" parent="backgroundImage"]
+position = Vector2(-54, -104)
+color = Color(1, 0.466667, 0, 1)
+texture = ExtResource("4_6kp6w")
+texture_scale = 2.5
 
-[node name="new_game" type="Button" parent="background/main_container"]
+[node name="light_timer" type="Timer" parent="backgroundImage"]
+wait_time = 0.1
+one_shot = true
+autostart = true
+
+[node name="flame" type="Sprite2D" parent="backgroundImage"]
+position = Vector2(-55, -108)
+texture = ExtResource("5_k5ytu")
+hframes = 6
+
+[node name="flame_timer" type="Timer" parent="backgroundImage/flame"]
+wait_time = 0.1
+one_shot = true
+autostart = true
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_r3pwd")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(-86, -837)
+rotation = 2.90804
+
+[node name="Camera2D" type="Camera2D" parent="Path2D/PathFollow2D"]
+
+[node name="menu_canvas" type="CanvasLayer" parent="."]
+
+[node name="background" type="MarginContainer" parent="menu_canvas"]
+offset_right = 640.0
+offset_bottom = 362.0
+theme_override_constants/margin_left = 400
+theme_override_constants/margin_top = 200
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="main_container" type="VBoxContainer" parent="menu_canvas/background"]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="new_game" type="Button" parent="menu_canvas/background/main_container"]
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
+theme = ExtResource("2_6mbmi")
 text = "New Game"
 
-[node name="load_game" type="Button" parent="background/main_container"]
+[node name="load_game" type="Button" parent="menu_canvas/background/main_container"]
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
+theme = ExtResource("2_6mbmi")
 text = "Load Game"
 
-[node name="settings" type="Button" parent="background/main_container"]
+[node name="settings" type="Button" parent="menu_canvas/background/main_container"]
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
+theme = ExtResource("2_6mbmi")
 text = "Settings"
 
-[node name="quit" type="Button" parent="background/main_container"]
+[node name="quit" type="Button" parent="menu_canvas/background/main_container"]
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
+theme = ExtResource("2_6mbmi")
 text = "Quit"
 
-[node name="new_container" type="VBoxContainer" parent="background"]
+[node name="new_container" type="VBoxContainer" parent="menu_canvas/background"]
 visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="menu_title" type="Label" parent="background/new_container"]
 layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="menu_title" type="Label" parent="menu_canvas/background/new_container"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+theme = ExtResource("3_4p1n0")
 text = "New Game"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="name_entry" type="LineEdit" parent="background/new_container"]
+[node name="name_entry" type="LineEdit" parent="menu_canvas/background/new_container"]
+custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
+theme = ExtResource("4_rc6gv")
 placeholder_text = "Enter name..."
+alignment = 1
 max_length = 8
 
-[node name="create_button" type="Button" parent="background/new_container"]
+[node name="create_button" type="Button" parent="menu_canvas/background/new_container"]
+custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
+theme = ExtResource("2_6mbmi")
 text = "Create"
 
-[node name="name_warning" type="Label" parent="background/new_container"]
+[node name="name_warning" type="Label" parent="menu_canvas/background/new_container"]
 visible = false
+custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
+theme = ExtResource("3_4p1n0")
 text = "Name taken"
+horizontal_alignment = 1
 
-[node name="back" type="Button" parent="background/new_container"]
+[node name="back" type="Button" parent="menu_canvas/background/new_container"]
+custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
+theme = ExtResource("2_6mbmi")
 text = "Back"
 
-[node name="load_container" type="VBoxContainer" parent="background"]
+[node name="load_container" type="VBoxContainer" parent="menu_canvas/background"]
 visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="back" type="Button" parent="background/load_container"]
 layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="menu_title" type="Label" parent="menu_canvas/background/load_container"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+theme = ExtResource("3_4p1n0")
+text = "Load Game"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="menu_canvas/background/load_container"]
+custom_minimum_size = Vector2(0, 81)
+layout_mode = 2
+theme = ExtResource("5_2gfa4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="menu_canvas/background/load_container/ScrollContainer"]
+custom_minimum_size = Vector2(215, 81)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="save_file" parent="menu_canvas/background/load_container/ScrollContainer/VBoxContainer" instance=ExtResource("5_wghpq")]
+layout_mode = 2
+
+[node name="save_file2" parent="menu_canvas/background/load_container/ScrollContainer/VBoxContainer" instance=ExtResource("5_wghpq")]
+layout_mode = 2
+
+[node name="save_file3" parent="menu_canvas/background/load_container/ScrollContainer/VBoxContainer" instance=ExtResource("5_wghpq")]
+layout_mode = 2
+
+[node name="save_file4" parent="menu_canvas/background/load_container/ScrollContainer/VBoxContainer" instance=ExtResource("5_wghpq")]
+layout_mode = 2
+
+[node name="back" type="Button" parent="menu_canvas/background/load_container"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+theme = ExtResource("2_6mbmi")
 text = "Back"
 
-[node name="settings_container" type="VBoxContainer" parent="background"]
+[node name="settings_container" type="VBoxContainer" parent="menu_canvas/background"]
 visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="back" type="Button" parent="background/settings_container"]
 layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="back" type="Button" parent="menu_canvas/background/settings_container"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+theme = ExtResource("2_6mbmi")
 text = "Back"
 
-[connection signal="pressed" from="background/main_container/new_game" to="." method="_on_new_game_pressed"]
-[connection signal="pressed" from="background/main_container/load_game" to="." method="_on_load_game_pressed"]
-[connection signal="pressed" from="background/main_container/quit" to="." method="_on_quit_pressed"]
-[connection signal="text_changed" from="background/new_container/name_entry" to="." method="_on_name_entry_text_changed"]
-[connection signal="pressed" from="background/new_container/create_button" to="." method="_on_create_button_pressed"]
-[connection signal="pressed" from="background/new_container/back" to="." method="_on_back_pressed"]
-[connection signal="pressed" from="background/load_container/back" to="." method="_on_back_pressed"]
-[connection signal="pressed" from="background/settings_container/back" to="." method="_on_back_pressed"]
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.372251, 0.372251, 0.372251, 1)
+
+[connection signal="timeout" from="backgroundImage/light_timer" to="backgroundImage" method="_on_light_timer_timeout"]
+[connection signal="timeout" from="backgroundImage/flame/flame_timer" to="backgroundImage" method="_on_flame_timer_timeout"]
+[connection signal="pressed" from="menu_canvas/background/main_container/new_game" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="menu_canvas/background/main_container/load_game" to="." method="_on_load_game_pressed"]
+[connection signal="pressed" from="menu_canvas/background/main_container/quit" to="." method="_on_quit_pressed"]
+[connection signal="text_changed" from="menu_canvas/background/new_container/name_entry" to="." method="_on_name_entry_text_changed"]
+[connection signal="pressed" from="menu_canvas/background/new_container/create_button" to="." method="_on_create_button_pressed"]
+[connection signal="pressed" from="menu_canvas/background/new_container/back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="menu_canvas/background/load_container/back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="menu_canvas/background/settings_container/back" to="." method="_on_back_pressed"]

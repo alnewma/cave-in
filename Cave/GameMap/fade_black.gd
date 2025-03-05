@@ -4,7 +4,7 @@ extends CanvasLayer
 @onready var rect = $blackRect
 var fog_rect
 func _ready():
-	if not tunnel:
+	if not tunnel or tunnel:
 		fog_rect = $"../FogLayer/ParallaxLayer/ColorRect"
 
 func fade_to_black():

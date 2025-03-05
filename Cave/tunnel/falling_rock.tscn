@@ -41,7 +41,7 @@ animations = [{
 }]
 
 [node name="falling_rock" type="StaticBody2D"]
-z_index = 1
+z_index = 4
 script = ExtResource("1_56kgf")
 
 [node name="bottom_rock" type="Sprite2D" parent="."]

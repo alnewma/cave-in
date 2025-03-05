@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Node2D
 
 func _ready():
 	menu_ready_function()
@@ -7,10 +7,13 @@ func _ready():
 
 ## Menu Handler ##
 
-@onready var mainC = $background/main_container
-@onready var newC = $background/new_container
-@onready var loadC = $background/load_container
-@onready var settingsC = $background/settings_container
+@onready var mainC = $menu_canvas/background/main_container
+@onready var newC = $menu_canvas/background/new_container
+@onready var loadC = $menu_canvas/background/load_container
+@onready var settingsC = $menu_canvas/background/settings_container
+
+@onready var load_button_container = $menu_canvas/background/load_container/ScrollContainer/VBoxContainer
+
 @onready var regex = RegEx.new()
 var containers = []
 
@@ -42,10 +45,12 @@ func container_ready_function():
 	regex.compile("[a-zA-Z0-9 ]+")
 	
 	# load container
+	for child in load_button_container.get_children():
+		child.queue_free()
 	for file in save_files:
 		var save_button = save_button_base.instantiate()
 		save_button.save_file_name = file
-		loadC.add_child(save_button)
+		load_button_container.add_child(save_button)
 		save_button.connect("pressed",load_button_pressed.bind(save_button))
 
 func _on_new_game_pressed():

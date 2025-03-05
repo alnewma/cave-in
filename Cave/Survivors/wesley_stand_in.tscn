@@ -1,6 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://0bofj0ott8oh"]
+[gd_scene load_steps=19 format=3 uid="uid://0bofj0ott8oh"]
 
+[ext_resource type="Shader" path="res://Resources/erase_texture.gdshader" id="1_et1v4"]
 [ext_resource type="Texture2D" uid="uid://dcrl6g7jqmuqc" path="res://ArtAssets/PeopleSprites2/1 Old_man/Old_man_idle.png" id="1_jci6d"]
+[ext_resource type="Texture2D" uid="uid://bnhh1fastatge" path="res://ArtAssets/PeopleSprites2/1 Old_man/Old_man_walk.png" id="2_gwmg7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5unm5"]
+shader = ExtResource("1_et1v4")
+shader_parameter/percentage = 1.0
+shader_parameter/angle = 0.0
+shader_parameter/line_width = 0.02
+shader_parameter/line_color = Color(0.211765, 0.309804, 0.266667, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_poy6d"]
 atlas = ExtResource("1_jci6d")
@@ -17,6 +26,30 @@ region = Rect2(96, 0, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_q6a4u"]
 atlas = ExtResource("1_jci6d")
 region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fpguo"]
+atlas = ExtResource("2_gwmg7")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jy8rl"]
+atlas = ExtResource("2_gwmg7")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4504m"]
+atlas = ExtResource("2_gwmg7")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4y4i1"]
+atlas = ExtResource("2_gwmg7")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3lw4"]
+atlas = ExtResource("2_gwmg7")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q31i6"]
+atlas = ExtResource("2_gwmg7")
+region = Rect2(240, 0, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fodqp"]
 animations = [{
@@ -36,10 +69,221 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fpguo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jy8rl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4504m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4y4i1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j3lw4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q31i6")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_n588c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:shader_parameter/percentage")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:animation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:z_index")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_2p417"]
+resource_name = "exit"
+length = 9.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1.5, 2.4, 3.33333, 4.23333, 5.2, 7.06667, 7.26667, 7.46667, 7.66667, 7.86667, 8.06667, 8.26667, 8.46667, 8.66667, 8.86667, 9.06667, 9.26667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [2, 3, 2, 3, 2, 0, 1, 3, 2, 4, 5, 0, 1, 3, 2, 4, 5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.666667, 0.866667, 1.06667, 1.73333, 6.36667, 6.93333, 7.26667, 9.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -24), Vector2(0, -24), Vector2(0, -29), Vector2(0, -17), Vector2(0, -17), Vector2(0, -29), Vector2(0, -29), Vector2(0, -41.75), Vector2(6, -51)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:shader_parameter/percentage")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.933333, 0.966667, 1, 1.03333, 1.06667, 6.36667, 6.66667, 6.93333, 7, 7.03333, 7.06667, 7.1, 7.13333, 7.16667, 7.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1.0, 0.96, 0.91, 0.86, 0.8, 0.72, 0.75, 0.75, 0.81, 0.85, 0.89, 0.92, 0.95, 0.97, 0.98, 1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:animation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 7.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"default", &"run"]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 8.1, 8.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:z_index")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1.1, 3.66667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 3, 2]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.866667, 1.06667, 1.43333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0.46, 0.46), Vector2(0.5, 0.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_duts7"]
+_data = {
+"RESET": SubResource("Animation_n588c"),
+"exit": SubResource("Animation_2p417")
+}
+
 [node name="wesleyStandIn" type="AnimatedSprite2D"]
+material = SubResource("ShaderMaterial_5unm5")
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_fodqp")
 autoplay = "default"
 offset = Vector2(0, -24)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_duts7")
+}
+speed_scale = 0.7

@@ -5,8 +5,14 @@ extends Node2D
 @onready var flag_edit_menu = $map_menu/edit_location
 @onready var location_flag = preload("res://GameMap/location_flag.tscn")
 
+@export var cutscene_active = false
+
 func _ready():
 	setup_map()
+	if cutscene_active:
+		cutscene()
+	else:
+		cutscene_finished(1)
 
 func _on_child_entered_tree(node):
 	if node.is_in_group("survivor"):
@@ -47,7 +53,6 @@ func _unhandled_input(event):
 ## Map Setup ##
 
 func setup_map():
-	$CanvasModulate.show()
 	create_locations()
 
 func create_locations():
@@ -58,3 +63,36 @@ func create_locations():
 		flag.flag_name = location["name"]
 		flag.global_position = str_to_var("Vector2" + location["position"]) # convert from string to vector2
 		add_child(flag)
+
+@onready var cutcam = $cutscene_camera
+@onready var playercam = $Player.get_node("Camera2D")
+@onready var playerlight = $Player.get_node("light")
+@onready var side_rocks = $SideRockLayer
+@onready var black_canvas = $CanvasModulate
+func cutscene():
+	black_canvas.show()
+	side_rocks.scroll_scale = Vector2(1,1)
+	playercam.enabled = false
+	playerlight.hide()
+	var tween = get_tree().create_tween()
+	tween.connect("step_finished",cutscene_finished)
+	tween.tween_property(cutcam,"global_position",Vector2(122,104),12)
+	tween.tween_property(cutcam,"global_position",$Player.global_position,8)
+	tween.set_ease(Tween.EASE_IN)
+	tween.set_trans(Tween.TRANS_EXPO)
+	tween.parallel().tween_property(cutcam,"zoom",Vector2(4,4),8)
+	tween.parallel().tween_property(cutcam.get_node("PointLight2D"),"color:a",.576,2)
+	#tween.parallel().tween_property(side_rocks,"scroll_scale",Vector2(1.1,1.1),2)
+	tween.set_ease(Tween.EASE_OUT_IN)
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property(cutcam.get_node("PointLight2D"),"texture_scale",1,8)
+
+func cutscene_finished(index):
+	match index:
+		1:
+			black_canvas.show()
+			playercam.enabled = true
+			cutcam.enabled = false
+			cutcam.hide()
+			playerlight.show()
+			side_rocks.scroll_scale = Vector2(1.1,1.1)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=4 uid="uid://dbt6aj80ujt3x"]
+[gd_scene load_steps=79 format=4 uid="uid://dbt6aj80ujt3x"]
 
 [ext_resource type="Script" path="res://tunnel/tunnel.gd" id="1_esspt"]
 [ext_resource type="TileSet" uid="uid://4d5lfppjykax" path="res://GameMap/TileMaps/SewerMap.tres" id="1_jpvxj"]
@@ -6,9 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://5srnmkncvwrc" path="res://ArtAssets/boat_water.png" id="3_2wtuk"]
 [ext_resource type="Texture2D" uid="uid://dv0w0p8g2q137" path="res://ArtAssets/BlockedGate.png" id="3_p4vk8"]
 [ext_resource type="Texture2D" uid="uid://b5d4kgjr5207g" path="res://ArtAssets/neutral_light_tex.webp" id="4_naco7"]
+[ext_resource type="Texture2D" uid="uid://br326cnjrrmvr" path="res://ArtAssets/survivor_ripple_world.png" id="5_2067x"]
 [ext_resource type="PackedScene" uid="uid://bsrbrnqvx2mpa" path="res://Player/Player.tscn" id="5_dwkph"]
 [ext_resource type="Texture2D" uid="uid://5gg16bnytwx" path="res://ArtAssets/water_ripple_top.png" id="5_hu0k2"]
 [ext_resource type="Texture2D" uid="uid://csu1axfm8ed70" path="res://ArtAssets/raft_engine.png" id="5_jqqnc"]
+[ext_resource type="Script" path="res://tunnel/survivor_ripple.gd" id="6_28nj4"]
 [ext_resource type="Script" path="res://tunnel/ripple_top.gd" id="6_a8h4q"]
 [ext_resource type="PackedScene" uid="uid://dwmc5vrgevot5" path="res://Survivors/man_survivor.tscn" id="7_5lghp"]
 [ext_resource type="Texture2D" uid="uid://dvv6eoa421glk" path="res://ArtAssets/water_ripple_bottom.png" id="7_15soe"]
@@ -17,9 +19,151 @@
 [ext_resource type="Texture2D" uid="uid://x2japhrhvelp" path="res://ArtAssets/light_mask.png" id="8_xcwqk"]
 [ext_resource type="PackedScene" uid="uid://cimeurx3tlf36" path="res://Survivors/old_woman_survivor.tscn" id="9_wggvp"]
 [ext_resource type="PackedScene" uid="uid://dvx2j0q542f3" path="res://Survivors/girl_survivor.tscn" id="10_3g804"]
+[ext_resource type="Texture2D" uid="uid://bpxkpc0otix8c" path="res://ArtAssets/raft_break.png" id="12_g0nga"]
 [ext_resource type="Texture2D" uid="uid://biixss06nkggd" path="res://icon.svg" id="13_wyg5k"]
 [ext_resource type="PackedScene" uid="uid://buwfwcnvl62h1" path="res://UI/interaction_ui_handler.tscn" id="15_kg5ai"]
 [ext_resource type="Script" path="res://GameMap/fade_black.gd" id="16_08ssx"]
+[ext_resource type="Script" path="res://GameMap/fog_layer.gd" id="21_xdl81"]
+[ext_resource type="Shader" path="res://GameMap/fog.gdshader" id="22_c45y2"]
+[ext_resource type="Texture2D" uid="uid://b03seaycqujvy" path="res://ArtAssets/feather_dark.png" id="26_hmj4w"]
+[ext_resource type="PackedScene" uid="uid://cykw63mwr86q2" path="res://UI/usage_prompt.tscn" id="27_skbrv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2nxuc"]
+atlas = ExtResource("5_2067x")
+region = Rect2(0, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swutv"]
+atlas = ExtResource("5_2067x")
+region = Rect2(10, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jk0yq"]
+atlas = ExtResource("5_2067x")
+region = Rect2(20, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q4lve"]
+atlas = ExtResource("5_2067x")
+region = Rect2(30, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0npu"]
+atlas = ExtResource("5_2067x")
+region = Rect2(40, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52rcq"]
+atlas = ExtResource("5_2067x")
+region = Rect2(50, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjf76"]
+atlas = ExtResource("5_2067x")
+region = Rect2(60, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hovq3"]
+atlas = ExtResource("5_2067x")
+region = Rect2(70, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8g1g"]
+atlas = ExtResource("5_2067x")
+region = Rect2(80, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7hdio"]
+atlas = ExtResource("5_2067x")
+region = Rect2(90, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_40mte"]
+atlas = ExtResource("5_2067x")
+region = Rect2(100, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhhtd"]
+atlas = ExtResource("5_2067x")
+region = Rect2(110, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_clyws"]
+atlas = ExtResource("5_2067x")
+region = Rect2(120, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_77n5s"]
+atlas = ExtResource("5_2067x")
+region = Rect2(130, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63kcm"]
+atlas = ExtResource("5_2067x")
+region = Rect2(140, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lcwfi"]
+atlas = ExtResource("5_2067x")
+region = Rect2(150, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhay7"]
+atlas = ExtResource("5_2067x")
+region = Rect2(160, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdqri"]
+atlas = ExtResource("5_2067x")
+region = Rect2(170, 0, 10, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_li5rt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2nxuc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swutv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jk0yq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q4lve")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n0npu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52rcq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gjf76")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hovq3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f8g1g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7hdio")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_40mte")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jhhtd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_clyws")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_77n5s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_63kcm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lcwfi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dhay7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bdqri")
+}],
+"loop": false,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qodew"]
+radius = 7.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vu7ww"]
 atlas = ExtResource("5_hu0k2")
@@ -93,6 +237,28 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ca3gg"]
+atlas = ExtResource("12_g0nga")
+region = Rect2(0, 0, 40, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ig7o0"]
+atlas = ExtResource("12_g0nga")
+region = Rect2(40, 0, 40, 47)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qc7h8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ca3gg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ig7o0")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_4nw5j"]
 atlas = ExtResource("3_2wtuk")
 region = Rect2(0, 0, 30, 14)
@@ -159,8 +325,38 @@ size = Vector2(36, 5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ovph7"]
 size = Vector2(4, 35)
 
-[node name="tunnel" type="Node2D" groups=["tunnel_scene"]]
+[sub_resource type="CircleShape2D" id="CircleShape2D_jq54c"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_h8u2h"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lwau3"]
+width = 640
+height = 360
+seamless = true
+noise = SubResource("FastNoiseLite_h8u2h")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yew3h"]
+shader = ExtResource("22_c45y2")
+shader_parameter/density = 0.3
+shader_parameter/speed = Vector2(0.002, -0.1)
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_lwau3")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_d117n"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_q6skh"]
+seamless = true
+noise = SubResource("FastNoiseLite_d117n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jkxnw"]
+shader = ExtResource("22_c45y2")
+shader_parameter/density = 0.3
+shader_parameter/speed = Vector2(0.002, 0.001)
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_q6skh")
+
+[node name="tunnel" type="Node2D" node_paths=PackedStringArray("player_prompt") groups=["tunnel_scene"]]
+y_sort_enabled = true
 script = ExtResource("1_esspt")
+player_prompt = NodePath("usage_holder/usage_prompt")
 
 [node name="tunnel_background" type="TileMapLayer" parent="."]
 position = Vector2(0, -257)
@@ -169,6 +365,7 @@ tile_set = ExtResource("1_jpvxj")
 collision_enabled = false
 
 [node name="transitionBricks" type="TileMapLayer" parent="tunnel_background"]
+visible = false
 z_index = 2
 z_as_relative = false
 position = Vector2(0, 369)
@@ -177,14 +374,30 @@ tile_set = ExtResource("1_jpvxj")
 collision_enabled = false
 
 [node name="gate" type="Sprite2D" parent="tunnel_background"]
+y_sort_enabled = true
 position = Vector2(40, -39)
 texture = ExtResource("3_p4vk8")
 hframes = 2
 
 [node name="PointLight2D" type="PointLight2D" parent="tunnel_background/gate"]
 position = Vector2(2, 4)
+shadow_enabled = true
 texture = ExtResource("4_naco7")
 texture_scale = 0.2
+
+[node name="survivor_ripple" type="AnimatedSprite2D" parent="tunnel_background/gate"]
+visible = false
+position = Vector2(3, 13.5)
+sprite_frames = SubResource("SpriteFrames_li5rt")
+script = ExtResource("6_28nj4")
+
+[node name="light_area" type="Area2D" parent="tunnel_background/gate"]
+collision_layer = 8388608
+collision_mask = 8388608
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tunnel_background/gate/light_area"]
+position = Vector2(1, 7)
+shape = SubResource("CircleShape2D_qodew")
 
 [node name="exit_marker" type="Marker2D" parent="tunnel_background"]
 position = Vector2(42, -21)
@@ -203,12 +416,28 @@ sprite_frames = SubResource("SpriteFrames_hwxvr")
 
 [node name="blocking_rocks" type="Sprite2D" parent="tunnel_background"]
 z_index = 2
+y_sort_enabled = true
 position = Vector2(40, -55)
 texture = ExtResource("8_kpe0n")
 
+[node name="rock1" type="Marker2D" parent="tunnel_background"]
+position = Vector2(24, -28)
+
+[node name="rock2" type="Marker2D" parent="tunnel_background"]
+position = Vector2(49, -4)
+
+[node name="rock3" type="Marker2D" parent="tunnel_background"]
+position = Vector2(47, -32)
+
 [node name="boat" type="Sprite2D" parent="."]
+y_sort_enabled = true
 position = Vector2(40, 100)
 texture = ExtResource("2_sytn6")
+
+[node name="break" type="AnimatedSprite2D" parent="boat"]
+visible = false
+position = Vector2(4, 0)
+sprite_frames = SubResource("SpriteFrames_qc7h8")
 
 [node name="boat_water" type="AnimatedSprite2D" parent="boat"]
 position = Vector2(0, 18.5)
@@ -236,10 +465,22 @@ shape = SubResource("RectangleShape2D_ovph7")
 
 [node name="engine" type="Sprite2D" parent="boat"]
 z_index = 1
+y_sort_enabled = true
 position = Vector2(0, 10)
 texture = ExtResource("5_jqqnc")
 
+[node name="leave_area" type="Area2D" parent="boat"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="boat/leave_area"]
+position = Vector2(0, -20)
+shape = SubResource("CircleShape2D_jq54c")
+disabled = true
+
 [node name="Player" parent="." instance=ExtResource("5_dwkph")]
+z_index = 1
+y_sort_enabled = true
 position = Vector2(39, 86)
 
 [node name="light" type="PointLight2D" parent="Player"]
@@ -248,15 +489,23 @@ shadow_enabled = true
 texture = ExtResource("8_xcwqk")
 
 [node name="man_survivor" parent="." instance=ExtResource("7_5lghp")]
+z_index = 1
+y_sort_enabled = true
 position = Vector2(45, 110)
 
 [node name="old_man_survivor" parent="." instance=ExtResource("8_7xlc5")]
+z_index = 1
+y_sort_enabled = true
 position = Vector2(34, 92)
 
 [node name="old_woman_survivor" parent="." instance=ExtResource("9_wggvp")]
+z_index = 1
+y_sort_enabled = true
 position = Vector2(50, 94)
 
 [node name="girl_survivor" parent="." instance=ExtResource("10_3g804")]
+z_index = 1
+y_sort_enabled = true
 position = Vector2(32, 107)
 
 [node name="rock_timer1" type="Timer" parent="."]
@@ -271,7 +520,6 @@ autostart = true
 one_shot = true
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-visible = false
 color = Color(1.27847e-07, 0.0611229, 0.0611229, 1)
 
 [node name="black_bg" type="Sprite2D" parent="."]
@@ -288,6 +536,7 @@ one_shot = true
 tunnel_scene = true
 
 [node name="fadeBlack" type="CanvasLayer" parent="."]
+visible = false
 script = ExtResource("16_08ssx")
 tunnel = true
 
@@ -305,7 +554,57 @@ wait_time = 286.0
 one_shot = true
 autostart = true
 
+[node name="FogLayer" type="ParallaxBackground" parent="." groups=["fog_layer"]]
+layer = 2
+visible = false
+script = ExtResource("21_xdl81")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="FogLayer"]
+motion_mirroring = Vector2(640, 360)
+
+[node name="ColorRect" type="ColorRect" parent="FogLayer/ParallaxLayer"]
+material = SubResource("ShaderMaterial_yew3h")
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+
+[node name="FogLayer2" type="ParallaxBackground" parent="." groups=["fog_layer"]]
+layer = 2
+script = ExtResource("21_xdl81")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="FogLayer2"]
+motion_mirroring = Vector2(640, 360)
+
+[node name="ColorRect" type="ColorRect" parent="FogLayer2/ParallaxLayer"]
+modulate = Color(1, 1, 1, 0)
+material = SubResource("ShaderMaterial_jkxnw")
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+
+[node name="darkness_cover" type="TextureRect" parent="."]
+visible = false
+z_index = 5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -435.0
+offset_right = 640.0
+offset_bottom = 265.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("26_hmj4w")
+
+[node name="usage_holder" type="CanvasLayer" parent="."]
+
+[node name="usage_prompt" parent="usage_holder" instance=ExtResource("27_skbrv")]
+visible = false
+
+[connection signal="animation_finished" from="tunnel_background/gate/survivor_ripple" to="tunnel_background/gate/survivor_ripple" method="_on_animation_finished"]
+[connection signal="area_entered" from="tunnel_background/gate/light_area" to="." method="_on_light_area_area_entered"]
 [connection signal="animation_finished" from="tunnel_background/ripple_top" to="tunnel_background/ripple_top" method="_on_animation_finished"]
+[connection signal="body_entered" from="boat/leave_area" to="." method="_on_leave_area_body_entered"]
+[connection signal="body_exited" from="boat/leave_area" to="." method="_on_leave_area_body_exited"]
 [connection signal="timeout" from="rock_timer1" to="." method="_on_rock_timer_1_timeout"]
 [connection signal="timeout" from="rock_timer2" to="." method="_on_rock_timer_2_timeout"]
 [connection signal="timeout" from="quake_timer" to="." method="_on_quake_timer_timeout"]

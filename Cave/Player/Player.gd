@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+var can_be_controlled = true
 
 var speed = 120
 var health = 100
@@ -26,19 +27,20 @@ func _process(_delta):
 	attack()
 
 func movement(_delta):
-	velocity = Vector2.ZERO
-	if Input.is_action_pressed("move_down"):
-		velocity += Vector2(0,1)
-	if Input.is_action_pressed("move_left"):
-		velocity += Vector2(-1,0)
-	if Input.is_action_pressed("move_right"):
-		velocity += Vector2(1,0)
-	if Input.is_action_pressed("move_up"):
-		velocity += Vector2(0,-1)
-	if velocity != Vector2.ZERO:
-		velocity = speed * velocity.normalized()
-	if velocity.dot(Vector2(cos(PI+attack_area.rotation),sin(PI+attack_area.rotation))) < 0:
-		velocity *= .5
+	if can_be_controlled:
+		velocity = Vector2.ZERO
+		if Input.is_action_pressed("move_down"):
+			velocity += Vector2(0,1)
+		if Input.is_action_pressed("move_left"):
+			velocity += Vector2(-1,0)
+		if Input.is_action_pressed("move_right"):
+			velocity += Vector2(1,0)
+		if Input.is_action_pressed("move_up"):
+			velocity += Vector2(0,-1)
+		if velocity != Vector2.ZERO:
+			velocity = speed * velocity.normalized()
+		if velocity.dot(Vector2(cos(PI+attack_area.rotation),sin(PI+attack_area.rotation))) < 0:
+			velocity *= .5
 	move_and_slide()
 
 func update_animation_parameters():

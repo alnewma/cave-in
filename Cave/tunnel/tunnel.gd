@@ -58,6 +58,7 @@ func set_survivors():
 @onready var boat = $boat
 @onready var bg = $tunnel_background
 @onready var progress_timer = $progress_timer
+@onready var leave_area = $boat/leave_area
 func tween_background():
 	progress_timer.start(travel_duration/2)
 	var tween = get_tree().create_tween()
@@ -83,9 +84,14 @@ func _on_progress_timer_timeout() -> void:
 			var speaking_survivor = current_survivors.pick_random()
 			speaking_survivor.queue_remark(speaking_survivor.remark_prompts.BLOCKED2)
 			interaction_menu.reached_tunnel_end = true
+			var tween = get_tree().create_tween()
+			tween.tween_property($FogLayer/ParallaxLayer/ColorRect,"modulate:a",0,1)
+			tween.parallel().tween_property($FogLayer2/ParallaxLayer/ColorRect,"modulate:a",1,1)
+			leave_area.get_node("CollisionShape2D").disabled = false
+			print("blocked = false")
 			progression += 1
 			progress_timer.start(60)
-		3:
+		3: # tunnel about to collapse
 			var current_survivors = get_tree().get_nodes_in_group("survivor")
 			var speaking_survivor = current_survivors.pick_random()
 			speaking_survivor.queue_remark(speaking_survivor.remark_prompts.BLOCKED2)
@@ -156,7 +162,6 @@ func _move_survivor(survivor_instance):
 	player.speed = 0
 	match survivor_chosen.name:
 		"Player":
-			to_move.global_position = exit_marker.global_position
 			replace_sprite(man_dummy,man, true)
 			replace_sprite(old_man_dummy,oldman, true)
 			replace_sprite(old_woman_dummy,woman, true)
@@ -184,11 +189,21 @@ func _move_survivor(survivor_instance):
 
 @onready var top_ripple = $tunnel_background/ripple_top
 @onready var bottom_ripple = $tunnel_background/ripple_bottom
+@onready var block_rock = preload("res://tunnel/block_rock.tscn")
+@onready var pos1 = $tunnel_background/rock1
+@onready var pos2 = $tunnel_background/rock2
+@onready var pos3 = $tunnel_background/rock3
 var dummies = []
 func trigger_end():
+	var tween = get_tree().create_tween()
+	tween.tween_property(to_move,"global_position",exit_marker.global_position,1.5)
+	to_move.play("run")
+	if exit_marker.global_position.x-to_move.global_position.x < 0:
+		to_move.flip_h = true
+	await tween.finished
 	to_move.stop()
 	to_move.get_node("AnimationPlayer").play("exit")
-	await get_tree().create_timer(.9).timeout
+	await get_tree().create_timer(1.1).timeout
 	boat.z_index += 1
 	for dummy in dummies:
 		dummy.z_index += 1
@@ -196,9 +211,45 @@ func trigger_end():
 	top_ripple.play("default")
 	bottom_ripple.show()
 	bottom_ripple.play("default")
+	await get_tree().create_timer(.5).timeout
+	$tunnel_background/gate/survivor_ripple.show()
+	$tunnel_background/gate/survivor_ripple.play("default")
+	await get_tree().create_timer(10).timeout
+	get_node("playerStandIn").get_node("Camera2D").add_trauma(.35)
+	await get_tree().create_timer(1).timeout
+	get_node("playerStandIn").get_node("Camera2D").add_trauma(.45)
+	var rock_inst = block_rock.instantiate()
+	rock_inst.destination = pos1.global_position
+	add_child(rock_inst)
+	await get_tree().create_timer(1).timeout
+	rock_inst = block_rock.instantiate()
+	rock_inst.connect("landed",rock2_land)
+	rock_inst.frame = 1
+	rock_inst.destination = pos2.global_position
+	add_child(rock_inst)
+	await get_tree().create_timer(.75).timeout
+	rock_inst = block_rock.instantiate()
+	rock_inst.frame = 2
+	rock_inst.destination = pos3.global_position
+	add_child(rock_inst)
+
+@onready var break_sprite = $boat/break
+func rock2_land():
+	break_sprite.show()
+	break_sprite.play("default")
+	push_characters_away(pos2.global_position)
+
+@onready var dark_cover = $darkness_cover
+func rock3_land():
+	dark_cover.show()
+	var tween = get_tree().create_tween()
+	tween.set_ease(Tween.EASE_OUT_IN)
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(dark_cover,"global_position",Vector2(0,0),1)
 
 func replace_sprite(replacement_file,original,location:bool): # true:original loc, false:marker loc
 	var man_inst = replacement_file.instantiate()
+	man_inst.z_index = 3
 	if location:
 		man_inst.global_position = original.global_position
 		dummies.append(man_inst)
@@ -224,4 +275,32 @@ func _on_interaction_ui_handler_updated_conversation_flag() -> void:
 
 func _on_interaction_ui_handler_menu_closed() -> void:
 	if to_move:
+		trigger_end()
+
+func push_characters_away(origin_position:Vector2):
+	for dummy in dummies:
+		var tween = get_tree().create_tween()
+		tween.set_ease(Tween.EASE_OUT)
+		tween.set_trans(Tween.TRANS_QUAD)
+		var push_location = dummy.global_position + (dummy.global_position - origin_position).normalized()*3
+		tween.tween_property(dummy,"global_position",push_location,.3)
+
+func _on_light_area_area_entered(area: Area2D) -> void:
+	rock3_land()
+
+@export var player_prompt : Control
+var player_inside = false
+var started_self_exit = false
+func _on_leave_area_body_entered(body: Node2D) -> void:
+	player_prompt.show()
+	player_inside = true
+func _on_leave_area_body_exited(body: Node2D) -> void:
+	player_prompt.hide()
+	player_inside = false
+func _physics_process(_delta):
+	if not started_self_exit and player_inside and Input.is_action_just_pressed("interact"):
+		started_self_exit = true
+		player.can_be_controlled = false
+		self.survivor_chosen = player
+		player_prompt.hide()
 		trigger_end()

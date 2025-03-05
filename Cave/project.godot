@@ -12,7 +12,7 @@ config_version=5
 
 config/name="CaveGame"
 run/main_scene="res://MainMenu/main_menu.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -79,6 +79,7 @@ attack={
 2d_physics/layer_2="player"
 2d_physics/layer_3="survivor"
 2d_physics/layer_4="enemy"
+2d_physics/layer_24="light_rock"
 
 [rendering]
 
