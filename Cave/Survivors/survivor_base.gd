@@ -24,15 +24,31 @@ enum survivor_types {
 @export var health := 100  : set = _on_health_changed
 @export var thirst := 100
 
+@onready var game_map = null
+
 func _ready():
+	if get_parent().name == "game_map":
+		game_map = get_parent()
 	player = get_tree().get_nodes_in_group("player")[0]
+	animator.play("idle")
+	# set variables from save data
+	global_position = GameHandler.get_survivor_data_from_object(self).global_position
+	assigned_location = GameHandler.get_survivor_data_from_object(self).assigned_location
+	target_area = NodePath(GameHandler.get_survivor_data_from_object(self).target_area)
+	target_assignment = NodePath(GameHandler.get_survivor_data_from_object(self).target_assignment)
+	target_usage = NodePath(GameHandler.get_survivor_data_from_object(self).target_usage)
+	print("loading target area: " + str(target_area))
+	health = GameHandler.get_survivor_data_from_object(self).health
+	thirst = GameHandler.get_survivor_data_from_object(self).thirst
 	set_up_remark_system()
 
 func _physics_process(_delta: float) -> void:
 	var absVel = abs(velocity)
 	var currentAnim = animator.get_animation()
-	if absVel > Vector2(.1,.1) and currentAnim != "walk":
-		animator.play("walk")
+	if absVel > Vector2(.1,.1):
+		if currentAnim != "walk":
+			animator.play("walk")
+		GameHandler.get_survivor_data_from_object(self).global_position = global_position
 		if velocity.x < 0:
 			animator.flip_h = true
 		else:
@@ -54,21 +70,27 @@ func approach_target():
 
 func find_target_area(input_location):
 	assigned_location = input_location
+	GameHandler.get_survivor_data_from_object(self).assigned_location = assigned_location
 	state_machine.change_state(state_machine.movement)
 	navigation_agent.target_position = input_location
 	for item2 in get_tree().get_nodes_in_group("location_flag"):
 		if item2.global_position == assigned_location:
 			target_area = get_path_to(item2)
+	GameHandler.get_survivor_data_from_object(self).target_area = target_area
+	GameHandler.get_survivor_data_from_object(self).target_assignment = target_assignment
+	GameHandler.get_survivor_data_from_object(self).target_usage = target_usage
+	print("assigned, area/node in data is: " + str(GameHandler.get_survivor_data_from_object(self).target_area))
 
 func get_point_in_target_area() -> Vector2:
 	var point_within_location
-	while true and get_node(target_area):
-		var random_angle = randf_range(0,2*PI)
-		var random_radius = randf_range(0,get_node(target_area).location_area_shape.shape.radius)
-		point_within_location = Vector2(random_radius*cos(random_angle),random_radius*sin(random_angle)) + get_node(target_area).global_position
-		var closest = NavigationServer2D.map_get_closest_point(get_tree().get_first_node_in_group("navigation_region").get_navigation_map(),point_within_location)
-		if point_within_location.distance_to(closest) < .1:
-			break
+	if target_area:
+		while true and get_node(target_area):
+			var random_angle = randf_range(0,2*PI)
+			var random_radius = randf_range(0,get_node(target_area).location_area_shape.shape.radius)
+			point_within_location = Vector2(random_radius*cos(random_angle),random_radius*sin(random_angle)) + get_node(target_area).global_position
+			var closest = NavigationServer2D.map_get_closest_point(get_tree().get_first_node_in_group("navigation_region").get_navigation_map(),point_within_location)
+			if point_within_location.distance_to(closest) < .1:
+				break
 	if point_within_location:
 		return point_within_location
 	else: return Vector2.ZERO
@@ -96,8 +118,8 @@ func take_status_break(status:String): # take break to move to status area
 	state_machine.change_state(state_machine.movement)
 	if status == "thirst":
 		queue_remark(remark_prompts.WATER)
-		if target_assignment and self in get_node(target_assignment).assigned_survivors:
-			get_node(target_assignment).assigned_survivors.erase(self)
+		if target_assignment:
+			get_node(target_assignment).set_assigned_survivors(get_path(),false)
 		var hydrants = get_tree().get_nodes_in_group("hydrant")
 		var highest_hydrant = 0
 		for hydrant in hydrants:
@@ -120,24 +142,24 @@ func _on_thirst_timer_timeout():
 		if thirst == 40:
 			queue_remark(remark_prompts.THIRST)
 		status_check()
+	GameHandler.get_survivor_data_from_object(self).thirst = thirst
 
 var returning_from_status_break = false
 func _on_survivor_movement_state_actor_reached_target():
-	if status_break:
-		if get_node(target_usage):
+	if status_break and target_usage:
+		if get_node(target_usage) and target_assignment:
 			if get_node(target_usage).manual_depletion(30):
 				print("drink completed")
 				thirst = 100
-				if self in get_node(target_usage).assigned_survivors:
-					get_node(target_usage).assigned_survivors.erase(self)
+				get_node(target_usage).set_assigned_survivors(get_path(),false)
 				status_break = false
 				returning_from_status_break = true
 				navigation_agent.target_position = get_node(target_assignment).global_position
 				# return to prior occupation
 			else:
 				# add to hydrant occupation
-				if self not in get_node(target_usage).assigned_survivors:
-					get_node(target_usage).assigned_survivors.append(self)
+				if get_path() not in get_node(target_usage).assigned_survivors:
+					get_node(target_usage).set_assigned_survivors(get_path(),true)
 					state_machine.change_state(state_machine.activity)
 				#print("waiting for progress")
 				#var delay_timer = Timer.new()
@@ -148,8 +170,7 @@ func _on_survivor_movement_state_actor_reached_target():
 	elif returning_from_status_break:
 		returning_from_status_break = false
 		state_machine.change_state(state_machine.activity)
-		if not self in get_node(target_assignment).assigned_survivors:
-			get_node(target_assignment).assigned_survivors.append(self)
+		get_node(target_assignment).set_assigned_survivors(get_path(),true)
 		#returned from water break, begin working on assignment
 
 var enemies_nearby : Array = []
@@ -169,14 +190,29 @@ func _on_animated_sprite_2d_animation_finished():
 
 func _on_health_changed(value):
 	health = value
+	#print("hurt " + str(health))
+	GameHandler.get_survivor_data_from_object(self).health = value
 	if health <= 0:
+		#print("dead")d
 		state_machine.change_state(state_machine.death)
 	elif health <= 40:
 		queue_remark(remark_prompts.HEALTH)
 
 func _on_survivor_death_state_death() -> void:
-	if survivor_type == survivor_types.GIRL:
-		GameHandler.player_data.conversation_flags["kate_dead"] = true
+	match survivor_type:
+		survivor_types.GIRL:
+			GameHandler.save_game_instance.player_data.conversation_flags["kate_dead"] = true
+		survivor_types.MAN:
+			GameHandler.save_game_instance.player_data.conversation_flags["mace_dead"] = true
+		survivor_types.OLDWOMAN:
+			GameHandler.save_game_instance.player_data.conversation_flags["ida_dead"] = true
+		survivor_types.OLDMAN:
+			GameHandler.save_game_instance.player_data.conversation_flags["wesley_dead"] = true
+	if (GameHandler.save_game_instance.player_data.conversation_flags["kate_dead"] # all dead
+	and GameHandler.save_game_instance.player_data.conversation_flags["mace_dead"]
+	and GameHandler.save_game_instance.player_data.conversation_flags["ida_dead"]
+	and GameHandler.save_game_instance.player_data.conversation_flags["wesley_dead"]):
+		game_map.trigger_ending(game_map.ending_types.SURVIVORS_DEAD)
 
 @onready var interaction_shape = $interaction_area/CollisionShape2D
 func _on_visibility_changed() -> void:
@@ -214,13 +250,13 @@ func _on_remark_timer_timeout() -> void:
 
 var ending_sequence = false
 func queue_remark(prompt : remark_prompts):
-	if remark_empty and not ending_sequence:
+	if remark_empty and not ending_sequence and remark_timer:
 		remark_timer.start(10)
 		remark_box.text = remarks[survivor_type][prompt].pick_random()
 		if prompt == remark_prompts.TOOL:
-			for item in GameHandler.item_instances:
+			for item in GameHandler.save_game_instance.item_instances:
 				print(item)
-				if item[1] == self:
+				if typeof(item[1]) == TYPE_OBJECT and item[1] == self:
 					remark_box.text = remark_box.text.replace("XXXX",GameHandler.item_names[item[0]]) # if tool, replace placeholder with tool
 	elif ending_sequence and (prompt == remark_prompts.FALLING or prompt == remark_prompts.BLOCKED1 or prompt == remark_prompts.BLOCKED2):
 		remark_timer.start(10)

@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1s3mmwqql7u5"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_syfyx"]
+
+[node name="kate_m" instance=ExtResource("1_syfyx")]
+visible = true
+line = "Did we do something wrong? How come Mace isn’t OK?"
+response1 = "It wasn’t us. Those wild animals got him. He was protecting us."
+response2 = "He wasn’t careful enough. None of us were."
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_syfyx")]
+layout_mode = 2
+line = "He was really brave…"
+response1 = "Yeah. He was."
+response2 = "[Silence]"
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_syfyx")]
+layout_mode = 2
+line = "Are we all going to die?"
+response1 = "Maybe. But we’re going to fight until the end no matter what."
+response2 = "No. If we stick together and be careful, nothing is keeping us down!"
+
+[node name="r2_1" parent="r2" index="4" instance=ExtResource("1_syfyx")]
+layout_mode = 2
+line = "I’m so scared…"
+
+[node name="r2_2" parent="r2" index="5" instance=ExtResource("1_syfyx")]
+layout_mode = 2
+line = "I trust you."

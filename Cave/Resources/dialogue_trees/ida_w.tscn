@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://dl056un1sgpki"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_8mmx0"]
+
+[node name="ida_w" instance=ExtResource("1_8mmx0")]
+visible = true
+line = "This feels a lot harder without Wesley here to guide us."
+response1 = "He’d tell us to stay focused if he were still alive."
+response2 = "We have to stick together, even without him."
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_8mmx0")]
+layout_mode = 2
+line = "Oh, I’m sure. But if it was that easy, we wouldn’t need leaders like him to begin with."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_8mmx0")]
+layout_mode = 2
+line = "How’s that been working, hon? Maybe it’s just our time to go. Not all trials are meant to be overcome."

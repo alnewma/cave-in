@@ -73,12 +73,12 @@ func _on_visibility_changed() -> void:
 ## Leaving Script ##
 
 var player_inside_to_leave = false
-func _on_leave_area_body_entered(body: Node2D) -> void:
+func _on_leave_area_body_entered(_body: Node2D) -> void:
 	if not leaving:
 		player_prompt.visible = true
 		player_inside_to_leave = true
 
-func _on_leave_area_body_exited(body: Node2D) -> void:
+func _on_leave_area_body_exited(_body: Node2D) -> void:
 	player_prompt.visible = false
 	player_inside_to_leave = false
 

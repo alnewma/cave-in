@@ -1,7 +1,7 @@
 [gd_scene load_steps=23 format=3 uid="uid://ygnyyeje43ta"]
 
 [ext_resource type="Texture2D" uid="uid://joavwh2jneu5" path="res://ArtAssets/BatSprite.png" id="1_dpp1s"]
-[ext_resource type="Script" path="res://Animals/bat_base.gd" id="1_gcnrs"]
+[ext_resource type="Script" uid="uid://kc60k06hot8s" path="res://Animals/bat_base.gd" id="1_gcnrs"]
 [ext_resource type="Texture2D" uid="uid://8pakf2qkk3d" path="res://ArtAssets/BatShadow.png" id="3_tgjbk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xygsq"]
@@ -157,7 +157,7 @@ script = ExtResource("1_gcnrs")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -20)
 sprite_frames = SubResource("SpriteFrames_rv0nq")
-animation = &"up"
+animation = &"right"
 autoplay = "down"
 
 [node name="detection_area" type="Area2D" parent="."]
@@ -188,14 +188,16 @@ one_shot = true
 one_shot = true
 
 [node name="shadow" type="Sprite2D" parent="."]
+z_index = -1
 texture = ExtResource("3_tgjbk")
 
 [node name="death_sprite" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(0, -10)
+position = Vector2(0, -8)
 texture = ExtResource("1_dpp1s")
 hframes = 4
 vframes = 4
+frame = 4
 
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]

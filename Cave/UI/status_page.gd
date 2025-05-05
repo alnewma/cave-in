@@ -38,7 +38,7 @@ func _on_visibility_changed():
 
 func refresh_item_textures():
 	var survivor_item = null
-	for item in GameHandler.item_instances:
+	for item in GameHandler.save_game_instance.item_instances:
 		if item[1] is Node2D and item[1] == handler.current_survivor:
 			survivor_item = item[0]
 	if survivor_item != null:
@@ -76,7 +76,7 @@ func inside_change(value):
 			replace_scoll_container.visible = false
 
 func _on_take_button_pressed():
-	for item in GameHandler.item_instances:
+	for item in GameHandler.save_game_instance.item_instances:
 		if item[1] is Node2D and item[1] == handler.current_survivor:
 			print("removing item from survivor")
 			item[1] = get_tree().get_first_node_in_group("player")
@@ -92,7 +92,7 @@ func _on_replace_button_pressed():
 	replace_scoll_container.visible = true
 	var player = get_tree().get_first_node_in_group("player")
 	var items_found = 0
-	for item in GameHandler.item_instances:
+	for item in GameHandler.save_game_instance.item_instances:
 		if item[1] is Node2D and item[1] == player:
 			print("items found for player")
 			items_found += 1
@@ -108,7 +108,7 @@ func _on_replace_button_pressed():
 func replace_item_clicked(pressed_item):
 	_on_take_button_pressed()
 	var player = get_tree().get_first_node_in_group("player")
-	for item in GameHandler.item_instances:
+	for item in GameHandler.save_game_instance.item_instances:
 		if item[0] == pressed_item and item[1] is Node2D and item[1] == player:
 			item[1] = handler.current_survivor
 			break

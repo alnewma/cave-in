@@ -16,7 +16,7 @@ func _on_button_pressed(source_text):
 				placeholder.flag_placed = true
 				placeholder.flag_name = name_entry.text
 				placeholder.peri.visible = false
-				GameHandler.player_data.map_data.locations.append({"position":placeholder.position,"name":name_entry.text})
+				GameHandler.save_game_instance.player_data.map_data.locations.append({"position":placeholder.position,"name":name_entry.text})
 			visible = false
 		"Close":
 			if placeholder:
@@ -36,7 +36,7 @@ func _on_name_entry_text_changed(new_text):
 	# name availability
 	var name_available = true
 	var create_button = $background/button_holder/confirm_button/NinePatchRect/Button
-	for location in GameHandler.player_data.map_data.locations:
+	for location in GameHandler.save_game_instance.player_data.map_data.locations:
 		if location["name"] == new_text:
 			name_available = false
 	if name_available and new_text != "":

@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://d36q2h1lewjtu"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_tticx"]
+
+[node name="wesley_k" instance=ExtResource("1_tticx")]
+visible = true
+line = "When I look back at my life, all I see are my mistakes. I tell myself I won’t let them happen again, and yet when the time comes, there’s nothing I can do."
+response1 = "None of this is your fault."
+response2 = "What’s weighing on you?"
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_tticx")]
+layout_mode = 2
+line = "Doesn’t matter. I could’ve changed it regardless. Kate? She never should’ve left my side. Yet, I let her, and look what happened."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_tticx")]
+layout_mode = 2
+line = "How did we let them get to Kate? Protecting her was a priority and we got distracted. I got distracted. Let’s be real, it doesn’t matter if an old man like me makes it out. This was for her."

@@ -28,7 +28,7 @@ func _on_completion_status_changed(value):
 	completion_status = value
 	if completion_status == 100 and not completed:
 		completed = true
-		GameHandler.events_completed.append(event)
+		GameHandler.save_game_instance.events_completed.append(event)
 	emit_signal("completion_status_changed")
 	ready_status_changed()
 
@@ -43,8 +43,44 @@ func ready_status_changed(): # to be overwritten per object
 	pass
 func completion_routine(): # to be overwritten per object
 	pass
+##
+#
+# If there's no verify function and survivor is assigned, no crash
+# If there is verify function but no survivor is assigned, no crash
+# If both exist, there is a crash
+# If only ready calls verify, there is a crash (no GameHandler)
+# If only setters call verify, no crash
+#
+func set_assigned_survivors(value,add_or_erase : bool):
+	print("assigned change triggered")
+	_verify_self_array_existence()
+	if add_or_erase: # adding
+		if not value in assigned_survivors:
+			assigned_survivors.append(value)
+	else:
+		if value in assigned_survivors:
+			assigned_survivors.erase(value)
+	GameHandler.save_game_instance.player_data.objective_data[name][0] = assigned_survivors.duplicate()
+func set_using_survivors(value,add_or_erase : bool):
+	print("using change triggered")
+	_verify_self_array_existence()
+	if add_or_erase: # adding
+		if not value in using_survivors:
+			using_survivors.append(value)
+	else:
+		if value in using_survivors:
+			using_survivors.erase(value)
+	GameHandler.save_game_instance.player_data.objective_data[name][1] = using_survivors.duplicate()
+
+func _verify_self_array_existence():
+	GameHandler.save_game_instance.player_data.objective_data.get_or_add(name,[assigned_survivors.duplicate(),using_survivors.duplicate()])
 
 func _ready():
+	# save setup
+	_verify_self_array_existence()
+	assigned_survivors = GameHandler.save_game_instance.player_data.objective_data[name][0].duplicate()
+	using_survivors = GameHandler.save_game_instance.player_data.objective_data[name][1].duplicate()
+	# other
 	required_tool = [required_tool1,required_tool2,required_tool3,required_tool4]
 	var potential_available_items = [available_item1,available_item2,available_item3,available_item4]
 	var ps_used = 0
@@ -52,7 +88,7 @@ func _ready():
 		ps_used += 1
 		if ps_used <= available_item_count:
 			available_items.append(p)
-	if event in GameHandler.events_completed: # event has been completed in save
+	if event in GameHandler.save_game_instance.events_completed: # event has been completed in save
 		self.completion_status = 100
 	if depletion_rate > 0:
 		depletion_timer.wait_time = depletion_rate
@@ -75,18 +111,20 @@ func _on_progression_timer_timeout():
 	# check if all required tools are provided
 	var required_tools_accounted_for = true
 	var tools_being_used = []
-	for survivor in assigned_survivors:
+	for survivorPath in assigned_survivors:
+		var survivor = get_node(survivorPath)
 		if survivor.state_machine.state == survivor.state_machine.activity: # if survivor is currently working
-			for item in GameHandler.item_instances:
+			for item in GameHandler.save_game_instance.item_instances:
 				if typeof(item[1]) == TYPE_OBJECT and item[1] == survivor:
 					tools_being_used.append(item[0])
 	for tool in required_tool:
 		if tool and not tools_being_used.has(tool): # if a required tool isn't being used
 			required_tools_accounted_for = false
 	
-	for survivor in assigned_survivors:
+	for survivorPath in assigned_survivors:
+		var survivor = get_node(survivorPath)
 		if survivor.state_machine.state == survivor.state_machine.activity: # if survivor is currently working
-			print(name + " progression: " + str(completion_status))
+			#print(name + " progression: " + str(completion_status))
 			if completion_status < 100 and required_tools_accounted_for: # increase progress based on productivity level and tools
 				var progress_inc = pow(1.5,GameHandler.get_survivor_data_from_object(survivor).productivity)
 				completion_status += progress_inc
@@ -98,23 +136,23 @@ func give_item(items : Array):
 		for survivor in assigned_survivors:
 			# determine items owned by survivor
 			var survivor_items = 0
-			for i in GameHandler.item_instances:
+			for i in GameHandler.save_game_instance.item_instances:
 				if i[1] is Node2D and i[1] == survivor:
 					survivor_items += 1
 			if survivor_items == 0:
-				for item_instance in GameHandler.item_instances:
+				for item_instance in GameHandler.save_game_instance.item_instances:
 					if item_instance[0] == item and item_instance[1] == null: #item is available to be given
 						if not item_dispensed:
 							item_dispensed = true
 							item_instance[1] = survivor
-							survivor.queue_remark(survivor.remark_prompts.TOOL)
+							get_node(survivor).queue_remark(get_node(survivor).remark_prompts.TOOL)
 		if not item_dispensed:
 			item_dispensed = true
 			var item_drop = dropped_item_base.instantiate()
-			get_tree().current_scene.add_child(item_drop)
+			get_tree().current_scene.add_child.call_deferred(item_drop)
 			item_drop.global_position = global_position + random_radius()
 			item_drop.texture = GameHandler.item_images[item]
-			for item_instance in GameHandler.item_instances:
+			for item_instance in GameHandler.save_game_instance.item_instances:
 				if item_instance[0] == item and item_instance[1] == null:
 					item_instance[1] = item_drop.global_position
 					break

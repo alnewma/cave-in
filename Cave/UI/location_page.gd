@@ -23,7 +23,7 @@ func initiate():
 		if button.is_in_group("menu_button"):
 			button.queue_free()
 	create_assignment("You")
-	var locations = GameHandler.player_data.map_data.locations
+	var locations = GameHandler.save_game_instance.player_data.map_data.locations
 	for location in locations:
 		create_assignment(location["name"],location["position"])
 

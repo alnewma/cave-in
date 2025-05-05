@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://35rblmqfpawf"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_7hueb"]
+
+[node name="wesley_m" instance=ExtResource("1_7hueb")]
+visible = true
+line = "How’d Mace manage to screw up so badly? I don’t understand. I just don’t."
+response1 = "He was helping us get out of here."
+response2 = "Not everyone is built for this."
+response3 = "Mace didn’t deserve to die any more than you, or anyone else."
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_7hueb")]
+layout_mode = 2
+line = "That he was. He didn’t do anything differently than I would’ve. So how’d it happen to him? It should’ve been me…"
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_7hueb")]
+layout_mode = 2
+line = "That’s a pitiful excuse. Mace was more than capable. His death shouldn’t have happened. His death–it’s inexcusable and I… just don’t understand it."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_7hueb")]
+layout_mode = 2
+line = "So then why did he! Can you explain it? I can’t… no matter how much I think about it. What did he do? What could we have possibly done differently? It just doesn’t make sense."

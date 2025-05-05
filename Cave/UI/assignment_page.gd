@@ -39,7 +39,7 @@ func assign_survivor(object:Object, location = Vector2.ZERO, assignment = ""): #
 	c_survivor.assigned_location = location
 	if object:
 		c_survivor.target_assignment = object.get_path()
-		object.assigned_survivors.append(c_survivor)
+		object.set_assigned_survivors(c_survivor.get_path(),true)
 		if object.is_in_group("player"):
 			c_survivor.queue_remark(c_survivor.remark_prompts.FOLLOWING)
 	elif assignment == "guard":

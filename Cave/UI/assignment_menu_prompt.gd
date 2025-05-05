@@ -25,7 +25,7 @@ func _on_input_event(viewport, event, _shape_idx):
 		var location = get_parent()
 		menu_instance.location.text = location.display_name
 		menu_instance.assignment.text = "Assignment: " + location.assignment
-		if location.required_tools > 0:
+		if location.required_tools and location.required_tools > 0:
 			menu_instance.requirements.text = "Tool Requirements: "
 			for tool in range(location.required_tools):
 				menu_instance.requirements.text += GameHandler.items.keys()[location.required_tool[tool]].capitalize()

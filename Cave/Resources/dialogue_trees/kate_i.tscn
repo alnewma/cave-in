@@ -1,0 +1,108 @@
+[gd_scene load_steps=2 format=3 uid="uid://ba5cgsevub3x2"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_f3gkm"]
+
+[node name="kate_i" instance=ExtResource("1_f3gkm")]
+visible = true
+line = "Ida’s not coming back, is she?"
+response1 = "No. It’s just us now."
+response2 = "She’ll get better, once we get out of here."
+response3 = "Let’s talk about this some other time."
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "Oh. But I don’t want her to be gone."
+response1 = "Sometimes that’s the way things are."
+response2 = "She’ll live on, one way or another."
+response3 = "I don’t want her to be gone either. But we still have each other."
+
+[node name="r1_1" parent="r1" index="4" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "That’s not fair."
+response1 = "It never is."
+response2 = "I know. But we have to push on anyway."
+
+[node name="r1_2" parent="r1" index="5" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "I miss Ida."
+
+[node name="r1_3" parent="r1" index="6" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "Just promise not to leave me too."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "Really?"
+response1 = "Yes, really! We just need to get out of here, alright?"
+response2 = "No, but she’ll stay strong in our hearts."
+response3 = "I… don’t think so."
+
+[node name="r2_1" parent="r2" index="4" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "OK! Let’s go."
+
+[node name="r2_2" parent="r2" index="5" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "That’s not the same! That’s not the same at all."
+
+[node name="r2_3" parent="r2" index="6" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "Then why’d you say that?"
+response1 = "Because I didn’t want to hurt you."
+response2 = "Because I wanted to believe it too."
+
+[node name="r2_3_1" parent="r2/r2_3" index="4" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "Well, you did."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "No, I want to talk about it now! When is Ida coming back?"
+response1 = "It's just us now."
+response2 = "She’ll get better, once we get out of here."
+
+[node name="r3_1" parent="r3" index="4" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "Oh. But I don’t want her to be gone."
+response1 = "Sometimes that’s the way things are."
+response2 = "She’ll live on, one way or another."
+response3 = "I don’t want her to be gone either. But we still have each other."
+
+[node name="r3_1_1" parent="r3/r3_1" index="4" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "That’s not fair."
+response1 = "It never is."
+response2 = "I know. But we have to push on anyway."
+
+[node name="r3_1_2" parent="r3/r3_1" index="5" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "I miss Ida."
+
+[node name="r3_1_3" parent="r3/r3_1" index="6" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "Just promise not to leave me too."
+
+[node name="r3_2" parent="r3" index="5" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "Really?"
+response1 = "Yes, really! We just need to get out of here, alright?"
+response2 = "No, but she’ll stay strong in our hearts."
+response3 = "I… don’t think so."
+
+[node name="r3_2_1" parent="r3/r3_2" index="4" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "OK! Let’s go."
+
+[node name="r3_2_2" parent="r3/r3_2" index="5" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "That’s not the same! That’s not the same at all."
+
+[node name="r3_2_3" parent="r3/r3_2" index="6" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "Then why’d you say that?"
+response1 = "Because I didn’t want to hurt you."
+response2 = "Because I wanted to believe it too."
+
+[node name="r3_2_3_1" parent="r3/r3_2/r3_2_3" index="4" instance=ExtResource("1_f3gkm")]
+layout_mode = 2
+line = "Well, you did."

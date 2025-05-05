@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7gb404g6m212"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_660nv"]
+
+[node name="wesley_i" instance=ExtResource("1_660nv")]
+visible = true
+line = "Ida left big shoes to fill. I know we can make it out but the relief won’t be the same without her standing next to us."
+response1 = "It’s hard to adjust, not having her here."
+response2 = "It’s not a great feeling."
+response3 = "At least she believed in an afterlife. Things could be worse."
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_660nv")]
+layout_mode = 2
+line = "That it is."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_660nv")]
+layout_mode = 2
+line = "It’s an awful feeling. She lived her whole life, countless birthdays, hours working… taking care of her family. Just to die in a hole with four strangers. No more dreams. An awful feeling."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_660nv")]
+layout_mode = 2
+line = "That’s a way of thinking. So it goes."

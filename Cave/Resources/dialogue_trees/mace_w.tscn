@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqi714wwiq7a3"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_558l1"]
+
+[node name="mace_w" instance=ExtResource("1_558l1")]
+visible = true
+line = "The cave’s a lot quieter without Wesley here. I’m not… sure I like it."
+response1 = "He died giving us hope."
+response2 = "We can make it without him, don’t worry."
+response3 = "He was definitely a character. It’ll be different without him."
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_558l1")]
+layout_mode = 2
+line = "I believe it. Because hope is about all I’m running on right now."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_558l1")]
+layout_mode = 2
+line = "Maybe. Maybe not. I don’t know if I care anymore."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_558l1")]
+layout_mode = 2
+line = "It’s amazing the impact an old man can have. Well, some of them anyways. I think, in the little time we had, I got to know Wesley better than I even knew my old man. Not that it matters. They’re both gone now."

@@ -1,6 +1,6 @@
 [gd_scene load_steps=79 format=4 uid="uid://dbt6aj80ujt3x"]
 
-[ext_resource type="Script" path="res://tunnel/tunnel.gd" id="1_esspt"]
+[ext_resource type="Script" uid="uid://cat2d6vhka2ts" path="res://tunnel/tunnel.gd" id="1_esspt"]
 [ext_resource type="TileSet" uid="uid://4d5lfppjykax" path="res://GameMap/TileMaps/SewerMap.tres" id="1_jpvxj"]
 [ext_resource type="Texture2D" uid="uid://b8ocphljvedwk" path="res://ArtAssets/Raft.png" id="2_sytn6"]
 [ext_resource type="Texture2D" uid="uid://5srnmkncvwrc" path="res://ArtAssets/boat_water.png" id="3_2wtuk"]
@@ -10,8 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://bsrbrnqvx2mpa" path="res://Player/Player.tscn" id="5_dwkph"]
 [ext_resource type="Texture2D" uid="uid://5gg16bnytwx" path="res://ArtAssets/water_ripple_top.png" id="5_hu0k2"]
 [ext_resource type="Texture2D" uid="uid://csu1axfm8ed70" path="res://ArtAssets/raft_engine.png" id="5_jqqnc"]
-[ext_resource type="Script" path="res://tunnel/survivor_ripple.gd" id="6_28nj4"]
-[ext_resource type="Script" path="res://tunnel/ripple_top.gd" id="6_a8h4q"]
+[ext_resource type="Script" uid="uid://bu4l1t8chxi3" path="res://tunnel/survivor_ripple.gd" id="6_28nj4"]
+[ext_resource type="Script" uid="uid://blsg6he0g4jey" path="res://tunnel/ripple_top.gd" id="6_a8h4q"]
 [ext_resource type="PackedScene" uid="uid://dwmc5vrgevot5" path="res://Survivors/man_survivor.tscn" id="7_5lghp"]
 [ext_resource type="Texture2D" uid="uid://dvv6eoa421glk" path="res://ArtAssets/water_ripple_bottom.png" id="7_15soe"]
 [ext_resource type="PackedScene" uid="uid://cgs33ypljrcev" path="res://Survivors/old_man_survivor.tscn" id="8_7xlc5"]
@@ -22,9 +22,9 @@
 [ext_resource type="Texture2D" uid="uid://bpxkpc0otix8c" path="res://ArtAssets/raft_break.png" id="12_g0nga"]
 [ext_resource type="Texture2D" uid="uid://biixss06nkggd" path="res://icon.svg" id="13_wyg5k"]
 [ext_resource type="PackedScene" uid="uid://buwfwcnvl62h1" path="res://UI/interaction_ui_handler.tscn" id="15_kg5ai"]
-[ext_resource type="Script" path="res://GameMap/fade_black.gd" id="16_08ssx"]
-[ext_resource type="Script" path="res://GameMap/fog_layer.gd" id="21_xdl81"]
-[ext_resource type="Shader" path="res://GameMap/fog.gdshader" id="22_c45y2"]
+[ext_resource type="Script" uid="uid://bwl3gxnhu54to" path="res://GameMap/fade_black.gd" id="16_08ssx"]
+[ext_resource type="Script" uid="uid://cxy5ylbhbnx7b" path="res://GameMap/fog_layer.gd" id="21_xdl81"]
+[ext_resource type="Shader" uid="uid://ctw52kihat482" path="res://GameMap/fog.gdshader" id="22_c45y2"]
 [ext_resource type="Texture2D" uid="uid://b03seaycqujvy" path="res://ArtAssets/feather_dark.png" id="26_hmj4w"]
 [ext_resource type="PackedScene" uid="uid://cykw63mwr86q2" path="res://UI/usage_prompt.tscn" id="27_skbrv"]
 
@@ -337,9 +337,9 @@ noise = SubResource("FastNoiseLite_h8u2h")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yew3h"]
 shader = ExtResource("22_c45y2")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_lwau3")
 shader_parameter/density = 0.3
 shader_parameter/speed = Vector2(0.002, -0.1)
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_lwau3")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_d117n"]
 
@@ -349,9 +349,9 @@ noise = SubResource("FastNoiseLite_d117n")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jkxnw"]
 shader = ExtResource("22_c45y2")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_q6skh")
 shader_parameter/density = 0.3
 shader_parameter/speed = Vector2(0.002, 0.001)
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_q6skh")
 
 [node name="tunnel" type="Node2D" node_paths=PackedStringArray("player_prompt") groups=["tunnel_scene"]]
 y_sort_enabled = true

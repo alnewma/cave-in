@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_wj5xr"]
 
 [node name="wesley_2" instance=ExtResource("1_wj5xr")]
+visible = true
 line = "Times like these are when I appreciate my grandson’s finesse. Things would be a lot easier if he was here."
 response1 = "I guess your grandson is pretty capable?"
 response2 = "I sure hope you can get back to him but things are looking rough in here."

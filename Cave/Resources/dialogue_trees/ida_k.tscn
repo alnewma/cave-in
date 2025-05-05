@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0j1k2rbpjw5d"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_tppn2"]
+
+[node name="ida_k" instance=ExtResource("1_tppn2")]
+visible = true
+line = "Of all of us to die, Kate deserved it the least. My heart goes out just thinking of her."
+response1 = "Mine too. Mine too."
+response2 = "She shouldn’t have been here."
+response3 = "Let’s make it out, for her."
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_tppn2")]
+layout_mode = 2
+line = "And yet it changes nothing…"
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_tppn2")]
+layout_mode = 2
+line = "She was clearly guided, and yet I’m struggling so much to see the purpose."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_tppn2")]
+layout_mode = 2
+line = "Yes. We have to bring her memory out of here. Otherwise, her parents may never know what happened. How brave she was."

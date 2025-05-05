@@ -1,13 +1,13 @@
 [gd_scene load_steps=13 format=3 uid="uid://d185j6h1es4ps"]
 
-[ext_resource type="Script" path="res://Survivors/survivor_base.gd" id="1_21p5d"]
-[ext_resource type="Script" path="res://Survivors/finite_state_machine.gd" id="2_861pe"]
-[ext_resource type="Script" path="res://Survivors/survivor_activity_state.gd" id="3_5t7pu"]
-[ext_resource type="Script" path="res://HelpfulFunctions/polygon_point_generator.gd" id="4_5lacm"]
-[ext_resource type="Script" path="res://Survivors/survivor_rest_state.gd" id="4_mhv7o"]
-[ext_resource type="Script" path="res://Survivors/survivor_movement_state.gd" id="5_h0sfs"]
-[ext_resource type="Script" path="res://Survivors/survivor_defense_state.gd" id="6_432de"]
-[ext_resource type="Script" path="res://Survivors/survivor_death_state.gd" id="7_fd67k"]
+[ext_resource type="Script" uid="uid://r8sappu5q1mg" path="res://Survivors/survivor_base.gd" id="1_21p5d"]
+[ext_resource type="Script" uid="uid://bt57v3pk6cixy" path="res://Survivors/finite_state_machine.gd" id="2_861pe"]
+[ext_resource type="Script" uid="uid://my20wvqocs5v" path="res://Survivors/survivor_activity_state.gd" id="3_5t7pu"]
+[ext_resource type="Script" uid="uid://c08pikrhqnv2j" path="res://HelpfulFunctions/polygon_point_generator.gd" id="4_5lacm"]
+[ext_resource type="Script" uid="uid://b3k6efbfm5ehi" path="res://Survivors/survivor_rest_state.gd" id="4_mhv7o"]
+[ext_resource type="Script" uid="uid://cntfhbme3wefa" path="res://Survivors/survivor_movement_state.gd" id="5_h0sfs"]
+[ext_resource type="Script" uid="uid://dm2helibvpqr3" path="res://Survivors/survivor_defense_state.gd" id="6_432de"]
+[ext_resource type="Script" uid="uid://2g0wcoyncs6o" path="res://Survivors/survivor_death_state.gd" id="7_fd67k"]
 [ext_resource type="Theme" uid="uid://bgr6frj5j5a2w" path="res://UI/label_theme.tres" id="9_7edol"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bnvq1"]
@@ -38,6 +38,7 @@ position = Vector2(0, -24)
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 5.0
 avoidance_enabled = true
+debug_enabled = true
 
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
 script = ExtResource("2_861pe")

@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var travel_duration = 15
+var spectator_mode = false
 
 func _ready():
 	speech_setup()
@@ -48,7 +49,7 @@ func set_backgrounds():
 
 func set_survivors():
 	var survivor_instances = [$man_survivor,$old_man_survivor,$old_woman_survivor,$girl_survivor]
-	var survivor_data = [GameHandler.player_data.survivor_data.ida,GameHandler.player_data.survivor_data.kate,GameHandler.player_data.survivor_data.mace,GameHandler.player_data.survivor_data.wesley]
+	var survivor_data = [GameHandler.save_game_instance.player_data.survivor_data.ida,GameHandler.save_game_instance.player_data.survivor_data.kate,GameHandler.save_game_instance.player_data.survivor_data.mace,GameHandler.save_game_instance.player_data.survivor_data.wesley]
 	for survivor in survivor_instances:
 		if not survivor.health > 0:
 			survivor.queue_free()
@@ -261,16 +262,16 @@ func replace_sprite(replacement_file,original,location:bool): # true:original lo
 
 
 func _on_interaction_ui_handler_updated_conversation_flag() -> void:
-	if GameHandler.player_data.conversation_flags["ida_chosen"]:
+	if GameHandler.save_game_instance.player_data.conversation_flags["ida_chosen"]:
 		survivor_chosen = woman
-	elif GameHandler.player_data.conversation_flags["mace_chosen"]:
+	elif GameHandler.save_game_instance.player_data.conversation_flags["mace_chosen"]:
 		survivor_chosen = man
-	elif GameHandler.player_data.conversation_flags["wesley_chosen"]:
-		if GameHandler.player_data.conversation_flags["kate_dead"]: # if wesley chosen and kate alive
+	elif GameHandler.save_game_instance.player_data.conversation_flags["wesley_chosen"]:
+		if GameHandler.save_game_instance.player_data.conversation_flags["kate_dead"]: # if wesley chosen and kate alive
 			survivor_chosen = oldman                                # choose kate
 		else:
 			survivor_chosen = girl
-	elif GameHandler.player_data.conversation_flags["kate_chosen"]:
+	elif GameHandler.save_game_instance.player_data.conversation_flags["kate_chosen"]:
 		survivor_chosen = girl
 
 func _on_interaction_ui_handler_menu_closed() -> void:

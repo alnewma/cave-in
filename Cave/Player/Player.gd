@@ -3,7 +3,7 @@ extends CharacterBody2D
 var can_be_controlled = true
 
 var speed = 120
-var health = 100
+var health = 100 : set = _health_changed
 @export var male = true
 @export var attack_cooldown = 1.5
 @export var attack_damage = 30
@@ -13,11 +13,17 @@ var health = 100
 @onready var animation_tree = $AnimationTree
 
 @onready var assigned_survivors = [] # survivors following player
+@onready var game_map = null
 
 func _ready():
+	if get_parent().name == "GameMap":
+		game_map = get_parent()
 	man.visible = male
 	woman.visible = not male
 	animation_tree.active = true
+	# set variables from save data
+	global_position = GameHandler.save_game_instance.player_data.player_character_stats.global_position
+	health = GameHandler.save_game_instance.player_data.player_character_stats.health
 
 func _physics_process(delta):
 	movement(delta)
@@ -42,6 +48,7 @@ func movement(_delta):
 		if velocity.dot(Vector2(cos(PI+attack_area.rotation),sin(PI+attack_area.rotation))) < 0:
 			velocity *= .5
 	move_and_slide()
+	GameHandler.save_game_instance.player_data.player_character_stats.global_position = global_position
 
 func update_animation_parameters():
 	#if velocity.x != 0: # makes player face walking direction
@@ -50,16 +57,17 @@ func update_animation_parameters():
 		#animation_tree["parameters/Idle/blend_position"] = velocity.x
 		#animation_tree["parameters/Walk/blend_position"] = velocity.x
 	# makes player face attack direction
-	animation_tree["parameters/Attack/blend_position"] = -cos(attack_area.rotation)
-	animation_tree["parameters/Death/blend_position"] = -cos(attack_area.rotation)
-	animation_tree["parameters/Idle/blend_position"] = -cos(attack_area.rotation)
-	animation_tree["parameters/Walk/blend_position"] = -cos(attack_area.rotation)
+	if can_be_controlled:
+		animation_tree["parameters/Attack/blend_position"] = -cos(attack_area.rotation)
+		animation_tree["parameters/Death/blend_position"] = -cos(attack_area.rotation)
+		animation_tree["parameters/Idle/blend_position"] = -cos(attack_area.rotation)
+		animation_tree["parameters/Walk/blend_position"] = -cos(attack_area.rotation)
 	if health <= 0:
 		animation_tree["parameters/conditions/is_attacking"] = false
 		animation_tree["parameters/conditions/is_dead"] = true
 		animation_tree["parameters/conditions/is_idle"] = false
 		animation_tree["parameters/conditions/is_walking"] = false
-	elif currently_attacking:
+	elif attacking_currently:
 		animation_tree["parameters/conditions/is_attacking"] = true
 		animation_tree["parameters/conditions/is_dead"] = false
 		animation_tree["parameters/conditions/is_idle"] = false
@@ -78,23 +86,40 @@ func update_animation_parameters():
 @onready var attack_area = $attack_area
 @onready var attack_cooldown_timer = $attack_cooldown
 var on_attack_cooldown = false
-@export var currently_attacking = false
+@export var attacking_currently = false
 var enemies_in_attack_radius = []
 func attack():
 	attack_area.rotation = attack_area.global_position.angle_to_point(get_global_mouse_position())+PI
 	if not on_attack_cooldown:
 		if Input.is_action_just_pressed("attack"):
 			on_attack_cooldown = true
-			currently_attacking = true
+			attacking_currently = true
 			attack_cooldown_timer.start(attack_cooldown)
 			get_tree().create_timer(.6).connect("timeout",attack_deal_damage)
+			get_tree().create_timer(.8).connect("timeout",_attack_ended)
 func attack_deal_damage():
 	if enemies_in_attack_radius.size() > 0:
 		GameHandler.damage_target(self,enemies_in_attack_radius[0],attack_damage)
 func _on_attack_cooldown_timeout():
 	on_attack_cooldown = false
+func _attack_ended():
+	attacking_currently = false
 func _on_attack_area_body_entered(body):
 	if body.is_in_group("enemy") and not body in enemies_in_attack_radius:
 		enemies_in_attack_radius.append(body)
 func _on_attack_area_body_exited(body):
 	enemies_in_attack_radius.erase(body)
+
+func _health_changed(val):
+	health = val
+	if health <= 0:
+		_player_died()
+	GameHandler.save_game_instance.player_data.player_character_stats.health = val
+
+var dead := false
+func _player_died():
+	if not dead:
+		dead = true
+		can_be_controlled = false
+		if game_map:
+			game_map.trigger_ending(game_map.ending_types.PLAYER_DEAD)

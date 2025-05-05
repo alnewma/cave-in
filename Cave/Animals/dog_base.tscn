@@ -1,7 +1,7 @@
 [gd_scene load_steps=24 format=3 uid="uid://b83b7hq6heqo8"]
 
 [ext_resource type="Texture2D" uid="uid://c1t35agc3f6p1" path="res://ArtAssets/DogSprite.png" id="1_bgkw4"]
-[ext_resource type="Script" path="res://Animals/dog_base.gd" id="1_it4ru"]
+[ext_resource type="Script" uid="uid://ipol2p4wtxb3" path="res://Animals/dog_base.gd" id="1_it4ru"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1tewv"]
 atlas = ExtResource("1_bgkw4")
@@ -165,6 +165,7 @@ y_sort_enabled = true
 collision_layer = 8
 collision_mask = 15
 script = ExtResource("1_it4ru")
+attack_damage = 30
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -12)

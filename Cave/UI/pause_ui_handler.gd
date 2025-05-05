@@ -4,18 +4,20 @@ func _ready():
 	pause_setup()
 
 func pause_setup():
-	notes.text = GameHandler.player_data.player_character_stats.notes
+	notes.text = GameHandler.save_game_instance.player_data.player_character_stats.notes
 	var player = get_tree().get_first_node_in_group("player")
-	for item in GameHandler.item_instances:
+	for item in GameHandler.save_game_instance.item_instances:
 		if item[1] is Node2D and item[1] == player:
 			var item_button = inventory_item.instantiate()
 			item_button.get_node("item_image").texture = GameHandler.item_images_small[item[0]]
 			item_button.get_node("item_name").text = GameHandler.item_names[item[0]]
 			inventory_grid.add_child(item_button)
-	
+
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"):
-		visible = not visible
+		var gameMap = get_tree().current_scene
+		if not gameMap.spectator_mode:
+			visible = not visible
 
 var inventory_item = preload("res://UI/inventory_item.tscn")
 @onready var inventory_grid = $background/inventory_container/GridContainer
@@ -39,14 +41,14 @@ func _on_quit_button_pressed():
 	get_tree().change_scene_to_packed(menu_scene)
 
 func _on_save_button_pressed():
-	GameHandler.save_data()
+	GameHandler.save_game_instance.write_data()
 
 func _on_resume_button_pressed():
 	visible = false
 
 @onready var notes = $background/right_container/notes_edit
 func _on_notes_edit_text_changed():
-	GameHandler.player_data.player_character_stats["notes"] = notes.text
+	GameHandler.save_game_instance.player_data.player_character_stats["notes"] = notes.text
 
 func _on_visibility_changed() -> void:
 	if visible:

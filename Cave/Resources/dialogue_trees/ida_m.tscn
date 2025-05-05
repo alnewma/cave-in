@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://drmcub8niwbir"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_30ubd"]
+
+[node name="ida_m" instance=ExtResource("1_30ubd")]
+visible = true
+line = "I don’t understand why it happened. Why did Mace die? He was still so young."
+response1 = "We’re all hurting. He didn’t deserve it."
+response2 = "We can grieve later. For now, we need to care for the living."
+response3 = "He died for the group."
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_30ubd")]
+layout_mode = 2
+line = "No, no one deserves death. No matter how much we disagreed, he’s only human. Just as I am. Imperfect but loved."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_30ubd")]
+layout_mode = 2
+line = "I suppose you’re right. Mace never really seemed to care about the afterlife, so he probably wouldn’t want me dwelling on it either."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_30ubd")]
+layout_mode = 2
+line = "I know. I just- the group isn’t the same without him. Sure, we disagreed sometimes but I could tell there was kindness behind his words. I hope he found peace with himself, wherever he may go."

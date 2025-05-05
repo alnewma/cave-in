@@ -34,10 +34,10 @@ func _on_visibility_changed() -> void:
 			show_clean_update_holder()
 			for child in tree_holder.get_children(): # clear any old conversations
 				child.queue_free()
-			var ida_pts = GameHandler.player_data.survivor_data.ida.conversation_point
-			var mace_pts = GameHandler.player_data.survivor_data.mace.conversation_point
-			var wesley_pts = GameHandler.player_data.survivor_data.wesley.conversation_point
-			var kate_pts = GameHandler.player_data.survivor_data.kate.conversation_point
+			var ida_pts = GameHandler.save_game_instance.player_data.survivor_data.ida.conversation_point
+			var mace_pts = GameHandler.save_game_instance.player_data.survivor_data.mace.conversation_point
+			var wesley_pts = GameHandler.save_game_instance.player_data.survivor_data.wesley.conversation_point
+			var kate_pts = GameHandler.save_game_instance.player_data.survivor_data.kate.conversation_point
 			var total_convo_points = ida_pts + mace_pts + wesley_pts + kate_pts
 			match get_parent().current_survivor.survivor_type:
 				0: # Kate
@@ -55,12 +55,18 @@ func _on_visibility_changed() -> void:
 					elif total_convo_points >= 4 and kate_pts == 2:
 						tree_holder.add_child(kate3.instantiate())
 					else: # not ready to talk
-						var holder = ui_label.instantiate()
-						tree_holder.add_child(holder)
-						if GameHandler.player_data.survivor_data.kate.conversation_happiness < 0: # unhappy
-							holder.text = "Kate: " + kate_busy_unhappy.pick_random()
+						# if pick_death_convo returns option, add convo
+						# else, pick line
+						var picker_result = pick_death_conversation("Kate")
+						if picker_result:
+							tree_holder.add_child(picker_result.instantiate())
 						else:
-							holder.text = "Kate: " + kate_busy_neutral.pick_random()
+							var holder = ui_label.instantiate()
+							tree_holder.add_child(holder)
+							if GameHandler.save_game_instance.player_data.survivor_data.kate.conversation_happiness < 0: # unhappy
+								holder.text = "Kate: " + kate_busy_unhappy.pick_random()
+							else:
+								holder.text = "Kate: " + kate_busy_neutral.pick_random()
 				1: # None
 					pass
 				2: # Mace
@@ -78,12 +84,18 @@ func _on_visibility_changed() -> void:
 					elif total_convo_points >= 4 and mace_pts == 2:
 						tree_holder.add_child(mace3.instantiate())
 					else: # not ready to talk
-						var holder = ui_label.instantiate()
-						tree_holder.add_child(holder)
-						if GameHandler.player_data.survivor_data.mace.conversation_happiness < 0: # unhappy
-							holder.text = "Mace: " + mace_busy_unhappy.pick_random()
+						# if pick_death_convo returns option, add convo
+						# else, pick line
+						var picker_result = pick_death_conversation("Mace")
+						if picker_result:
+							tree_holder.add_child(picker_result.instantiate())
 						else:
-							holder.text = "Mace: " + mace_busy_neutral.pick_random()
+							var holder = ui_label.instantiate()
+							tree_holder.add_child(holder)
+							if GameHandler.save_game_instance.player_data.survivor_data.mace.conversation_happiness < 0: # unhappy
+								holder.text = "Mace: " + mace_busy_unhappy.pick_random()
+							else:
+								holder.text = "Mace: " + mace_busy_neutral.pick_random()
 				3: # Ida
 					if get_parent().tunnel_scene:
 						if get_parent().reached_tunnel_end:
@@ -99,12 +111,18 @@ func _on_visibility_changed() -> void:
 					elif total_convo_points >= 4 and ida_pts == 2:
 						tree_holder.add_child(ida3.instantiate())
 					else: # not ready to talk
-						var holder = ui_label.instantiate()
-						tree_holder.add_child(holder)
-						if GameHandler.player_data.survivor_data.ida.conversation_happiness < 0: # unhappy
-							holder.text = "Ida: " + ida_busy_unhappy.pick_random()
+						# if pick_death_convo returns option, add convo
+						# else, pick line
+						var picker_result = pick_death_conversation("Ida")
+						if picker_result:
+							tree_holder.add_child(picker_result.instantiate())
 						else:
-							holder.text = "Ida: " + ida_busy_neutral.pick_random()
+							var holder = ui_label.instantiate()
+							tree_holder.add_child(holder)
+							if GameHandler.save_game_instance.player_data.survivor_data.ida.conversation_happiness < 0: # unhappy
+								holder.text = "Ida: " + ida_busy_unhappy.pick_random()
+							else:
+								holder.text = "Ida: " + ida_busy_neutral.pick_random()
 				4: # Wesley
 					if get_parent().tunnel_scene:
 						if get_parent().reached_tunnel_end:
@@ -120,12 +138,18 @@ func _on_visibility_changed() -> void:
 					elif total_convo_points >= 4 and wesley_pts == 2:
 						tree_holder.add_child(wesley3.instantiate())
 					else: # not ready to talk
-						var holder = ui_label.instantiate()
-						tree_holder.add_child(holder)
-						if GameHandler.player_data.survivor_data.wesley.conversation_happiness < 0: # unhappy
-							holder.text = "Wesley: " + wesley_busy_unhappy.pick_random()
+						# if pick_death_convo returns option, add convo
+						# else, pick line
+						var picker_result = pick_death_conversation("Wesley")
+						if picker_result:
+							tree_holder.add_child(picker_result.instantiate())
 						else:
-							holder.text = "Wesley: " + wesley_busy_neutral.pick_random()
+							var holder = ui_label.instantiate()
+							tree_holder.add_child(holder)
+							if GameHandler.save_game_instance.player_data.survivor_data.wesley.conversation_happiness < 0: # unhappy
+								holder.text = "Wesley: " + wesley_busy_unhappy.pick_random()
+							else:
+								holder.text = "Wesley: " + wesley_busy_neutral.pick_random()
 	elif update_holder: # if not visible
 		update_holder.hide()
 
@@ -142,6 +166,49 @@ func show_clean_update_holder():
 		for child in update_holder.get_children():
 			child.queue_free()
 		update_holder.show()
+
+# Death conversations
+
+var ida_mace = preload("res://Resources/dialogue_trees/ida_m.tscn")
+var ida_wesley = preload("res://Resources/dialogue_trees/ida_w.tscn")
+var ida_kate = preload("res://Resources/dialogue_trees/ida_k.tscn")
+var mace_wesley = preload("res://Resources/dialogue_trees/mace_w.tscn")
+var mace_kate = preload("res://Resources/dialogue_trees/mace_k.tscn")
+var mace_ida = preload("res://Resources/dialogue_trees/mace_i.tscn")
+var wesley_kate = preload("res://Resources/dialogue_trees/wesley_k.tscn")
+var wesley_ida = preload("res://Resources/dialogue_trees/wesley_i.tscn")
+var wesley_mace = preload("res://Resources/dialogue_trees/wesley_m.tscn")
+var kate_ida = preload("res://Resources/dialogue_trees/kate_i.tscn")
+var kate_mace = preload("res://Resources/dialogue_trees/kate_m.tscn")
+var kate_wesley = preload("res://Resources/dialogue_trees/kate_w.tscn")
+
+func pick_death_conversation(survivor : String):
+	survivor = survivor.to_lower()
+	var ida_convos = {"mace":mace_ida,"wesley":wesley_ida,"kate":kate_ida}
+	var mace_convos = {"ida":ida_mace,"wesley":wesley_mace,"kate":kate_mace}
+	var wesley_convos = {"ida":ida_wesley,"mace":mace_wesley,"kate":kate_wesley}
+	var kate_convos = {"ida":ida_kate,"mace":mace_kate,"wesley":wesley_kate}
+	var pickable_characters = {}
+	if GameHandler.save_game_instance.player_data.conversation_flags["ida_dead"]:
+		if not GameHandler.death_conversations_given["ida"][survivor]: # if convo hasn't happened yet
+			pickable_characters["ida"] = ida_convos[survivor]
+	if GameHandler.save_game_instance.player_data.conversation_flags["mace_dead"]:
+		if not GameHandler.death_conversations_given["mace"][survivor]: # if convo hasn't happened yet
+			pickable_characters["mace"] = mace_convos[survivor]
+	if GameHandler.save_game_instance.player_data.conversation_flags["wesley_dead"]:
+		if not GameHandler.death_conversations_given["wesley"][survivor]: # if convo hasn't happened yet
+			pickable_characters["wesley"] = wesley_convos[survivor]
+	if GameHandler.save_game_instance.player_data.conversation_flags["kate_dead"]:
+		if not GameHandler.death_conversations_given["kate"][survivor]: # if convo hasn't happened yet
+			pickable_characters["kate"] = kate_convos[survivor]
+	if pickable_characters.size() == 0:
+		return false
+	else: # get random item from dictionary, return value and set key gameHandler to true
+		var chosen_convo_key = pickable_characters.keys()[randi() % pickable_characters.size()]
+		GameHandler.death_conversations_given[chosen_convo_key][survivor] = true
+		var chosen_convos = pickable_characters[chosen_convo_key] # key is the dead survivor convo is about
+		return chosen_convos
+	
 
 var ida_busy_neutral = ["Not now hun, I’m a little busy.",
 "I don’t have it in me to chat right now. I can’t just jump around with what I’m doing like that. Guess I’ve got a one-track mind.",

@@ -1,6 +1,6 @@
 [gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://bidgvrteq4xem"]
 
-[ext_resource type="FontFile" uid="uid://cmvis4l03ujqr" path="res://UI/PixelFont.ttf" id="1_0p2o5"]
+[ext_resource type="FontFile" uid="uid://bq7xtjypk2864" path="res://UI/PixelFont.ttf" id="1_0p2o5"]
 
 [resource]
 base_font = ExtResource("1_0p2o5")

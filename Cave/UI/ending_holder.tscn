@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://cuo30d2x3drow"]
+
+[ext_resource type="Script" uid="uid://dev6damqaq6dr" path="res://UI/ending_holder.gd" id="1_xo3w5"]
+[ext_resource type="Theme" uid="uid://c0w38urtirqsi" path="res://UI/button_theme.tres" id="2_onhn8"]
+
+[node name="ending_holder" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -180.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_xo3w5")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="returnContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 200.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="returnButton" type="Button" parent="returnContainer"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme = ExtResource("2_onhn8")
+text = "Return to Menu"
+
+[connection signal="pressed" from="returnContainer/returnButton" to="." method="_on_return_button_pressed"]

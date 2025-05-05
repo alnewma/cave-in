@@ -110,10 +110,10 @@ func initialization():
 	var current_survivor = get_tree().get_first_node_in_group("interaction_UI_handler").current_survivor
 	lineT.text = current_survivor_string + ": " + line
 	if line_requirement == "happy": # if line has happiness requirement
-		if GameHandler.player_data.survivor_data[current_survivor_string.to_lower()].conversation_happiness >= 0:
+		if GameHandler.save_game_instance.player_data.survivor_data[current_survivor_string.to_lower()].conversation_happiness >= 0:
 			lineT.text = current_survivor_string + ": " + line_alt
 	elif line_requirement != "": # if line has other requirement
-		if GameHandler.player_data.conversation_flags[line_requirement]:
+		if GameHandler.save_game_instance.player_data.conversation_flags[line_requirement]:
 			lineT.text = current_survivor_string + ": "+ line_alt
 	if lineT.text == "": # hide entire node if line is blank
 		hide()
@@ -121,11 +121,11 @@ func initialization():
 		if response1_requirement == "": # check if response doesn't have req
 			response1T.text = "You: " + response1
 		elif response1_requirement == "happy": # unique requirement code that checks if survivor happiness >= 0
-			if GameHandler.player_data.survivor_data[current_survivor_string.to_lower()].conversation_happiness >= 0:
+			if GameHandler.save_game_instance.player_data.survivor_data[current_survivor_string.to_lower()].conversation_happiness >= 0:
 				response1T.text = "You: " + response1_alt # survivor is happy
 			else:
 				response1T.text = "You: " + response1 # survivor is not happy
-		elif GameHandler.player_data.conversation_flags[response1_requirement]: # check if reponse req is met
+		elif GameHandler.save_game_instance.player_data.conversation_flags[response1_requirement]: # check if reponse req is met
 			response1T.text = "You: " + response1_alt
 		if response1T.text == "":
 			response1T.hide()
@@ -135,11 +135,11 @@ func initialization():
 		if response2_requirement == "": # check if response doesn't have req
 			response2T.text = "You: " + response2
 		elif response2_requirement == "happy": # unique requirement code that checks if survivor happiness >= 0
-			if GameHandler.player_data.survivor_data[current_survivor_string.to_lower()].conversation_happiness >= 0:
+			if GameHandler.save_game_instance.player_data.survivor_data[current_survivor_string.to_lower()].conversation_happiness >= 0:
 				response2T.text = "You: " + response2_alt # survivor is happy
 			else:
 				response2T.text = "You: " + response2 # survivor is not happy
-		elif GameHandler.player_data.conversation_flags[response2_requirement]: # check if reponse req is met
+		elif GameHandler.save_game_instance.player_data.conversation_flags[response2_requirement]: # check if reponse req is met
 			response2T.text = "You: " + response2_alt
 		if response2T.text == "":
 			response2T.hide()
@@ -149,11 +149,11 @@ func initialization():
 		if response3_requirement == "": # check if response doesn't have req
 			response3T.text = "You: " + response3
 		elif response3_requirement == "happy": # unique requirement code that checks if survivor happiness >= 0
-			if GameHandler.player_data.survivor_data[current_survivor_string.to_lower()].conversation_happiness >= 0:
+			if GameHandler.save_game_instance.player_data.survivor_data[current_survivor_string.to_lower()].conversation_happiness >= 0:
 				response3T.text = "You: " + response3_alt # survivor is happy
 			else:
 				response3T.text = "You: " + response3 # survivor is not happy
-		elif GameHandler.player_data.conversation_flags[response3_requirement]: # check if reponse req is met
+		elif GameHandler.save_game_instance.player_data.conversation_flags[response3_requirement]: # check if reponse req is met
 			response3T.text = "You: " + response3_alt
 		if response3T.text == "":
 			response3T.hide()
@@ -199,7 +199,7 @@ func travel_destination(destination_button): # once reponse button is clicked
 	match destination_button:
 		response1T:
 			if response1_fulfilled_req:
-				GameHandler.player_data.conversation_flags[response1_fulfilled_req] = true
+				GameHandler.save_game_instance.player_data.conversation_flags[response1_fulfilled_req] = true
 				get_tree().get_first_node_in_group("interaction_UI_handler").emit_signal("updated_conversation_flag")
 			if dislikes_1:
 				print(characters_to_react.keys()[reacting_character4].capitalize() + "dislikes")
@@ -207,14 +207,14 @@ func travel_destination(destination_button): # once reponse button is clicked
 				temp_updater.update_type = temp_updater.update_types.DISLIKE
 				temp_updater.survivor_name = characters_to_react.keys()[reacting_character4].capitalize()
 				holder.add_child(temp_updater)
-				GameHandler.player_data.survivor_data[characters_to_react.keys()[reacting_character4].to_lower()].conversation_happiness -= 1
+				GameHandler.save_game_instance.player_data.survivor_data[characters_to_react.keys()[reacting_character4].to_lower()].conversation_happiness -= 1
 			if likes_1:
 				print(characters_to_react.keys()[reacting_character1].capitalize() + "likes")
 				var temp_updater = update_node.instantiate()
 				temp_updater.update_type = temp_updater.update_types.LIKE
 				temp_updater.survivor_name = characters_to_react.keys()[reacting_character1].capitalize()
 				holder.add_child(temp_updater)
-				GameHandler.player_data.survivor_data[characters_to_react.keys()[reacting_character1].to_lower()].conversation_happiness += 1
+				GameHandler.save_game_instance.player_data.survivor_data[characters_to_react.keys()[reacting_character1].to_lower()].conversation_happiness += 1
 				
 			if prod_down1:
 				print(characters_to_react.keys()[reacting_character10].capitalize() + "prod decreased")
@@ -222,20 +222,20 @@ func travel_destination(destination_button): # once reponse button is clicked
 				temp_updater.update_type = temp_updater.update_types.PRODDOWN
 				temp_updater.survivor_name = characters_to_react.keys()[reacting_character10].capitalize()
 				holder.add_child(temp_updater)
-				GameHandler.player_data.survivor_data[characters_to_react.keys()[reacting_character10].to_lower()].productivity -= 1
+				GameHandler.save_game_instance.player_data.survivor_data[characters_to_react.keys()[reacting_character10].to_lower()].productivity -= 1
 			if prod_up1:
 				print(characters_to_react.keys()[reacting_character7].capitalize() + "prod increased")
 				var temp_updater = update_node.instantiate()
 				temp_updater.update_type = temp_updater.update_types.PRODUP
 				temp_updater.survivor_name = characters_to_react.keys()[reacting_character7].capitalize()
 				holder.add_child(temp_updater)
-				GameHandler.player_data.survivor_data[characters_to_react.keys()[reacting_character7].to_lower()].productivity += 1
+				GameHandler.save_game_instance.player_data.survivor_data[characters_to_react.keys()[reacting_character7].to_lower()].productivity += 1
 				
 			destination1.show()
 			update_if_end(destination1)
 		response2T:
 			if response2_fulfilled_req:
-				GameHandler.player_data.conversation_flags[response2_fulfilled_req] = true
+				GameHandler.save_game_instance.player_data.conversation_flags[response2_fulfilled_req] = true
 				get_tree().get_first_node_in_group("interaction_UI_handler").emit_signal("updated_conversation_flag")
 			if dislikes_2:
 				print(characters_to_react.keys()[reacting_character5].capitalize() + "dislikes")
@@ -243,14 +243,14 @@ func travel_destination(destination_button): # once reponse button is clicked
 				temp_updater.update_type = temp_updater.update_types.DISLIKE
 				temp_updater.survivor_name = characters_to_react.keys()[reacting_character5].capitalize()
 				holder.add_child(temp_updater)
-				GameHandler.player_data.survivor_data[characters_to_react.keys()[reacting_character5].to_lower()].conversation_happiness -= 1
+				GameHandler.save_game_instance.player_data.survivor_data[characters_to_react.keys()[reacting_character5].to_lower()].conversation_happiness -= 1
 			if likes_2:
 				print(characters_to_react.keys()[reacting_character2].capitalize() + "likes")
 				var temp_updater = update_node.instantiate()
 				temp_updater.update_type = temp_updater.update_types.LIKE
 				temp_updater.survivor_name = characters_to_react.keys()[reacting_character2].capitalize()
 				holder.add_child(temp_updater)
-				GameHandler.player_data.survivor_data[characters_to_react.keys()[reacting_character2].to_lower()].conversation_happiness += 1
+				GameHandler.save_game_instance.player_data.survivor_data[characters_to_react.keys()[reacting_character2].to_lower()].conversation_happiness += 1
 				
 			if prod_down2:
 				print(characters_to_react.keys()[reacting_character11].capitalize() + "prod decreased")
@@ -258,20 +258,20 @@ func travel_destination(destination_button): # once reponse button is clicked
 				temp_updater.update_type = temp_updater.update_types.PRODDOWN
 				temp_updater.survivor_name = characters_to_react.keys()[reacting_character11].capitalize()
 				holder.add_child(temp_updater)
-				GameHandler.player_data.survivor_data[characters_to_react.keys()[reacting_character11].to_lower()].productivity -= 1
+				GameHandler.save_game_instance.player_data.survivor_data[characters_to_react.keys()[reacting_character11].to_lower()].productivity -= 1
 			if prod_up2:
 				print(characters_to_react.keys()[reacting_character8].capitalize() + "prod increased")
 				var temp_updater = update_node.instantiate()
 				temp_updater.update_type = temp_updater.update_types.PRODUP
 				temp_updater.survivor_name = characters_to_react.keys()[reacting_character8].capitalize()
 				holder.add_child(temp_updater)
-				GameHandler.player_data.survivor_data[characters_to_react.keys()[reacting_character8].to_lower()].productivity += 1
+				GameHandler.save_game_instance.player_data.survivor_data[characters_to_react.keys()[reacting_character8].to_lower()].productivity += 1
 				
 			destination2.show()
 			update_if_end(destination2)
 		response3T:
 			if response3_fulfilled_req:
-				GameHandler.player_data.conversation_flags[response3_fulfilled_req] = true
+				GameHandler.save_game_instance.player_data.conversation_flags[response3_fulfilled_req] = true
 				get_tree().get_first_node_in_group("interaction_UI_handler").emit_signal("updated_conversation_flag")
 			if dislikes_3:
 				print(characters_to_react.keys()[reacting_character6].capitalize() + "dislikes")
@@ -279,14 +279,14 @@ func travel_destination(destination_button): # once reponse button is clicked
 				temp_updater.update_type = temp_updater.update_types.DISLIKE
 				temp_updater.survivor_name = characters_to_react.keys()[reacting_character6].capitalize()
 				holder.add_child(temp_updater)
-				GameHandler.player_data.survivor_data[characters_to_react.keys()[reacting_character6]].conversation_happiness -= 1
+				GameHandler.save_game_instance.player_data.survivor_data[characters_to_react.keys()[reacting_character6]].conversation_happiness -= 1
 			if likes_3:
 				print(characters_to_react.keys()[reacting_character3].capitalize() + "likes")
 				var temp_updater = update_node.instantiate()
 				temp_updater.update_type = temp_updater.update_types.LIKE
 				temp_updater.survivor_name = characters_to_react.keys()[reacting_character3].capitalize()
 				holder.add_child(temp_updater)
-				GameHandler.player_data.survivor_data[characters_to_react.keys()[reacting_character3]].conversation_happiness += 1
+				GameHandler.save_game_instance.player_data.survivor_data[characters_to_react.keys()[reacting_character3]].conversation_happiness += 1
 				
 			if prod_down3:
 				print(characters_to_react.keys()[reacting_character12].capitalize() + "prod decreased")
@@ -294,14 +294,14 @@ func travel_destination(destination_button): # once reponse button is clicked
 				temp_updater.update_type = temp_updater.update_types.PRODDOWN
 				temp_updater.survivor_name = characters_to_react.keys()[reacting_character12].capitalize()
 				holder.add_child(temp_updater)
-				GameHandler.player_data.survivor_data[characters_to_react.keys()[reacting_character12]].productivity -= 1
+				GameHandler.save_game_instance.player_data.survivor_data[characters_to_react.keys()[reacting_character12]].productivity -= 1
 			if prod_up3:
 				print(characters_to_react.keys()[reacting_character9].capitalize() + "prod increased")
 				var temp_updater = update_node.instantiate()
 				temp_updater.update_type = temp_updater.update_types.PRODUP
 				temp_updater.survivor_name = characters_to_react.keys()[reacting_character9].capitalize()
 				holder.add_child(temp_updater)
-				GameHandler.player_data.survivor_data[characters_to_react.keys()[reacting_character9]].productivity += 1
+				GameHandler.save_game_instance.player_data.survivor_data[characters_to_react.keys()[reacting_character9]].productivity += 1
 				
 			destination3.show()
 			update_if_end(destination3)
@@ -317,4 +317,4 @@ func update_if_end(destination):
 		if child.visible:
 			visible_children += 1
 	if visible_children <= 1: # if only visible line is line, no more responses
-		GameHandler.player_data.survivor_data[current_survivor_string.to_lower()].conversation_point += 1
+		GameHandler.save_game_instance.player_data.survivor_data[current_survivor_string.to_lower()].conversation_point += 1

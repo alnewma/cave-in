@@ -1,9 +1,10 @@
 extends Node2D
 
+@onready var SaveGameInstance = GameHandler.save_game_instance
 func _ready():
 	menu_ready_function()
 	container_ready_function()
-	GameHandler.save_ready_function()
+	#GameHandler.save_ready_function()
 
 ## Menu Handler ##
 
@@ -37,7 +38,7 @@ const save_button_base = preload("res://MainMenu/save_button_base.tscn")
 
 func container_ready_function():
 	# main container
-	var save_files = DirAccess.get_files_at(GameHandler.SAVE_DIR)
+	var save_files = DirAccess.get_files_at(SaveGameInstance.SAVE_DIR)
 	if save_files.size() == 0:
 		mainC.get_node("load_game").disabled = true
 	
@@ -59,8 +60,8 @@ func _on_load_game_pressed():
 	switch_container(loadC)
 
 func load_button_pressed(button):
-	GameHandler.SAVE_FILE_NAME = button.save_file_name
-	GameHandler.load_data(GameHandler.SAVE_DIR + GameHandler.SAVE_FILE_NAME)
+	SaveGameInstance.SAVE_FILE_NAME = button.save_file_name
+	SaveGameInstance.load_data()
 	load_map()
 
 func _on_name_entry_text_changed(new_text):
@@ -78,7 +79,7 @@ func _on_name_entry_text_changed(new_text):
 	var name_available = true
 	var name_warning = newC.get_node("name_warning")
 	var create_button = newC.get_node("create_button")
-	for file in DirAccess.get_files_at(GameHandler.SAVE_DIR):
+	for file in DirAccess.get_files_at(SaveGame.SAVE_DIR):
 		if file.get_slice(".",0) == new_text:
 			name_available = false
 	if name_available:
@@ -94,8 +95,9 @@ const world_map = preload("res://GameMap/game_map.tscn")
 
 func _on_create_button_pressed():
 	var name_entry = newC.get_node("name_entry")
-	GameHandler.SAVE_FILE_NAME = name_entry.text + ".save"
-	GameHandler.save_data(GameHandler.SAVE_DIR + GameHandler.SAVE_FILE_NAME)
+	SaveGameInstance.SAVE_FILE_NAME = name_entry.text + ".tres"
+	print("name set to: " + name_entry.text + ".tres")
+	SaveGameInstance.write_data()
 	load_map()
 
 func load_map():

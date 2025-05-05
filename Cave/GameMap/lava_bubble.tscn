@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://dvfy4rmn2xhu4"]
 
 [ext_resource type="Texture2D" uid="uid://mdkocatjukfs" path="res://ArtAssets/lavaBubble.png" id="1_ywtda"]
-[ext_resource type="Script" path="res://GameMap/lava_bubble.gd" id="2_8547w"]
+[ext_resource type="Script" uid="uid://d3drruwgtm1xa" path="res://GameMap/lava_bubble.gd" id="2_8547w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wcvex"]
 atlas = ExtResource("1_ywtda")
@@ -54,6 +54,7 @@ animations = [{
 }]
 
 [node name="lavaBubble" type="AnimatedSprite2D"]
+z_index = 1
 sprite_frames = SubResource("SpriteFrames_jpy1j")
 autoplay = "default"
 script = ExtResource("2_8547w")

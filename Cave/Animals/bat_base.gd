@@ -60,7 +60,7 @@ var wander_destination = Vector2.ZERO
 
 @onready var wander_timer = $wander_timer
 func _on_wander_timer_timeout():
-	wander_destination = find_random_destination()
+	wander_destination = global_position + find_random_destination()
 	wander_timer.start(randi_range(6,12))
 
 func find_random_destination():
@@ -85,6 +85,7 @@ func _on_detection_area_body_exited(body):
 func update_attack_state():
 	if state != states.DEAD:
 		if targets_in_area.size() > 0:
+			print("attacking")
 			state = states.ATTACK
 			attack_target = targets_in_area[0]
 		else:
@@ -113,14 +114,15 @@ func _on_health_changed(value):
 		state = states.DEAD
 		set_collision_layer_value(4,false)
 		if death_sprite.frame == 0 or death_sprite.frame == 8:
-			death_sprite.position = Vector2(0,-12)
+			death_sprite.position = Vector2(0,-22)
+			death_sprite.offset = Vector2(0,-12)
 		else:
-			death_sprite.position = Vector2(0,-8)
-		death_sprite.offset = sprite.offset
+			death_sprite.position = Vector2(0,-16)
+			death_sprite.offset = Vector2(0,-8)
 		death_sprite.visible = true
 		sprite.visible = false
 		var tween = get_tree().create_tween()
-		tween.tween_property(death_sprite,"offset",Vector2(0,0),.6)
+		tween.tween_property(death_sprite,"offset",Vector2(0,8),.6)
 		death_timer.start(20)
 
 func _on_death_timer_timeout():

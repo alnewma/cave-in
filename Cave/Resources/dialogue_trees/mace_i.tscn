@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://by4dp3jgdtwgp"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_mupxy"]
+
+[node name="mace_i" instance=ExtResource("1_mupxy")]
+visible = true
+line = "This is really bad. So bad. Ida kept saying things would work out and, despite my misgivings, I believed her. But I shouldn’t have believed her."
+response1 = "She always knew what to say."
+response2 = "Ida believed in you to push through. Her not being here changes nothing."
+response3 = "I believed her too."
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_mupxy")]
+layout_mode = 2
+line = "But not when to call it quits."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_mupxy")]
+layout_mode = 2
+line = "You’d think it wouldn’t. But somehow it changes everything."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_mupxy")]
+layout_mode = 2
+line = "Do you still believe her?"
+response1 = "Yes"
+response2 = "No"
+
+[node name="r3_1" parent="r3" index="4" instance=ExtResource("1_mupxy")]
+layout_mode = 2
+line = "I see."
+
+[node name="r3_2" parent="r3" index="5" instance=ExtResource("1_mupxy")]
+layout_mode = 2
+line = "I see."

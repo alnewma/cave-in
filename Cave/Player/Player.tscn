@@ -1,6 +1,6 @@
 [gd_scene load_steps=94 format=3 uid="uid://bsrbrnqvx2mpa"]
 
-[ext_resource type="Script" path="res://Player/Player.gd" id="1_moy0r"]
+[ext_resource type="Script" uid="uid://c38hqrmopq5n" path="res://Player/Player.gd" id="1_moy0r"]
 [ext_resource type="Texture2D" uid="uid://ckg0j0y0o2km1" path="res://ArtAssets/MCSprites1/2 Punk/Attack.png" id="1_msnrt"]
 [ext_resource type="Texture2D" uid="uid://bu0t0hfpo562f" path="res://ArtAssets/MCSprites2/Punk_death.png" id="2_ol7pa"]
 [ext_resource type="Texture2D" uid="uid://6d6p7xyvovjr" path="res://ArtAssets/MCSprites1/2 Punk/Idle.png" id="3_qqe2i"]
@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://djbrlerxt58re" path="res://ArtAssets/MCSprites3/Talk.png" id="7_6txqx"]
 [ext_resource type="Texture2D" uid="uid://vpxv5cura0lo" path="res://ArtAssets/MCSprites3/Use.png" id="8_ktigj"]
 [ext_resource type="Texture2D" uid="uid://0e0i2yqvqru8" path="res://ArtAssets/Woman_spritesheet.png" id="10_7047o"]
-[ext_resource type="Script" path="res://Player/camera_2d.gd" id="10_skwot"]
+[ext_resource type="Script" uid="uid://uhtyfgb2kw1o" path="res://Player/camera_2d.gd" id="10_skwot"]
 [ext_resource type="Texture2D" uid="uid://dveosuce1lq60" path="res://ArtAssets/Man_spritesheet.png" id="11_mnxuv"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y77d4"]
@@ -381,7 +381,8 @@ blend_point_0/node = SubResource("AnimationNodeAnimation_dhxrq")
 blend_point_0/pos = -1.0
 blend_point_1/node = SubResource("AnimationNodeAnimation_o7ig2")
 blend_point_1/pos = 1.0
-blend_mode = 2
+blend_mode = 1
+sync = true
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gqjwu"]
 animation = &"death_left"
@@ -500,18 +501,6 @@ tracks/1/keys = {
 "update": 1,
 "values": [0]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:currently_attacking")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
 
 [sub_resource type="Animation" id="Animation_16b3e"]
 resource_name = "attack_left"
@@ -565,18 +554,6 @@ tracks/3/keys = {
 "update": 1,
 "values": [true]
 }
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath(".:currently_attacking")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
 
 [sub_resource type="Animation" id="Animation_0gqld"]
 resource_name = "attack_right"
@@ -629,18 +606,6 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath(".:currently_attacking")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_dfw85"]
@@ -967,15 +932,15 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8mq6p"]
 _data = {
-"RESET": SubResource("Animation_8rlex"),
-"attack_left": SubResource("Animation_16b3e"),
-"attack_right": SubResource("Animation_0gqld"),
-"death_left": SubResource("Animation_dfw85"),
-"death_right": SubResource("Animation_pn1mg"),
-"idle_left": SubResource("Animation_yt1qc"),
-"idle_right": SubResource("Animation_k5n8m"),
-"walk_left": SubResource("Animation_ir28y"),
-"walk_right": SubResource("Animation_g2ncy")
+&"RESET": SubResource("Animation_8rlex"),
+&"attack_left": SubResource("Animation_16b3e"),
+&"attack_right": SubResource("Animation_0gqld"),
+&"death_left": SubResource("Animation_dfw85"),
+&"death_right": SubResource("Animation_pn1mg"),
+&"idle_left": SubResource("Animation_yt1qc"),
+&"idle_right": SubResource("Animation_k5n8m"),
+&"walk_left": SubResource("Animation_ir28y"),
+&"walk_right": SubResource("Animation_g2ncy")
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ag41p"]
@@ -984,8 +949,8 @@ height = 20.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 scale = Vector2(0.5, 0.5)
-collision_layer = 2
-collision_mask = 3
+collision_layer = 18
+collision_mask = 19
 script = ExtResource("1_moy0r")
 male = false
 
@@ -1020,7 +985,7 @@ parameters/Walk/blend_position = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_8mq6p")
+&"": SubResource("AnimationLibrary_8mq6p")
 }
 
 [node name="woman_sprite" type="Sprite2D" parent="."]
@@ -1031,6 +996,7 @@ hframes = 6
 vframes = 4
 
 [node name="man_sprite" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(0, -24)
 texture = ExtResource("11_mnxuv")
 flip_h = true

@@ -14,7 +14,7 @@ extends Control
 @onready var opened_screen = $Base/opened_text
 
 func _ready():
-	if GameHandler.events.BLAST_DOOR in GameHandler.events_completed:
+	if GameHandler.events.BLAST_DOOR in GameHandler.save_game_instance.events_completed:
 		completion_routine()
 
 func hide_screens():
@@ -69,7 +69,7 @@ func _on_door_2_button_pressed(): # blast door opened
 	completion_routine()
 
 func completion_routine():
-	GameHandler.events_completed.append(GameHandler.events.BLAST_DOOR)
+	GameHandler.save_game_instance.events_completed.append(GameHandler.events.BLAST_DOOR)
 	if get_tree().get_first_node_in_group("blastdoor"):
 		get_tree().get_first_node_in_group("blastdoor").queue_free()
 

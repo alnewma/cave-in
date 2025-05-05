@@ -1,10 +1,10 @@
 [gd_scene load_steps=12 format=3 uid="uid://slxdkui1guxf"]
 
-[ext_resource type="Script" path="res://MainMenu/main_menu.gd" id="1_t0rvo"]
+[ext_resource type="Script" uid="uid://vcfaaf7ohddn" path="res://MainMenu/main_menu.gd" id="1_t0rvo"]
 [ext_resource type="Texture2D" uid="uid://rbxupuk0gxyq" path="res://ArtAssets/tabletop.png" id="2_1b6bn"]
 [ext_resource type="Theme" uid="uid://c0w38urtirqsi" path="res://UI/button_theme.tres" id="2_6mbmi"]
 [ext_resource type="Theme" uid="uid://bgr6frj5j5a2w" path="res://UI/label_theme.tres" id="3_4p1n0"]
-[ext_resource type="Script" path="res://MainMenu/background_image.gd" id="3_r0asr"]
+[ext_resource type="Script" uid="uid://b2rep0xdxp0ty" path="res://MainMenu/background_image.gd" id="3_r0asr"]
 [ext_resource type="Texture2D" uid="uid://x2japhrhvelp" path="res://ArtAssets/light_mask.png" id="4_6kp6w"]
 [ext_resource type="Theme" uid="uid://brnwg1k0lrtsw" path="res://UI/line_edit_theme.tres" id="4_rc6gv"]
 [ext_resource type="Theme" uid="uid://dhfh8ip3erkc0" path="res://UI/scroll_theme.tres" id="5_2gfa4"]

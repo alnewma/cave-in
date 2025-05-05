@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxudrp5f3uo6e"]
+
+[ext_resource type="PackedScene" uid="uid://cd0fcycabalgg" path="res://UI/dialogue_line.tscn" id="1_m2nh7"]
+
+[node name="kate_w" instance=ExtResource("1_m2nh7")]
+visible = true
+line = "Wesley’s not here. He should be here."
+response1 = "Wesley’s gone, Kate."
+response2 = "Think about something else for now."
+response3 = "I know it’s hard, but we have to go on without him."
+
+[node name="r1" parent="." index="4" instance=ExtResource("1_m2nh7")]
+layout_mode = 2
+line = "He should be here."
+response1 = "We need to focus so that we don’t get hurt too."
+response2 = "[Silence]"
+
+[node name="r1_1" parent="r1" index="4" instance=ExtResource("1_m2nh7")]
+layout_mode = 2
+line = "I’ll try, but it’s so hard."
+
+[node name="r1_2" parent="r1" index="5" instance=ExtResource("1_m2nh7")]
+layout_mode = 2
+line = "He should be here."
+
+[node name="r2" parent="." index="5" instance=ExtResource("1_m2nh7")]
+layout_mode = 2
+line = "I can’t. Wesley was always here to help me. I don’t know what to do without him…"
+response1 = "Let’s focus on getting somewhere safe."
+response2 = "You’d better figure out fast then."
+
+[node name="r2_1" parent="r2" index="4" instance=ExtResource("1_m2nh7")]
+layout_mode = 2
+line = "Wesley would’ve kept us safe."
+
+[node name="r3" parent="." index="6" instance=ExtResource("1_m2nh7")]
+layout_mode = 2
+line = "But I don’t want to go on like that."
+response1 = "I understand. But we don’t have a choice right now."
+response2 = "Don’t focus on what you’ve lost. Look at what you have. Know you’re not alone."
