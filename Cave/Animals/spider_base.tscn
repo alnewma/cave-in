@@ -1,6 +1,6 @@
 [gd_scene load_steps=28 format=3 uid="uid://b3tc1if5ng2h0"]
 
-[ext_resource type="Script" path="res://Animals/spider_base.gd" id="1_60e7a"]
+[ext_resource type="Script" uid="uid://dst230hppkidu" path="res://Animals/spider_base.gd" id="1_60e7a"]
 [ext_resource type="Texture2D" uid="uid://dpj6enia4eqva" path="res://ArtAssets/SpiderSprite.png" id="1_atnfq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s6h0b"]
@@ -191,7 +191,6 @@ height = 8.0
 z_index = 1
 y_sort_enabled = true
 collision_layer = 8
-collision_mask = 15
 script = ExtResource("1_60e7a")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

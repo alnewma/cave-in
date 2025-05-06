@@ -52,7 +52,6 @@ func completion_routine(): # to be overwritten per object
 # If only setters call verify, no crash
 #
 func set_assigned_survivors(value,add_or_erase : bool):
-	print("assigned change triggered")
 	_verify_self_array_existence()
 	if add_or_erase: # adding
 		if not value in assigned_survivors:
@@ -62,7 +61,6 @@ func set_assigned_survivors(value,add_or_erase : bool):
 			assigned_survivors.erase(value)
 	GameHandler.save_game_instance.player_data.objective_data[name][0] = assigned_survivors.duplicate()
 func set_using_survivors(value,add_or_erase : bool):
-	print("using change triggered")
 	_verify_self_array_existence()
 	if add_or_erase: # adding
 		if not value in using_survivors:
@@ -137,14 +135,15 @@ func give_item(items : Array):
 			# determine items owned by survivor
 			var survivor_items = 0
 			for i in GameHandler.save_game_instance.item_instances:
-				if i[1] is Node2D and i[1] == survivor:
+				if i[1] is Node2D and i[1] == get_node(survivor):
 					survivor_items += 1
 			if survivor_items == 0:
 				for item_instance in GameHandler.save_game_instance.item_instances:
 					if item_instance[0] == item and item_instance[1] == null: #item is available to be given
 						if not item_dispensed:
+							print(survivor)
 							item_dispensed = true
-							item_instance[1] = survivor
+							item_instance[1] = get_node(survivor)
 							get_node(survivor).queue_remark(get_node(survivor).remark_prompts.TOOL)
 		if not item_dispensed:
 			item_dispensed = true

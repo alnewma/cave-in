@@ -11,18 +11,19 @@ var health = 100 : set = _health_changed
 @onready var man = $man_sprite
 @onready var woman = $woman_sprite
 @onready var animation_tree = $AnimationTree
-
-@onready var assigned_survivors = [] # survivors following player
 @onready var game_map = null
+var in_main_game = false
 
 func _ready():
 	if get_parent().name == "GameMap":
 		game_map = get_parent()
+		in_main_game = true
 	man.visible = male
 	woman.visible = not male
 	animation_tree.active = true
 	# set variables from save data
-	global_position = GameHandler.save_game_instance.player_data.player_character_stats.global_position
+	if in_main_game:
+		global_position = GameHandler.save_game_instance.player_data.player_character_stats.global_position
 	health = GameHandler.save_game_instance.player_data.player_character_stats.health
 
 func _physics_process(delta):
@@ -33,6 +34,8 @@ func _process(_delta):
 	attack()
 
 func movement(_delta):
+	if dead:
+		velocity = velocity.move_toward(Vector2.ZERO,_delta*250)
 	if can_be_controlled:
 		velocity = Vector2.ZERO
 		if Input.is_action_pressed("move_down"):
@@ -123,3 +126,31 @@ func _player_died():
 		can_be_controlled = false
 		if game_map:
 			game_map.trigger_ending(game_map.ending_types.PLAYER_DEAD)
+
+## Survivors Following Player Logic ##
+
+var assigned_survivors = [] # survivors following player
+var using_survivors = []
+
+func set_assigned_survivors(value,add_or_erase : bool):
+	_verify_self_array_existence()
+	if add_or_erase: # adding
+		if not value in assigned_survivors:
+			assigned_survivors.append(value)
+	else:
+		if value in assigned_survivors:
+			assigned_survivors.erase(value)
+	GameHandler.save_game_instance.player_data.objective_data[name][0] = assigned_survivors.duplicate()
+
+func set_using_survivors(value,add_or_erase : bool):
+	_verify_self_array_existence()
+	if add_or_erase: # adding
+		if not value in using_survivors:
+			using_survivors.append(value)
+	else:
+		if value in using_survivors:
+			using_survivors.erase(value)
+	GameHandler.save_game_instance.player_data.objective_data[name][1] = using_survivors.duplicate()
+	
+func _verify_self_array_existence():
+	GameHandler.save_game_instance.player_data.objective_data.get_or_add(name,[assigned_survivors.duplicate(),using_survivors.duplicate()])

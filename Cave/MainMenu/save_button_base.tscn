@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://nmfgotssstbe"]
 
 [ext_resource type="Theme" uid="uid://c0w38urtirqsi" path="res://UI/button_theme.tres" id="1_c535w"]
-[ext_resource type="Script" path="res://MainMenu/save_button_base.gd" id="1_eeggq"]
+[ext_resource type="Script" uid="uid://bnvw7u8o00coh" path="res://MainMenu/save_button_base.gd" id="1_eeggq"]
 
 [node name="save_file" type="Button" groups=["save_button"]]
-custom_minimum_size = Vector2(100, 25)
 theme = ExtResource("1_c535w")
+theme_override_font_sizes/font_size = 5
 text = "Save 1"
 script = ExtResource("1_eeggq")

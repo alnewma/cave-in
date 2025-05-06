@@ -40,6 +40,8 @@ func assign_survivor(object:Object, location = Vector2.ZERO, assignment = ""): #
 	if object:
 		c_survivor.target_assignment = object.get_path()
 		object.set_assigned_survivors(c_survivor.get_path(),true)
+		GameHandler.get_survivor_data_from_object(c_survivor).target_assignment = c_survivor.target_assignment
+		GameHandler.get_survivor_data_from_object(c_survivor).target_usage = c_survivor.target_usage
 		if object.is_in_group("player"):
 			c_survivor.queue_remark(c_survivor.remark_prompts.FOLLOWING)
 	elif assignment == "guard":

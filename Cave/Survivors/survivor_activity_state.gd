@@ -26,4 +26,5 @@ func pick_next_action():
 	await get_tree().create_timer(randf_range(5,20)).timeout
 	if randi_range(0,1) == 0:
 		actor.navigation_agent.target_position = actor.get_point_in_target_area()
+		#print(actor.name + " is actively wandering to " + str(actor.navigation_agent.target_position))
 	picking = false

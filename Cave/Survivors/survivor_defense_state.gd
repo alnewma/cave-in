@@ -8,9 +8,16 @@ func _ready():
 
 func _enter_state() -> void:
 	set_physics_process(true)
+	movement_cooldown = true
+	get_tree().create_timer(3).connect("timeout",_end_movement_cooldown)
+	actor.queue_remark(actor.remark_prompts.ENEMY)
 
 func _exit_state() -> void:
 	set_physics_process(false)
+
+var movement_cooldown = false # survivor won't leave defense state for a couple seconds after entering
+func _end_movement_cooldown():
+	movement_cooldown = false
 
 func handle_enemies():
 	if actor.enemies_nearby.size() > 0:
@@ -25,21 +32,46 @@ func handle_enemies():
 				fight_enemies()
 			actor.survivor_types.OLDMAN:
 				run_from_enemies()
-	else:
+	elif not movement_cooldown:
 		actor.state_machine.change_state(actor.state_machine.movement)
+	else:
+		# out of range of enemy after running. Slowly move away until movement cooldown elapses
+		var original_vector = actor.velocity
+		actor.velocity = original_vector * Vector2(.2,.2) 
+		actor.move_and_slide()
+		actor.velocity = original_vector
 
 func _physics_process(_delta):
 	handle_enemies()
 
+var run_cooldown = false # survivor won't try running again soon after being forced to fight
+func _end_run_cooldown():
+	run_cooldown = false
+
 func run_from_enemies():
-	if not actor.get_last_slide_collision(): # if the survivor isn't cornered/running into a wall
+	# get closest enemy
+	var closest_distance = INF
+	for enemy in actor.enemies_nearby:
+		if actor.global_position.distance_squared_to(enemy.global_position) < closest_distance:
+			closest_distance = actor.global_position.distance_squared_to(enemy.global_position)
+	# run from first enemy to get nearby
+	if not actor.get_last_slide_collision() and not run_cooldown:
+		# if the survivor isn't cornered/running into a wall
 		var full_vector = Vector2.ZERO
 		for enemy in actor.enemies_nearby:
 			full_vector += enemy.global_position.direction_to(actor.global_position)
 		actor.velocity = full_vector*actor.SPEED
 		actor.move_and_slide()
-	else:
-		fight_enemies()
+	else: # hide and fight if enemy is too close
+		if closest_distance < 400:
+			if not run_cooldown:
+				run_cooldown = true
+				get_tree().create_timer(5).connect("timeout",_end_run_cooldown)
+			fight_enemies()
+		elif not run_cooldown:
+			actor.velocity = Vector2.ZERO
+		else:
+			fight_enemies()
 	
 var target_enemy = null
 func fight_enemies():

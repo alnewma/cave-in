@@ -33,7 +33,6 @@ func _on_visibility_changed():
 		title.text = survivor_name
 		health_bar.value = handler.current_survivor.health
 		thirst_bar.value = handler.current_survivor.thirst
-		print("refreshing textures")
 		refresh_item_textures()
 
 func refresh_item_textures():
@@ -64,12 +63,10 @@ func inside_change(value):
 	if value != inside:
 		inside = value
 		if inside:
-			print("inside changed: inside")
 			item_image.visible = false
 			for node in item_menu_nodes:
 				node.visible = true
 		else:
-			print("inside changed: not inside")
 			item_image.visible = true
 			for node in item_menu_nodes:
 				node.visible = false
@@ -78,7 +75,6 @@ func inside_change(value):
 func _on_take_button_pressed():
 	for item in GameHandler.save_game_instance.item_instances:
 		if item[1] is Node2D and item[1] == handler.current_survivor:
-			print("removing item from survivor")
 			item[1] = get_tree().get_first_node_in_group("player")
 	refresh_item_textures()
 
@@ -94,7 +90,6 @@ func _on_replace_button_pressed():
 	var items_found = 0
 	for item in GameHandler.save_game_instance.item_instances:
 		if item[1] is Node2D and item[1] == player:
-			print("items found for player")
 			items_found += 1
 			var label = item_base.instantiate()
 			label.text = GameHandler.item_names[item[0]]
@@ -115,15 +110,11 @@ func replace_item_clicked(pressed_item):
 	replace_scoll_container.visible = false
 	for node in item_menu_nodes:
 		node.visible = true
-	print("refreshing texture after replace")
 	refresh_item_textures()
 
 func _on_item_holder_mouse_entered():
 	inside = true
 
 func _on_item_holder_mouse_exited():
-	print("exited")
-	print(item_holder.get_rect())
-	print(get_local_mouse_position())
 	if not Rect2(item_holder.position,item_holder.size).has_point(get_local_mouse_position()):
 		inside = false

@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://c4f0lu4niir0k"]
 
 [ext_resource type="Texture2D" uid="uid://dr0wqgmtwxyyo" path="res://ArtAssets/UI/UINotebook.png" id="1_uxyon"]
-[ext_resource type="Script" path="res://UI/pause_ui_handler.gd" id="1_ww6sy"]
+[ext_resource type="Script" uid="uid://cka7hqiikhuvn" path="res://UI/pause_ui_handler.gd" id="1_ww6sy"]
 [ext_resource type="Theme" uid="uid://b7i8iy7krauku" path="res://UI/text_edit_theme.tres" id="2_garsl"]
 [ext_resource type="Theme" uid="uid://bgr6frj5j5a2w" path="res://UI/label_theme.tres" id="2_h0mjx"]
-[ext_resource type="FontFile" uid="uid://cmvis4l03ujqr" path="res://UI/PixelFont.ttf" id="3_j7cjj"]
+[ext_resource type="FontFile" uid="uid://bq7xtjypk2864" path="res://UI/PixelFont.ttf" id="3_j7cjj"]
 [ext_resource type="Theme" uid="uid://dhfh8ip3erkc0" path="res://UI/scroll_theme.tres" id="4_rtuia"]
 [ext_resource type="Theme" uid="uid://b6m6fsg3natah" path="res://UI/pause_button_theme.tres" id="6_et8rb"]
 
@@ -42,15 +42,17 @@ vertical_alignment = 1
 
 [node name="inventory_container" type="ScrollContainer" parent="background"]
 layout_mode = 0
-offset_left = 3.0
+offset_left = 4.0
 offset_top = 11.0
-offset_right = 41.0
+offset_right = 39.0
 offset_bottom = 44.0
 theme = ExtResource("4_rtuia")
 
 [node name="GridContainer" type="GridContainer" parent="background/inventory_container"]
 layout_mode = 2
-columns = 3
+theme_override_constants/h_separation = 1
+theme_override_constants/v_separation = 2
+columns = 2
 
 [node name="hand_title" type="Label" parent="background"]
 visible = false
@@ -112,8 +114,8 @@ theme_override_constants/separation = 1
 layout_mode = 2
 theme = ExtResource("6_et8rb")
 theme_override_colors/font_hover_pressed_color = Color(0.261113, 0.261113, 0.261113, 1)
-theme_override_colors/font_pressed_color = Color(0.262745, 0.262745, 0.262745, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.262745, 0.262745, 0.262745, 1)
 theme_override_font_sizes/font_size = 3
 text = "Resume"
 

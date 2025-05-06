@@ -151,14 +151,13 @@ z_index = 1
 y_sort_enabled = true
 scale = Vector2(0.5, 0.5)
 collision_layer = 8
-collision_mask = 15
 script = ExtResource("1_gcnrs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -20)
 sprite_frames = SubResource("SpriteFrames_rv0nq")
-animation = &"right"
+animation = &"up"
 autoplay = "down"
+offset = Vector2(0, -20)
 
 [node name="detection_area" type="Area2D" parent="."]
 collision_layer = 0
@@ -169,7 +168,6 @@ visible = false
 shape = SubResource("CircleShape2D_46wi1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, -7)
 shape = SubResource("CapsuleShape2D_qyfk5")
 
@@ -193,11 +191,10 @@ texture = ExtResource("3_tgjbk")
 
 [node name="death_sprite" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(0, -8)
 texture = ExtResource("1_dpp1s")
+offset = Vector2(0, -12)
 hframes = 4
 vframes = 4
-frame = 4
 
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]

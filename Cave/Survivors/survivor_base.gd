@@ -25,19 +25,23 @@ enum survivor_types {
 @export var thirst := 100
 
 @onready var game_map = null
+var in_main_game = false
 
 func _ready():
-	if get_parent().name == "game_map":
+	if get_parent().name == "GameMap":
 		game_map = get_parent()
+		in_main_game = true
 	player = get_tree().get_nodes_in_group("player")[0]
 	animator.play("idle")
 	# set variables from save data
-	global_position = GameHandler.get_survivor_data_from_object(self).global_position
-	assigned_location = GameHandler.get_survivor_data_from_object(self).assigned_location
-	target_area = NodePath(GameHandler.get_survivor_data_from_object(self).target_area)
-	target_assignment = NodePath(GameHandler.get_survivor_data_from_object(self).target_assignment)
-	target_usage = NodePath(GameHandler.get_survivor_data_from_object(self).target_usage)
-	print("loading target area: " + str(target_area))
+	if in_main_game:
+		global_position = GameHandler.get_survivor_data_from_object(self).global_position
+		## assignment deferred so that assigned_location setter is called after location flags are ready
+		#assigned_location = GameHandler.get_survivor_data_from_object(self).assigned_location
+		set_deferred("assigned_location",GameHandler.get_survivor_data_from_object(self).assigned_location)
+		#target_area = NodePath(GameHandler.get_survivor_data_from_object(self).target_area)
+		target_assignment = NodePath(GameHandler.get_survivor_data_from_object(self).target_assignment)
+		target_usage = NodePath(GameHandler.get_survivor_data_from_object(self).target_usage)
 	health = GameHandler.get_survivor_data_from_object(self).health
 	thirst = GameHandler.get_survivor_data_from_object(self).thirst
 	set_up_remark_system()
@@ -77,9 +81,11 @@ func find_target_area(input_location):
 		if item2.global_position == assigned_location:
 			target_area = get_path_to(item2)
 	GameHandler.get_survivor_data_from_object(self).target_area = target_area
-	GameHandler.get_survivor_data_from_object(self).target_assignment = target_assignment
-	GameHandler.get_survivor_data_from_object(self).target_usage = target_usage
-	print("assigned, area/node in data is: " + str(GameHandler.get_survivor_data_from_object(self).target_area))
+	## for debugging location assignments
+	#print(str(get_tree().get_nodes_in_group("location_flag").size()) + " flags cross-checked")
+	#print(name + " assigned, area/node in data is: " + str(GameHandler.get_survivor_data_from_object(self).target_area))
+	#print("area/node in game is " + str(target_area))
+	#print("assigned location is " + str(assigned_location))
 
 func get_point_in_target_area() -> Vector2:
 	var point_within_location
@@ -91,6 +97,8 @@ func get_point_in_target_area() -> Vector2:
 			var closest = NavigationServer2D.map_get_closest_point(get_tree().get_first_node_in_group("navigation_region").get_navigation_map(),point_within_location)
 			if point_within_location.distance_to(closest) < .1:
 				break
+	else:
+		printerr("no target area for survivor wandering")
 	if point_within_location:
 		return point_within_location
 	else: return Vector2.ZERO
@@ -137,6 +145,7 @@ func take_status_break(status:String): # take break to move to status area
 		#navigation_agent.target_position = input_location
 
 func _on_thirst_timer_timeout():
+	#print("assigned location for " + name + ": " + str(assigned_location)) 
 	if thirst != 0:
 		thirst -= 1
 		if thirst == 40:
@@ -149,7 +158,7 @@ func _on_survivor_movement_state_actor_reached_target():
 	if status_break and target_usage:
 		if get_node(target_usage) and target_assignment:
 			if get_node(target_usage).manual_depletion(30):
-				print("drink completed")
+				print(name + ": drink completed")
 				thirst = 100
 				get_node(target_usage).set_assigned_survivors(get_path(),false)
 				status_break = false
@@ -176,7 +185,6 @@ func _on_survivor_movement_state_actor_reached_target():
 var enemies_nearby : Array = []
 func _on_danger_area_body_entered(body):
 	if body.is_in_group("enemy") and not enemies_nearby.has(body):
-		queue_remark(remark_prompts.ENEMY)
 		enemies_nearby.append(body)
 		state_machine.change_state(state_machine.defense)
 
@@ -193,7 +201,8 @@ func _on_health_changed(value):
 	#print("hurt " + str(health))
 	GameHandler.get_survivor_data_from_object(self).health = value
 	if health <= 0:
-		#print("dead")d
+		#print("dead")
+		remark_box.hide()
 		state_machine.change_state(state_machine.death)
 	elif health <= 40:
 		queue_remark(remark_prompts.HEALTH)
@@ -251,11 +260,11 @@ func _on_remark_timer_timeout() -> void:
 var ending_sequence = false
 func queue_remark(prompt : remark_prompts):
 	if remark_empty and not ending_sequence and remark_timer:
+		remark_empty = false
 		remark_timer.start(10)
 		remark_box.text = remarks[survivor_type][prompt].pick_random()
 		if prompt == remark_prompts.TOOL:
 			for item in GameHandler.save_game_instance.item_instances:
-				print(item)
 				if typeof(item[1]) == TYPE_OBJECT and item[1] == self:
 					remark_box.text = remark_box.text.replace("XXXX",GameHandler.item_names[item[0]]) # if tool, replace placeholder with tool
 	elif ending_sequence and (prompt == remark_prompts.FALLING or prompt == remark_prompts.BLOCKED1 or prompt == remark_prompts.BLOCKED2):

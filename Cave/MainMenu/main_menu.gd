@@ -13,6 +13,7 @@ func _ready():
 @onready var loadC = $menu_canvas/background/load_container
 @onready var settingsC = $menu_canvas/background/settings_container
 
+@onready var load_scroll_container = $menu_canvas/background/load_container/ScrollContainer
 @onready var load_button_container = $menu_canvas/background/load_container/ScrollContainer/VBoxContainer
 
 @onready var regex = RegEx.new()
@@ -37,6 +38,7 @@ func switch_container(target_container):
 const save_button_base = preload("res://MainMenu/save_button_base.tscn")
 
 func container_ready_function():
+	#load_scroll_container.get_v_scroll_bar().custom_minimum_size = load_scroll_container.get_v_scroll_bar().size*4
 	# main container
 	var save_files = DirAccess.get_files_at(SaveGameInstance.SAVE_DIR)
 	if save_files.size() == 0:

@@ -29,17 +29,19 @@ func _physics_process(_delta):
 	match state:
 		states.WANDER:
 			nav_agent.target_position = wander_destination
-			dir = to_local(nav_agent.get_next_path_position()).normalized()
-			velocity = dir * SPEED
-			move_and_slide()
-		states.ATTACK:
-			if attack_target:
-				nav_agent.target_position = attack_target.global_position
+			if global_position.distance_squared_to(wander_destination) > 50:
 				dir = to_local(nav_agent.get_next_path_position()).normalized()
 				velocity = dir * SPEED
 				move_and_slide()
-				if global_position.distance_squared_to(attack_target.global_position) < 100:
+		states.ATTACK:
+			if attack_target:
+				if global_position.distance_squared_to(attack_target.global_position) < 50:
 					attempt_attack()
+				else:
+					nav_agent.target_position = attack_target.global_position
+					dir = to_local(nav_agent.get_next_path_position()).normalized()
+					velocity = dir * SPEED
+					move_and_slide()
 		states.DEAD:
 			pass
 	var velN = velocity.normalized()
@@ -85,7 +87,6 @@ func _on_detection_area_body_exited(body):
 func update_attack_state():
 	if state != states.DEAD:
 		if targets_in_area.size() > 0:
-			print("attacking")
 			state = states.ATTACK
 			attack_target = targets_in_area[0]
 		else:
@@ -114,15 +115,17 @@ func _on_health_changed(value):
 		state = states.DEAD
 		set_collision_layer_value(4,false)
 		if death_sprite.frame == 0 or death_sprite.frame == 8:
-			death_sprite.position = Vector2(0,-22)
-			death_sprite.offset = Vector2(0,-12)
+			death_sprite.position = Vector2(0,0)
+			death_sprite.offset = Vector2(0,-24)
+			var tween = get_tree().create_tween()
+			tween.tween_property(death_sprite,"offset",Vector2(0,-12),.6)
 		else:
-			death_sprite.position = Vector2(0,-16)
-			death_sprite.offset = Vector2(0,-8)
+			death_sprite.position = Vector2(0,0)
+			death_sprite.offset = Vector2(0,-32)
+			var tween = get_tree().create_tween()
+			tween.tween_property(death_sprite,"offset",Vector2(0,-8),.6)
 		death_sprite.visible = true
 		sprite.visible = false
-		var tween = get_tree().create_tween()
-		tween.tween_property(death_sprite,"offset",Vector2(0,8),.6)
 		death_timer.start(20)
 
 func _on_death_timer_timeout():

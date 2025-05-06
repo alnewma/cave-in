@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://davja3ux7626q"]
 
 [ext_resource type="Texture2D" uid="uid://cx0cl5ue5n15d" path="res://ArtAssets/Barrel.png" id="1_p6oo0"]
-[ext_resource type="Script" path="res://GameMap/barrel.gd" id="2_ffysb"]
+[ext_resource type="Script" uid="uid://cio6g7tsin4yi" path="res://GameMap/barrel.gd" id="2_ffysb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jrb1m"]
 atlas = ExtResource("1_p6oo0")
@@ -32,13 +32,13 @@ height = 10.0
 [node name="barrelSprite" type="AnimatedSprite2D"]
 z_index = 1
 y_sort_enabled = true
-position = Vector2(0, -11)
+position = Vector2(0, -2)
 sprite_frames = SubResource("SpriteFrames_8dgv2")
-offset = Vector2(0, 5)
+offset = Vector2(0, -4)
 script = ExtResource("2_ffysb")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(0, 11)
+position = Vector2(0, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(0, -2)

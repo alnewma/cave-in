@@ -6,6 +6,8 @@ func _ready():
 func pause_setup():
 	notes.text = GameHandler.save_game_instance.player_data.player_character_stats.notes
 	var player = get_tree().get_first_node_in_group("player")
+	for item in inventory_grid.get_children(): # clear out inventory before reinstancing
+		item.queue_free()
 	for item in GameHandler.save_game_instance.item_instances:
 		if item[1] is Node2D and item[1] == player:
 			var item_button = inventory_item.instantiate()

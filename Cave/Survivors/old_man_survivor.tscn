@@ -179,8 +179,12 @@ animations = [{
 survivor_type = 4
 
 [node name="AnimatedSprite2D" parent="." index="1"]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(0, 0)
 sprite_frames = SubResource("SpriteFrames_dgrnl")
 animation = &"attack"
+offset = Vector2(0, -24)
 
 [node name="remark" parent="." index="9"]
 offset_top = -42.0

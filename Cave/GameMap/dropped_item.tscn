@@ -1,12 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://vo3pm67a3dkl"]
 
-[ext_resource type="Script" path="res://GameMap/dropped_item.gd" id="1_6u3rh"]
+[ext_resource type="Script" uid="uid://bs6dxgsgxmnmm" path="res://GameMap/dropped_item.gd" id="1_6u3rh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_olgjk"]
 radius = 13.0
 
 [node name="dropped_item" type="Sprite2D"]
-z_index = 1
+z_index = 2
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_6u3rh")
 

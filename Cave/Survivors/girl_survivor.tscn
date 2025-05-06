@@ -176,10 +176,14 @@ animations = [{
 }]
 
 [node name="girl_survivor" instance=ExtResource("1_yai6e")]
+z_index = 1
+y_sort_enabled = true
 
 [node name="AnimatedSprite2D" parent="." index="1"]
+position = Vector2(0, 0)
 sprite_frames = SubResource("SpriteFrames_pxymr")
 animation = &"attack"
+offset = Vector2(0, -24)
 
 [node name="remark" parent="." index="9"]
 offset_top = -34.0

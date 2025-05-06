@@ -59,39 +59,39 @@ rotation = 2.90804
 [node name="menu_canvas" type="CanvasLayer" parent="."]
 
 [node name="background" type="MarginContainer" parent="menu_canvas"]
-offset_right = 640.0
-offset_bottom = 362.0
-theme_override_constants/margin_left = 400
-theme_override_constants/margin_top = 200
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 25
+offset_right = 160.0
+offset_bottom = 90.0
+scale = Vector2(4, 4)
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 6
 
 [node name="main_container" type="VBoxContainer" parent="menu_canvas/background"]
 layout_mode = 2
 theme_override_constants/separation = 3
 
 [node name="new_game" type="Button" parent="menu_canvas/background/main_container"]
-custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 theme = ExtResource("2_6mbmi")
+theme_override_font_sizes/font_size = 5
 text = "New Game"
 
 [node name="load_game" type="Button" parent="menu_canvas/background/main_container"]
-custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 theme = ExtResource("2_6mbmi")
+theme_override_font_sizes/font_size = 5
 text = "Load Game"
 
 [node name="settings" type="Button" parent="menu_canvas/background/main_container"]
-custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 theme = ExtResource("2_6mbmi")
+theme_override_font_sizes/font_size = 5
 text = "Settings"
 
 [node name="quit" type="Button" parent="menu_canvas/background/main_container"]
-custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 theme = ExtResource("2_6mbmi")
+theme_override_font_sizes/font_size = 5
 text = "Quit"
 
 [node name="new_container" type="VBoxContainer" parent="menu_canvas/background"]
@@ -100,39 +100,39 @@ layout_mode = 2
 theme_override_constants/separation = 3
 
 [node name="menu_title" type="Label" parent="menu_canvas/background/new_container"]
-custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 theme = ExtResource("3_4p1n0")
+theme_override_font_sizes/font_size = 5
 text = "New Game"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="name_entry" type="LineEdit" parent="menu_canvas/background/new_container"]
-custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 theme = ExtResource("4_rc6gv")
+theme_override_font_sizes/font_size = 5
 placeholder_text = "Enter name..."
 alignment = 1
 max_length = 8
 
 [node name="create_button" type="Button" parent="menu_canvas/background/new_container"]
-custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 theme = ExtResource("2_6mbmi")
+theme_override_font_sizes/font_size = 5
 text = "Create"
 
 [node name="name_warning" type="Label" parent="menu_canvas/background/new_container"]
 visible = false
-custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 theme = ExtResource("3_4p1n0")
+theme_override_font_sizes/font_size = 5
 text = "Name taken"
 horizontal_alignment = 1
 
 [node name="back" type="Button" parent="menu_canvas/background/new_container"]
-custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 theme = ExtResource("2_6mbmi")
+theme_override_font_sizes/font_size = 5
 text = "Back"
 
 [node name="load_container" type="VBoxContainer" parent="menu_canvas/background"]
@@ -141,22 +141,22 @@ layout_mode = 2
 theme_override_constants/separation = 3
 
 [node name="menu_title" type="Label" parent="menu_canvas/background/load_container"]
-custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 theme = ExtResource("3_4p1n0")
+theme_override_font_sizes/font_size = 5
 text = "Load Game"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="menu_canvas/background/load_container"]
-custom_minimum_size = Vector2(0, 81)
+custom_minimum_size = Vector2(0, 20.25)
 layout_mode = 2
 theme = ExtResource("5_2gfa4")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="menu_canvas/background/load_container/ScrollContainer"]
-custom_minimum_size = Vector2(215, 81)
+custom_minimum_size = Vector2(54, 0)
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation = 1
 
 [node name="save_file" parent="menu_canvas/background/load_container/ScrollContainer/VBoxContainer" instance=ExtResource("5_wghpq")]
 layout_mode = 2
@@ -171,9 +171,9 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="back" type="Button" parent="menu_canvas/background/load_container"]
-custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 theme = ExtResource("2_6mbmi")
+theme_override_font_sizes/font_size = 5
 text = "Back"
 
 [node name="settings_container" type="VBoxContainer" parent="menu_canvas/background"]
@@ -182,9 +182,9 @@ layout_mode = 2
 theme_override_constants/separation = 3
 
 [node name="back" type="Button" parent="menu_canvas/background/settings_container"]
-custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 theme = ExtResource("2_6mbmi")
+theme_override_font_sizes/font_size = 5
 text = "Back"
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]

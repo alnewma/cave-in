@@ -18,5 +18,5 @@ func change_state(new_state : State):
 		if state == activity:
 			if actor.target_assignment:
 				get_node(actor.target_assignment).set_assigned_survivors(get_path(),false)
-	new_state._enter_state()
-	state = new_state
+		new_state._enter_state()
+		state = new_state
