@@ -1,11 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://5l67trp6jxuj"]
+[gd_scene load_steps=9 format=3 uid="uid://5l67trp6jxuj"]
 
 [ext_resource type="Texture2D" uid="uid://cm5lb1bi11657" path="res://ArtAssets/UI/UIPage.png" id="1_ixgaj"]
-[ext_resource type="Script" path="res://UI/assignment_menu.gd" id="1_nvwk8"]
+[ext_resource type="Script" uid="uid://ufrfngry1aea" path="res://UI/assignment_menu.gd" id="1_nvwk8"]
 [ext_resource type="Texture2D" uid="uid://c1wv18vpvs6d0" path="res://ArtAssets/UI/assignment_icon.png" id="2_42khg"]
 [ext_resource type="PackedScene" uid="uid://b13m7ybp1isac" path="res://UI/title_holder.tscn" id="3_5jcs3"]
 [ext_resource type="Theme" uid="uid://bgr6frj5j5a2w" path="res://UI/label_theme.tres" id="4_jr2u4"]
 [ext_resource type="PackedScene" uid="uid://lisxvkd8i4da" path="res://UI/menu_button_base.tscn" id="6_fisxy"]
+[ext_resource type="FontFile" uid="uid://bq7xtjypk2864" path="res://UI/PixelFont.ttf" id="6_s761l"]
+
+[sub_resource type="FontVariation" id="FontVariation_gqbuf"]
+base_font = ExtResource("6_s761l")
 
 [node name="assignment_menu" type="Control"]
 z_index = 1
@@ -30,7 +34,7 @@ offset_right = -2.0
 offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 1
+theme_override_constants/separation = 2
 
 [node name="icon" type="TextureRect" parent="background/button_holder"]
 custom_minimum_size = Vector2(8, 11)
@@ -42,6 +46,8 @@ stretch_mode = 5
 layout_mode = 2
 
 [node name="Label" parent="background/button_holder/title_holder/TitleBanner" index="0"]
+offset_left = 8.0
+offset_top = 4.0
 text = "Location name"
 
 [node name="assignment" type="Label" parent="background/button_holder"]
@@ -59,8 +65,9 @@ texture_filter = 1
 layout_mode = 2
 theme = ExtResource("4_jr2u4")
 theme_override_constants/line_spacing = 1
+theme_override_fonts/font = SubResource("FontVariation_gqbuf")
 theme_override_font_sizes/font_size = 3
-text = "Tool Requirements: None"
+text = "Tool Requirements: Tool1[X], Tool2[], Tool3[X]"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2

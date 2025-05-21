@@ -102,9 +102,6 @@ func attempt_attack():
 		actor.animator.play("attack")
 func attack_damage():
 	if target_enemy != null:
-		print("damaging")
-		print(target_enemy.name)
-		print(target_enemy.states.keys()[target_enemy.state])
 		GameHandler.damage_target(actor,target_enemy,20)
 
 func attack_cooldown_timer_timeout():

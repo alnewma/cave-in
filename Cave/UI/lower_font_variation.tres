@@ -4,5 +4,4 @@
 
 [resource]
 base_font = ExtResource("1_0p2o5")
-spacing_top = 1
 spacing_bottom = -2

@@ -15,8 +15,10 @@ func _on_button_pressed(source_text):
 		"Close":
 			visible = false
 			removal_flag.peri.visible = false
+			removal_flag.being_interacted_with = false
 
 func removal_process(flag):
 	removal_flag = flag
 	title.text = removal_flag.flag_name
 	visible = true
+	removal_flag.being_interacted_with = true

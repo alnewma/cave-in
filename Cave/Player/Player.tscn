@@ -1,4 +1,4 @@
-[gd_scene load_steps=94 format=3 uid="uid://bsrbrnqvx2mpa"]
+[gd_scene load_steps=101 format=3 uid="uid://bsrbrnqvx2mpa"]
 
 [ext_resource type="Script" uid="uid://c38hqrmopq5n" path="res://Player/Player.gd" id="1_moy0r"]
 [ext_resource type="Texture2D" uid="uid://ckg0j0y0o2km1" path="res://ArtAssets/MCSprites1/2 Punk/Attack.png" id="1_msnrt"]
@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://0e0i2yqvqru8" path="res://ArtAssets/Woman_spritesheet.png" id="10_7047o"]
 [ext_resource type="Script" uid="uid://uhtyfgb2kw1o" path="res://Player/camera_2d.gd" id="10_skwot"]
 [ext_resource type="Texture2D" uid="uid://dveosuce1lq60" path="res://ArtAssets/Man_spritesheet.png" id="11_mnxuv"]
+[ext_resource type="Texture2D" uid="uid://b47ot87hqir3i" path="res://ArtAssets/attackEffect.png" id="13_dm7nj"]
+[ext_resource type="Script" uid="uid://cqit05cbv7du3" path="res://Player/attack_effect.gd" id="14_3mea3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y77d4"]
 radius = 4.0
@@ -947,9 +949,50 @@ _data = {
 radius = 12.0
 height = 36.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_dm7nj"]
+atlas = ExtResource("13_dm7nj")
+region = Rect2(0, 0, 1, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7v5gs"]
+atlas = ExtResource("13_dm7nj")
+region = Rect2(0, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8sa4y"]
+atlas = ExtResource("13_dm7nj")
+region = Rect2(9, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3nb2p"]
+atlas = ExtResource("13_dm7nj")
+region = Rect2(18, 0, 9, 9)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d7xyo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dm7nj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dm7nj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dm7nj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7v5gs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8sa4y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3nb2p")
+}],
+"loop": false,
+"name": &"default",
+"speed": 8.0
+}]
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 z_index = 1
-y_sort_enabled = true
 scale = Vector2(0.5, 0.5)
 collision_layer = 18
 collision_mask = 19
@@ -1017,6 +1060,14 @@ shape = SubResource("CapsuleShape2D_ag41p")
 [node name="attack_cooldown" type="Timer" parent="."]
 one_shot = true
 
+[node name="attackEffect" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(0, -25)
+sprite_frames = SubResource("SpriteFrames_d7xyo")
+offset = Vector2(-11.3385, -11.3572)
+script = ExtResource("14_3mea3")
+
 [connection signal="body_entered" from="attack_area" to="." method="_on_attack_area_body_entered"]
 [connection signal="body_exited" from="attack_area" to="." method="_on_attack_area_body_exited"]
 [connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
+[connection signal="animation_finished" from="attackEffect" to="attackEffect" method="_on_animation_finished"]

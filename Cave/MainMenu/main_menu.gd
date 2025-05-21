@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var SaveGameInstance = GameHandler.save_game_instance
 func _ready():
+	if GameHandler.game_just_opened:
+		menu_intro_cutscene()
 	menu_ready_function()
 	container_ready_function()
 	#GameHandler.save_ready_function()
@@ -12,6 +14,7 @@ func _ready():
 @onready var newC = $menu_canvas/background/new_container
 @onready var loadC = $menu_canvas/background/load_container
 @onready var settingsC = $menu_canvas/background/settings_container
+@onready var tutorialC = $menu_canvas/tutorialContainer
 
 @onready var load_scroll_container = $menu_canvas/background/load_container/ScrollContainer
 @onready var load_button_container = $menu_canvas/background/load_container/ScrollContainer/VBoxContainer
@@ -20,7 +23,7 @@ func _ready():
 var containers = []
 
 func menu_ready_function():
-	containers = [mainC,newC,loadC,settingsC]
+	containers = [mainC,newC,loadC,settingsC,tutorialC]
 
 func _on_back_pressed():
 	switch_container(mainC)
@@ -66,6 +69,9 @@ func load_button_pressed(button):
 	SaveGameInstance.load_data()
 	load_map()
 
+func _on_tutorial_pressed() -> void:
+	switch_container(tutorialC)
+
 func _on_name_entry_text_changed(new_text):
 	
 	# valid characters
@@ -91,6 +97,13 @@ func _on_name_entry_text_changed(new_text):
 		name_warning.visible = true
 		create_button.disabled = true
 
+@onready var intro_logos = preload("res://UI/cutscene_start.tscn")
+func menu_intro_cutscene():
+	GameHandler.game_just_opened = false
+	var intro_instance = intro_logos.instantiate()
+	get_tree().current_scene.add_child(intro_instance)
+	await intro_instance.get_node("AnimationPlayer").animation_finished
+	intro_instance.queue_free()
 ## Game Creation ##
 
 const world_map = preload("res://GameMap/game_map.tscn")
@@ -104,3 +117,6 @@ func _on_create_button_pressed():
 
 func load_map():
 	get_tree().change_scene_to_packed(world_map)
+
+func _on_close_button_pressed() -> void:
+	switch_container(mainC)

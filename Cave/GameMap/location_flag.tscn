@@ -75,6 +75,7 @@ modulate = Color(1, 1, 1, 0.2)
 texture = ExtResource("3_a2005")
 
 [node name="location_area" type="Area2D" parent="."]
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="location_area"]
 shape = SubResource("CircleShape2D_sj2gv")
@@ -82,3 +83,5 @@ shape = SubResource("CircleShape2D_sj2gv")
 [connection signal="input_event" from="interaction_area" to="." method="_on_interaction_area_input_event"]
 [connection signal="mouse_entered" from="interaction_area" to="." method="_on_interaction_area_mouse_entered"]
 [connection signal="mouse_exited" from="interaction_area" to="." method="_on_interaction_area_mouse_exited"]
+[connection signal="body_entered" from="location_area" to="." method="_on_location_area_body_entered"]
+[connection signal="body_exited" from="location_area" to="." method="_on_location_area_body_exited"]

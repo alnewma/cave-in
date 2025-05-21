@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bjiwhknxcx6xk" path="res://UI/interaction_base.tscn" id="1_pu425"]
 [ext_resource type="PackedScene" uid="uid://b13m7ybp1isac" path="res://UI/title_holder.tscn" id="2_b0ch3"]
-[ext_resource type="Script" path="res://UI/establish_location.gd" id="2_rrprg"]
+[ext_resource type="Script" uid="uid://dwwhnbuo3u8u" path="res://UI/establish_location.gd" id="2_rrprg"]
 [ext_resource type="PackedScene" uid="uid://lisxvkd8i4da" path="res://UI/menu_button_base.tscn" id="3_agwr4"]
 [ext_resource type="Texture2D" uid="uid://c1qxget4jv7yg" path="res://ArtAssets/UI/button_resize.png" id="4_lmw1g"]
 [ext_resource type="Theme" uid="uid://brnwg1k0lrtsw" path="res://UI/line_edit_theme.tres" id="5_u2aw7"]
@@ -30,16 +30,16 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 2.0
-offset_top = 2.0
+offset_left = 3.0
+offset_top = 3.0
 offset_right = -2.0
-offset_bottom = -2.0
+offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("5_u2aw7")
 theme_override_colors/font_placeholder_color = Color(1, 1, 1, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 3
+theme_override_font_sizes/font_size = 2
 placeholder_text = "Enter name..."
 alignment = 1
 max_length = 10
@@ -50,13 +50,18 @@ button_text = "Confirm"
 
 [node name="Button" parent="background/button_holder/confirm_button/NinePatchRect" index="0"]
 disabled = true
+
+[node name="Label" parent="background/button_holder/confirm_button/NinePatchRect/Button" index="0"]
+offset_left = -6.0
+offset_top = -1.0
+offset_bottom = 3.0
 text = "Confirm"
 
 [node name="button_holder" parent="background/button_holder" index="3" instance=ExtResource("3_agwr4")]
 layout_mode = 2
 button_text = "Close"
 
-[node name="Button" parent="background/button_holder/button_holder/NinePatchRect" index="0"]
+[node name="Label" parent="background/button_holder/button_holder/NinePatchRect/Button" index="0"]
 text = "Close"
 
 [connection signal="text_changed" from="background/button_holder/CenterContainer/NinePatchRect/name_entry" to="." method="_on_name_entry_text_changed"]

@@ -98,8 +98,14 @@ func attack():
 			on_attack_cooldown = true
 			attacking_currently = true
 			attack_cooldown_timer.start(attack_cooldown)
+			_handle_attack_effect()
 			get_tree().create_timer(.6).connect("timeout",attack_deal_damage)
 			get_tree().create_timer(.8).connect("timeout",_attack_ended)
+@onready var attack_effect = $attackEffect
+func _handle_attack_effect():
+	attack_effect.rotation_degrees = attack_area.rotation_degrees-45
+	attack_effect.play("default")
+	attack_effect.show()
 func attack_deal_damage():
 	if enemies_in_attack_radius.size() > 0:
 		GameHandler.damage_target(self,enemies_in_attack_radius[0],attack_damage)

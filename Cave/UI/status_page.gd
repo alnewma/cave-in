@@ -30,7 +30,7 @@ func _on_visibility_changed():
 			2: survivor_name = "Mace"
 			3: survivor_name = "Ida"
 			4: survivor_name = "Wesley"
-		title.text = survivor_name
+		title.text = survivor_name + " Status"
 		health_bar.value = handler.current_survivor.health
 		thirst_bar.value = handler.current_survivor.thirst
 		refresh_item_textures()
@@ -46,7 +46,6 @@ func refresh_item_textures():
 		take_button.text = "Take Item"
 		
 	else:
-		print("no texture")
 		item_image.texture = null
 		item_name.text = "No Item Equipped"
 		take_button.text = ""

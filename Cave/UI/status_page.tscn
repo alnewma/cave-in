@@ -43,10 +43,10 @@ layout_mode = 2
 size_flags_horizontal = 4
 
 [node name="Label" parent="background/button_holder/title_holder/TitleBanner" index="0"]
+offset_left = 8.0
 offset_top = 2.0
 offset_bottom = -2.0
 text = "Character Name"
-autowrap_mode = 2
 
 [node name="status_holder2" type="CenterContainer" parent="background/button_holder" index="2"]
 layout_mode = 2

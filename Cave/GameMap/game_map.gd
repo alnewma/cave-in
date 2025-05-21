@@ -41,8 +41,8 @@ func flag_mouse_exited(flag):
 
 func create_interaction_menu(survivor):
 	if not spectator_mode:
-		interaction_menu.change_page(interaction_menu.start_page,true)
 		interaction_menu.current_survivor = survivor
+		interaction_menu.change_page(interaction_menu.start_page,true)
 func create_removal_menu(flag):
 	if not spectator_mode:
 		flag_edit_menu.removal_process(flag)
@@ -75,12 +75,18 @@ func create_locations():
 @onready var side_rocks = $SideRockLayer
 @onready var black_canvas = $CanvasModulate
 @onready var news_text = $player_ui/news_margin
+@onready var intro_logos = preload("res://UI/cutscene_start.tscn")
 func cutscene():
-	news_text.start_displaying()
 	black_canvas.show()
 	side_rocks.scroll_scale = Vector2(1,1)
 	playercam.enabled = false
 	playerlight.hide()
+	#var intro_instance = intro_logos.instantiate()
+	#get_tree().current_scene.add_child(intro_instance)
+	#await intro_instance.get_node("AnimationPlayer").animation_finished
+	#print("cutscene ended")
+	#intro_instance.queue_free()
+	news_text.start_displaying()
 	var tween = get_tree().create_tween()
 	tween.connect("step_finished",cutscene_finished)
 	tween.tween_property(cutcam,"global_position",Vector2(122,104),12)

@@ -23,6 +23,7 @@ var completion_status = 0 : set = _on_completion_status_changed
 signal completion_status_changed
 signal object_completed
 @export var event : GameHandler.events
+var flags_through_which_player_is_nearby = []
 
 func _on_completion_status_changed(value):
 	completion_status = value
@@ -102,19 +103,31 @@ func manual_depletion(amount):
 	else:
 		return false
 
-func _on_progression_timer_timeout():
-	if assigned_survivors.size() > 0:
-		spawn_smoke_if_applicable()
-	
-	# check if all required tools are provided
-	var required_tools_accounted_for = true
+func get_tools_being_used() -> Array:
 	var tools_being_used = []
+	# check tools survivors are providing
 	for survivorPath in assigned_survivors:
 		var survivor = get_node(survivorPath)
 		if survivor.state_machine.state == survivor.state_machine.activity: # if survivor is currently working
 			for item in GameHandler.save_game_instance.item_instances:
 				if typeof(item[1]) == TYPE_OBJECT and item[1] == survivor:
 					tools_being_used.append(item[0])
+					#print(name + ": " + item[1].name + " is using item")
+	# check tools player is providing
+	var player = get_tree().get_first_node_in_group("player")
+	if flags_through_which_player_is_nearby.size() > 0: # player is nearby
+		for item in GameHandler.save_game_instance.item_instances:
+			if typeof(item[1]) == TYPE_OBJECT and item[1] == player:
+				tools_being_used.append(item[0])
+				#print("player is using item")
+	return tools_being_used
+
+func _on_progression_timer_timeout():
+	
+	# check if all required tools are provided
+	var required_tools_accounted_for = true
+	var tools_being_used = get_tools_being_used()
+
 	for tool in required_tool:
 		if tool and not tools_being_used.has(tool): # if a required tool isn't being used
 			required_tools_accounted_for = false
@@ -126,6 +139,7 @@ func _on_progression_timer_timeout():
 			if completion_status < 100 and required_tools_accounted_for: # increase progress based on productivity level and tools
 				var progress_inc = pow(1.5,GameHandler.get_survivor_data_from_object(survivor).productivity)
 				completion_status += progress_inc
+				spawn_smoke_if_applicable()
 
 @onready var dropped_item_base = preload("res://GameMap/dropped_item.tscn")
 func give_item(items : Array):

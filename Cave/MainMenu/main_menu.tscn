@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://slxdkui1guxf"]
+[gd_scene load_steps=23 format=3 uid="uid://slxdkui1guxf"]
 
 [ext_resource type="Script" uid="uid://vcfaaf7ohddn" path="res://MainMenu/main_menu.gd" id="1_t0rvo"]
 [ext_resource type="Texture2D" uid="uid://rbxupuk0gxyq" path="res://ArtAssets/tabletop.png" id="2_1b6bn"]
@@ -10,12 +10,201 @@
 [ext_resource type="Theme" uid="uid://dhfh8ip3erkc0" path="res://UI/scroll_theme.tres" id="5_2gfa4"]
 [ext_resource type="Texture2D" uid="uid://3y1ur874ymtp" path="res://ArtAssets/candle_flame.png" id="5_k5ytu"]
 [ext_resource type="PackedScene" uid="uid://nmfgotssstbe" path="res://MainMenu/save_button_base.tscn" id="5_wghpq"]
+[ext_resource type="Script" uid="uid://c8we6sptwlov4" path="res://MainMenu/tutorial_container.gd" id="11_iej5p"]
+[ext_resource type="Texture2D" uid="uid://gittvoawbhs8" path="res://ArtAssets/UI/tutorial/tutf1.png" id="12_b3er0"]
+[ext_resource type="Texture2D" uid="uid://bela0ug4pdmgm" path="res://ArtAssets/UI/tutorial/tutorialFlash1.png" id="13_qmlj8"]
+[ext_resource type="Texture2D" uid="uid://p6yjg8ajnntm" path="res://ArtAssets/UI/tutorial/tutf2.png" id="14_gcf2c"]
+[ext_resource type="Texture2D" uid="uid://csdr6k38gi8gr" path="res://ArtAssets/UI/tutorial/tutf3.png" id="15_t5loh"]
+[ext_resource type="Texture2D" uid="uid://b38x57jpbrcky" path="res://ArtAssets/UI/tutorial/tutf4.png" id="16_8wefa"]
+[ext_resource type="Texture2D" uid="uid://2onqls5b4r2" path="res://ArtAssets/UI/tutorial/tutorialFlash2.png" id="17_cqjde"]
+[ext_resource type="Texture2D" uid="uid://b8w4ib6w74ghg" path="res://ArtAssets/UI/tutorial/tutorialFlash3.png" id="18_homfb"]
 
 [sub_resource type="Curve2D" id="Curve2D_r3pwd"]
 _data = {
 "points": PackedVector2Array(224.17, -53.3289, -224.17, 53.3289, -86, -837, 140.165, -231.721, -140.165, 231.721, -516, -575, -199.219, -143.66, 199.219, 143.66, -363, 57, -94.8807, 134.08, 94.8807, -134.08, 72, 96, -158.58, 153.68, 158.58, -153.68, 107, -311, -75.2809, 212.479, 75.2809, -212.479, 518, -428, 137.806, 46.2498, -137.806, -46.2498, 279, -859, 66.5431, -8.96681, -66.5431, 8.96681, -86, -837)
 }
 point_count = 8
+
+[sub_resource type="Animation" id="Animation_a07ub"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("tutorialRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("12_b3er0")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("tutorialRect/flash:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("13_qmlj8")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("tutorialRect/flash:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("tutorialRect/desc1:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("tutorialRect/desc2:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("tutorialRect/desc3:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("tutorialRect/close_button:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_wbgrs"]
+resource_name = "show_tutorial"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("tutorialRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.85, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("12_b3er0"), ExtResource("14_gcf2c"), ExtResource("15_t5loh"), ExtResource("16_8wefa")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("tutorialRect/flash:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.666667, 1.43333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("13_qmlj8"), ExtResource("17_cqjde"), ExtResource("18_homfb")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("tutorialRect/flash:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1, 0.6, 0.75, 0.849807, 1.34981, 1.49981, 1.6, 2.1, 2.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("tutorialRect/desc1:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("tutorialRect/desc2:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.85),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("tutorialRect/desc3:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("tutorialRect/close_button:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.85),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0sxtl"]
+_data = {
+&"RESET": SubResource("Animation_a07ub"),
+&"show_tutorial": SubResource("Animation_wbgrs")
+}
 
 [node name="main_menu" type="Node2D"]
 script = ExtResource("1_t0rvo")
@@ -81,6 +270,12 @@ layout_mode = 2
 theme = ExtResource("2_6mbmi")
 theme_override_font_sizes/font_size = 5
 text = "Load Game"
+
+[node name="tutorial" type="Button" parent="menu_canvas/background/main_container"]
+layout_mode = 2
+theme = ExtResource("2_6mbmi")
+theme_override_font_sizes/font_size = 5
+text = "Tutorial"
 
 [node name="settings" type="Button" parent="menu_canvas/background/main_container"]
 layout_mode = 2
@@ -187,6 +382,110 @@ theme = ExtResource("2_6mbmi")
 theme_override_font_sizes/font_size = 5
 text = "Back"
 
+[node name="tutorialContainer" type="CenterContainer" parent="menu_canvas"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -320.0
+offset_bottom = -180.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("11_iej5p")
+
+[node name="tutorialRect" type="TextureRect" parent="menu_canvas/tutorialContainer"]
+layout_mode = 2
+texture = ExtResource("12_b3er0")
+
+[node name="desc1" type="Label" parent="menu_canvas/tutorialContainer/tutorialRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -41.0
+offset_right = 102.0
+offset_bottom = -8.0
+grow_vertical = 0
+theme = ExtResource("3_4p1n0")
+theme_override_font_sizes/font_size = 12
+text = "Explore the area"
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 2
+
+[node name="desc2" type="Label" parent="menu_canvas/tutorialContainer/tutorialRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 114.0
+offset_top = -170.0
+offset_right = 206.0
+offset_bottom = -105.0
+grow_vertical = 0
+theme = ExtResource("3_4p1n0")
+theme_override_font_sizes/font_size = 12
+text = "Place objective flags"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="desc3" type="Label" parent="menu_canvas/tutorialContainer/tutorialRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 218.0
+offset_top = -41.0
+offset_right = 312.0
+offset_bottom = -8.0
+grow_vertical = 0
+theme = ExtResource("3_4p1n0")
+theme_override_font_sizes/font_size = 12
+text = "Direct the escape"
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 2
+
+[node name="close_button" type="Button" parent="menu_canvas/tutorialContainer/tutorialRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -22.5
+offset_top = -30.0
+offset_right = 22.5
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_6mbmi")
+theme_override_font_sizes/font_size = 12
+text = "Close"
+
+[node name="flash" type="TextureRect" parent="menu_canvas/tutorialContainer/tutorialRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("13_qmlj8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="menu_canvas/tutorialContainer"]
+libraries = {
+&"": SubResource("AnimationLibrary_0sxtl")
+}
+
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.372251, 0.372251, 0.372251, 1)
 
@@ -194,9 +493,12 @@ color = Color(0.372251, 0.372251, 0.372251, 1)
 [connection signal="timeout" from="backgroundImage/flame/flame_timer" to="backgroundImage" method="_on_flame_timer_timeout"]
 [connection signal="pressed" from="menu_canvas/background/main_container/new_game" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="menu_canvas/background/main_container/load_game" to="." method="_on_load_game_pressed"]
+[connection signal="pressed" from="menu_canvas/background/main_container/tutorial" to="." method="_on_tutorial_pressed"]
 [connection signal="pressed" from="menu_canvas/background/main_container/quit" to="." method="_on_quit_pressed"]
 [connection signal="text_changed" from="menu_canvas/background/new_container/name_entry" to="." method="_on_name_entry_text_changed"]
 [connection signal="pressed" from="menu_canvas/background/new_container/create_button" to="." method="_on_create_button_pressed"]
 [connection signal="pressed" from="menu_canvas/background/new_container/back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="menu_canvas/background/load_container/back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="menu_canvas/background/settings_container/back" to="." method="_on_back_pressed"]
+[connection signal="visibility_changed" from="menu_canvas/tutorialContainer" to="menu_canvas/tutorialContainer" method="_on_visibility_changed"]
+[connection signal="pressed" from="menu_canvas/tutorialContainer/tutorialRect/close_button" to="." method="_on_close_button_pressed"]

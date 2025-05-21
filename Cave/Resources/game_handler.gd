@@ -2,6 +2,8 @@ extends Node
 
 @onready var save_game_instance = SaveGame.new()
 
+var game_just_opened = true
+
 ## Save Handler ##
 #
 #const SAVE_DIR = "user://saves/"

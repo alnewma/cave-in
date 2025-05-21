@@ -68,11 +68,10 @@ animations = [{
 }]
 
 [node name="smoke_puff" type="AnimatedSprite2D"]
+visible = false
 z_index = 2
 sprite_frames = SubResource("SpriteFrames_tksjs")
-autoplay = "default"
 frame = 5
-frame_progress = 0.143826
 script = ExtResource("2_gyi5t")
 
 [connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

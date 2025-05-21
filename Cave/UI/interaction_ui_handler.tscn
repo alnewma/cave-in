@@ -15,7 +15,6 @@ transform = Transform2D(1, 0, 0, 1, 40, 40)
 script = ExtResource("1_mld6s")
 
 [node name="interaction_page" parent="." instance=ExtResource("1_3fm8v")]
-visible = false
 scale = Vector2(1, 1)
 
 [node name="background" parent="interaction_page" index="0"]

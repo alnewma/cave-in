@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://5v62qkneob0d"]
 
-[ext_resource type="Script" path="res://UI/computer.gd" id="1_5pdpm"]
+[ext_resource type="Script" uid="uid://dum7kq7mfu6a8" path="res://UI/computer.gd" id="1_5pdpm"]
 [ext_resource type="Texture2D" uid="uid://cjduktjnn04rc" path="res://ArtAssets/computer_screen.png" id="1_jyp6a"]
 [ext_resource type="Theme" uid="uid://cv6n8i5ybuo2h" path="res://UI/computer_font_theme.tres" id="3_0gtt5"]
 [ext_resource type="FontFile" uid="uid://bok2h3w4j5fn6" path="res://ArtAssets/UI/PublicPixel-E447g.ttf" id="4_fweoj"]
@@ -196,6 +196,12 @@ theme = ExtResource("4_smsvl")
 text = "Log 3"
 alignment = 0
 
+[node name="logs_button4" type="Button" parent="Base/logs_text/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_smsvl")
+text = "Log 4"
+alignment = 0
+
 [node name="back_button" type="Button" parent="Base/logs_text"]
 layout_mode = 1
 anchors_preset = 3
@@ -288,7 +294,7 @@ offset_top = 63.0
 offset_right = 475.0
 offset_bottom = 79.0
 theme = ExtResource("3_0gtt5")
-text = "Log 1"
+text = "First Day"
 
 [node name="body" type="Label" parent="Base/log1_text"]
 layout_mode = 1
@@ -299,10 +305,13 @@ anchor_right = 0.412326
 anchor_bottom = 0.132716
 offset_left = 89.0
 offset_top = 106.0
-offset_right = 1063.0
-offset_bottom = 535.0
+offset_right = 576.0
+offset_bottom = 673.0
 theme = ExtResource("3_0gtt5")
-text = "Log body."
+theme_override_constants/line_spacing = 4
+theme_override_font_sizes/font_size = 13
+text = "First day on the job and it’s not like I have much to do yet so I guess I’ll just start a log. I’m supposed to be “monitoring and investigating” a subterranean fissure that scans found under this mountain. Very cool, but the only equipment that’s been delivered is some welding gear and pizza (not that I’m complaining about the latter). I guess this still beats lab work."
+autowrap_mode = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="back_buttonL" type="Button" parent="Base/log1_text"]
@@ -339,7 +348,7 @@ offset_top = 63.0
 offset_right = 475.0
 offset_bottom = 79.0
 theme = ExtResource("3_0gtt5")
-text = "Log 2"
+text = "Make it end."
 
 [node name="body" type="Label" parent="Base/log2_text"]
 layout_mode = 1
@@ -350,10 +359,13 @@ anchor_right = 0.412326
 anchor_bottom = 0.132716
 offset_left = 89.0
 offset_top = 106.0
-offset_right = 1063.0
-offset_bottom = 535.0
+offset_right = 576.0
+offset_bottom = 673.0
 theme = ExtResource("3_0gtt5")
-text = "Log body."
+theme_override_constants/line_spacing = 4
+theme_override_font_sizes/font_size = 13
+text = "I pushed hard, but my request to bring Snowball down here was denied. Again. Dave is a fine partner and all, but he talks SO MUCH. I’m 10 hours into my shift and about to head down to restart the scanners—a task that would be much more fun with Snowball by my side! Instead… Ah. Here comes Dave."
+autowrap_mode = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="back_buttonL" type="Button" parent="Base/log2_text"]
@@ -390,7 +402,7 @@ offset_top = 63.0
 offset_right = 475.0
 offset_bottom = 79.0
 theme = ExtResource("3_0gtt5")
-text = "Log 3"
+text = "Snowball"
 
 [node name="body" type="Label" parent="Base/log3_text"]
 layout_mode = 1
@@ -401,13 +413,79 @@ anchor_right = 0.412326
 anchor_bottom = 0.132716
 offset_left = 89.0
 offset_top = 106.0
-offset_right = 1063.0
-offset_bottom = 535.0
+offset_right = 576.0
+offset_bottom = 673.0
 theme = ExtResource("3_0gtt5")
-text = "Cat picture."
+theme_override_constants/line_spacing = 4
+theme_override_font_sizes/font_size = 13
+text = "            ／＞　 フ
+           | _　_| 
+          ／` ミ＿xノ 
+         /　　　　 |
+        /　 ヽ　　 ﾉ
+        │　　|　|　|
+     ／￣|　　 |　|　|
+     | (￣ヽ＿_ヽ_)__)
+      ＼二)
+"
+autowrap_mode = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="back_buttonL" type="Button" parent="Base/log3_text"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 527.0
+offset_top = 300.0
+offset_right = 591.0
+offset_bottom = 316.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("4_smsvl")
+text = "Back"
+alignment = 0
+
+[node name="log4_text" type="Control" parent="Base"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+
+[node name="title" type="Label" parent="Base/log4_text"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0512153
+anchor_top = 0.0972222
+anchor_right = 0.412326
+anchor_bottom = 0.132716
+offset_left = 59.0
+offset_top = 63.0
+offset_right = 475.0
+offset_bottom = 79.0
+theme = ExtResource("3_0gtt5")
+text = "Evacuation"
+
+[node name="body" type="Label" parent="Base/log4_text"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0512153
+anchor_top = 0.0972222
+anchor_right = 0.412326
+anchor_bottom = 0.132716
+offset_left = 89.0
+offset_top = 106.0
+offset_right = 576.0
+offset_bottom = 673.0
+theme = ExtResource("3_0gtt5")
+theme_override_constants/line_spacing = 4
+theme_override_font_sizes/font_size = 13
+text = "Upper brass called and they’re making us evacuate the bunker. Thank God. The scanners have been going berserk all morning and I was starting to get worried. The ground starts shaking too hard and next thing you know that fissure full of magma is going to be decorating our basement! I’m not trying to be here if that happens."
+autowrap_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="back_buttonL" type="Button" parent="Base/log4_text"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -482,10 +560,12 @@ alignment = 0
 [connection signal="pressed" from="Base/logs_text/VBoxContainer/logs_button1" to="." method="_on_logs_button_1_pressed"]
 [connection signal="pressed" from="Base/logs_text/VBoxContainer/logs_button2" to="." method="_on_logs_button_2_pressed"]
 [connection signal="pressed" from="Base/logs_text/VBoxContainer/logs_button3" to="." method="_on_logs_button_3_pressed"]
+[connection signal="pressed" from="Base/logs_text/VBoxContainer/logs_button4" to="." method="_on_logs_button_4_pressed"]
 [connection signal="pressed" from="Base/logs_text/back_button" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="Base/doors_text/VBoxContainer/door2_button" to="." method="_on_door_2_button_pressed"]
 [connection signal="pressed" from="Base/doors_text/back_button" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="Base/log1_text/back_buttonL" to="." method="_on_back_button_l_pressed"]
 [connection signal="pressed" from="Base/log2_text/back_buttonL" to="." method="_on_back_button_l_pressed"]
 [connection signal="pressed" from="Base/log3_text/back_buttonL" to="." method="_on_back_button_l_pressed"]
+[connection signal="pressed" from="Base/log4_text/back_buttonL" to="." method="_on_back_button_l_pressed"]
 [connection signal="pressed" from="Base/opened_text/back_buttonD" to="." method="_on_back_button_d_pressed"]

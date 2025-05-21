@@ -10,6 +10,7 @@ extends Control
 @onready var log1_screen = $Base/log1_text
 @onready var log2_screen = $Base/log2_text
 @onready var log3_screen = $Base/log3_text
+@onready var log4_screen = $Base/log4_text
 @onready var password_screen = $Base/password_text
 @onready var opened_screen = $Base/opened_text
 
@@ -18,7 +19,7 @@ func _ready():
 		completion_routine()
 
 func hide_screens():
-	var screens = [start_screen,logs_screen,doors_screen,log1_screen,log2_screen,log3_screen,password_screen,opened_screen]
+	var screens = [start_screen,logs_screen,doors_screen,log1_screen,log2_screen,log3_screen,log4_screen,password_screen,opened_screen]
 	for screen in screens:
 		screen.hide()
 
@@ -54,6 +55,10 @@ func _on_logs_button_2_pressed():
 func _on_logs_button_3_pressed():
 	hide_screens()
 	log3_screen.show()
+	
+func _on_logs_button_4_pressed():
+	hide_screens()
+	log4_screen.show()
 
 func _on_back_button_l_pressed():
 	hide_screens()

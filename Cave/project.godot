@@ -34,6 +34,8 @@ player=""
 survivor=""
 fog_layer=""
 tunnel_scene=""
+interaction_object=""
+location_flag=""
 
 [gui]
 

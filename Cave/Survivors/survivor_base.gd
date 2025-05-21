@@ -9,6 +9,7 @@ const SPEED = 30
 @onready var poly_point_gen = $PolygonRandomPointGenerator
 @onready var animator = $AnimatedSprite2D
 @onready var state_machine = $FiniteStateMachine
+@onready var soft_collisions = $softCollisions
 var player
 var assigned_location = Vector2.ZERO : set = find_target_area
 
@@ -46,7 +47,7 @@ func _ready():
 	thirst = GameHandler.get_survivor_data_from_object(self).thirst
 	set_up_remark_system()
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	var absVel = abs(velocity)
 	var currentAnim = animator.get_animation()
 	if absVel > Vector2(.1,.1):
@@ -57,8 +58,12 @@ func _physics_process(_delta: float) -> void:
 			animator.flip_h = true
 		else:
 			animator.flip_h = false
-	elif absVel < Vector2(.1,.1) and currentAnim == "walk":
+	elif absVel < Vector2(.1,.1) and currentAnim == "walk" and !soft_collisions.colliding:
 		animator.play("idle")
+	if state_machine.state != state_machine.defense and state_machine.state != state_machine.death:
+		velocity = soft_collisions.get_soft_collisions_push_vector(delta)/5
+		if velocity != Vector2.ZERO:
+			move_and_slide()
 
 func approach_target():
 	if assigned_location == Vector2.ZERO and not status_break:

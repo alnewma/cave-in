@@ -36,6 +36,10 @@ func establish_assignments(location : Vector2):
 func assign_survivor(object:Object, location = Vector2.ZERO, assignment = ""): # object is assigned location
 	visible = false
 	var c_survivor = get_parent().current_survivor
+	# get assigned object from location and unassign survivor
+	for interObj in get_tree().get_nodes_in_group("interaction_object"):
+		interObj.set_assigned_survivors(c_survivor.get_path(),false)
+	# reassign survivor
 	c_survivor.assigned_location = location
 	if object:
 		c_survivor.target_assignment = object.get_path()
@@ -45,4 +49,4 @@ func assign_survivor(object:Object, location = Vector2.ZERO, assignment = ""): #
 		if object.is_in_group("player"):
 			c_survivor.queue_remark(c_survivor.remark_prompts.FOLLOWING)
 	elif assignment == "guard":
-		pass
+		c_survivor.target_assignment = ""
