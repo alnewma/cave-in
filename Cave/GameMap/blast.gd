@@ -9,6 +9,9 @@ func completion_routine():
 		sprite1.visible = true
 		animation_explode.show()
 		animation_explode.play()
+		AudioManager.play_effect(AudioManager.effects.EXPLOSIONCLOSE,0,0,0,global_position,250,2)
+		AudioManager.play_effect(AudioManager.effects.EXPLOSIONFAR,0,0,0,Vector2.ZERO,0,2)
+		get_tree().get_first_node_in_group("player").get_node("Camera2D").add_trauma(.35)
 
 func ready_status_changed():
 	_update_gas()

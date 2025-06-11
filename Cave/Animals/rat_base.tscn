@@ -1,7 +1,8 @@
-[gd_scene load_steps=24 format=3 uid="uid://nhkxam2x6p"]
+[gd_scene load_steps=25 format=3 uid="uid://nhkxam2x6p"]
 
-[ext_resource type="Script" path="res://Animals/rat_base.gd" id="1_jt35k"]
+[ext_resource type="Script" uid="uid://sg2nrjn27i2x" path="res://Animals/rat_base.gd" id="1_jt35k"]
 [ext_resource type="Texture2D" uid="uid://djedieuwls04k" path="res://ArtAssets/RatSprite.png" id="1_mcfnd"]
+[ext_resource type="AudioStream" uid="uid://dj1g2cvy3p3bb" path="res://Audio/SFX/Animals/RatMovement.wav" id="3_8oor0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aqgl5"]
 atlas = ExtResource("1_mcfnd")
@@ -165,6 +166,7 @@ y_sort_enabled = true
 collision_layer = 8
 collision_mask = 15
 script = ExtResource("1_jt35k")
+metadata/enemy_type = "rat"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
@@ -200,6 +202,11 @@ one_shot = true
 
 [node name="flee_timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="movement" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_8oor0")
+autoplay = true
+max_distance = 50.0
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]

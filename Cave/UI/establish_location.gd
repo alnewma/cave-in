@@ -41,11 +41,20 @@ func _on_name_entry_text_changed(new_text):
 			name_available = false
 	if name_available and new_text != "":
 		create_button.disabled = false
+		create_button.get_node("Label").text = "Confirm"
+		create_button.get_node("Label").set("theme_override_font_sizes/font_size",3)
 	else:
 		create_button.disabled = true
+		create_button.get_node("Label").text = "Unavailable"
+		create_button.get_node("Label").set("theme_override_font_sizes/font_size",2)
 
 func creation_process(flag_placeholder : AnimatedSprite2D):
 	visible = true
 	placeholder = flag_placeholder
 	get_parent().get_parent().add_child(flag_placeholder)
 	placeholder.peri.visible = true
+
+func _on_visibility_changed() -> void:
+	if visible:
+		name_entry.text = ""
+		_on_name_entry_text_changed(name_entry.text)

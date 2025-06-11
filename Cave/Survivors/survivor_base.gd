@@ -285,6 +285,27 @@ func _on_emotion_timer_timeout() -> void:
 	elif convo_happiness > 0: # happy
 		queue_remark(remark_prompts.HAPPY)
 
+## Audio ##
+
+func _on_animated_sprite_2d_frame_changed() -> void:
+	if animator.animation == "walk" and (animator.frame == 0 or animator.frame == 3):
+		_play_footstep()
+
+func _play_footstep():
+	for area in get_tree().get_nodes_in_group("footstep_area"):
+		if self in area.bodies_inside:
+			match area.name:
+				"dirt":
+					AudioManager.play_effect(AudioManager.effects.DIRT,0,0,0,global_position)
+				"asphalt":
+					AudioManager.play_effect(AudioManager.effects.ASPHALT,0,0,0,global_position)
+				"tile":
+					AudioManager.play_effect(AudioManager.effects.TILE,0,0,0,global_position)
+				"stone":
+					AudioManager.play_effect(AudioManager.effects.STONE,0,0,0,global_position)
+				"metal":
+					AudioManager.play_effect(AudioManager.effects.METAL,0,0,0,global_position)
+
 var remarks = {
 	survivor_types.OLDWOMAN : {
 		remark_prompts.TOOL : [

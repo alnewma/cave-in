@@ -101,10 +101,14 @@ func attempt_attack():
 func _on_attack_timer_timeout():
 	attack_cooldown = false
 
+var currently_attacking = false
 func attack():
+	currently_attacking = true
+	AudioManager.play_effect(AudioManager.effects.BATATTACK,0,0,0,global_position)
 	var tween = get_tree().create_tween()
 	tween.tween_property(sprite,"offset",sprite.offset+Vector2(0,11),.3)
 	await tween.finished
+	currently_attacking = false
 	GameHandler.damage_target(self,attack_target,attack_damage)
 	var tween2 = get_tree().create_tween()
 	tween2.tween_property(sprite,"offset",sprite.offset+Vector2(0,-11),.4)
@@ -113,6 +117,7 @@ func _on_health_changed(value):
 	health = value
 	if health <= 0:
 		state = states.DEAD
+		AudioManager.play_effect(AudioManager.effects.BATDEATH,0,0,0,global_position,75,1.2)
 		set_collision_layer_value(4,false)
 		if death_sprite.frame == 0 or death_sprite.frame == 8:
 			death_sprite.position = Vector2(0,0)
@@ -130,3 +135,7 @@ func _on_health_changed(value):
 
 func _on_death_timer_timeout():
 	queue_free()
+
+func _on_wing_sound_timeout() -> void:
+	if state != states.DEAD and not currently_attacking:
+		AudioManager.play_effect(AudioManager.effects.BATWING,0,0,0,global_position,75,.6)

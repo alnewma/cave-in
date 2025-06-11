@@ -10,11 +10,13 @@ extends Node2D
 var spectator_mode = true
 
 func _ready():
+	AudioManager.stop_audio()
 	setup_map()
 	if not cutscene_disabled and GameHandler.save_game_instance.player_data.game_flags["new_game"]:
 		GameHandler.save_game_instance.player_data.game_flags["new_game"] = false
 		cutscene()
 	else:
+		AudioManager.play_effect(AudioManager.effects.WIND,true,.5)
 		cutscene_finished(1)
 
 func _on_child_entered_tree(node):
@@ -52,7 +54,6 @@ func _unhandled_input(event):
 		if event.is_action_pressed("object_select") and survivors_within_mouse.size() == 0 and flags_within_mouse.size() == 0 and not flag_creation_menu.visible:
 			var flag = location_flag.instantiate()
 			flag.global_position = NavigationServer2D.map_get_closest_point(get_tree().get_first_node_in_group("navigation_region").get_navigation_map(),get_global_mouse_position())
-			print(flag.global_position)
 			flag_creation_menu.creation_process(flag)
 			flag.self_modulate.a = .5
 
@@ -105,6 +106,8 @@ func cutscene():
 
 func cutscene_finished(index):
 	match index:
+		0:
+			AudioManager.play_effect(AudioManager.effects.WIND,true,.5)
 		1:
 			black_canvas.show()
 			playercam.enabled = true

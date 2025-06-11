@@ -94,10 +94,13 @@ var flee_cooldown = false
 func _on_flee_timer_timeout():
 	flee_cooldown = false
 
+@onready var movement_sound = $movement
 func _on_health_changed(value):
 	health = value
 	if health <= 0:
 		state = states.DEAD
+		movement_sound.stop()
+		AudioManager.play_effect(AudioManager.effects.RATSQUEAK)
 		set_collision_layer_value(4,false)
 		sprite.play("death")
 		death_timer.start(20)

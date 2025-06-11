@@ -199,6 +199,26 @@ tracks/6/keys = {
 "update": 1,
 "values": [false, true]
 }
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.1, 0.85, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"_play_photo_sound1"
+}, {
+"args": [],
+"method": &"_play_photo_sound1"
+}, {
+"args": [],
+"method": &"_play_photo_sound2"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0sxtl"]
 _data = {

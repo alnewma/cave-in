@@ -4,6 +4,7 @@ extends Node2D
 var spectator_mode = false
 
 func _ready():
+	AudioManager.play_audio(AudioManager.songs.ENDSEND,false)
 	speech_setup()
 	cutscene_setup()
 

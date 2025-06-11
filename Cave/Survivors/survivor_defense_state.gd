@@ -100,9 +100,19 @@ func attempt_attack():
 		get_tree().create_timer(2).connect("timeout",attack_cooldown_timer_timeout)
 		get_tree().create_timer(.6).connect("timeout",attack_damage)
 		actor.animator.play("attack")
+		AudioManager.play_effect(AudioManager.effects.WOOSH,0,0,.3,actor.global_position)
 func attack_damage():
 	if target_enemy != null:
 		GameHandler.damage_target(actor,target_enemy,20)
+		match target_enemy.get_meta("enemy_type"):
+			"spider":
+				AudioManager.play_effect(AudioManager.effects.SPIDER_PUNCH,0,0,0,actor.global_position)
+			"bat":
+				AudioManager.play_effect(AudioManager.effects.BAT_PUNCH,0,0,0,actor.global_position)
+			"dog":
+				AudioManager.play_effect(AudioManager.effects.DOG_PUNCH,0,0,0,actor.global_position)
+			"rat":
+				AudioManager.play_effect(AudioManager.effects.DOG_PUNCH,0,0,0,actor.global_position)
 
 func attack_cooldown_timer_timeout():
 	attack_cooldown = false

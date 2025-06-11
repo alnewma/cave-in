@@ -2,8 +2,7 @@ extends Node2D
 
 @onready var SaveGameInstance = GameHandler.save_game_instance
 func _ready():
-	if GameHandler.game_just_opened:
-		menu_intro_cutscene()
+	menu_intro_cutscene()
 	menu_ready_function()
 	container_ready_function()
 	#GameHandler.save_ready_function()
@@ -99,11 +98,20 @@ func _on_name_entry_text_changed(new_text):
 
 @onready var intro_logos = preload("res://UI/cutscene_start.tscn")
 func menu_intro_cutscene():
-	GameHandler.game_just_opened = false
-	var intro_instance = intro_logos.instantiate()
-	get_tree().current_scene.add_child(intro_instance)
-	await intro_instance.get_node("AnimationPlayer").animation_finished
-	intro_instance.queue_free()
+	AudioManager.stop_all_effects()
+	if GameHandler.game_just_opened:
+		GameHandler.game_just_opened = false
+		var intro_instance = intro_logos.instantiate()
+		get_tree().current_scene.add_child(intro_instance)
+		intro_instance.connect("start_music",_play_menu_music)
+		await intro_instance.get_node("AnimationPlayer").animation_finished
+		intro_instance.queue_free()
+	else:
+		_play_menu_music()
+
+func _play_menu_music():
+	AudioManager.play_audio(AudioManager.songs.LULLABY)
+
 ## Game Creation ##
 
 const world_map = preload("res://GameMap/game_map.tscn")

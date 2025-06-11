@@ -105,6 +105,7 @@ func _on_attack_timer_timeout():
 	attack_cooldown = false
 
 func attack():
+	AudioManager.play_effect(AudioManager.effects.DOGGROWL,0,0,0,global_position)
 	sprite.play("attack")
 
 func _on_health_changed(value):
@@ -112,6 +113,7 @@ func _on_health_changed(value):
 	if health <= 0:
 		state = states.DEAD
 		set_collision_layer_value(4,false)
+		AudioManager.play_effect(AudioManager.effects.DOGYELP,0,0,0,global_position)
 		sprite.play("death")
 		death_timer.start(20)
 
@@ -122,3 +124,9 @@ func _on_animated_sprite_2d_animation_finished():
 	if sprite.animation == "attack":
 		GameHandler.damage_target(self,attack_target,attack_damage)
 		sprite.play("idle")
+
+@onready var btim = $bark_timer
+func _on_bark_timer_timeout() -> void:
+	if state != states.DEAD:
+		btim.start(randi_range(5,10))
+		AudioManager.play_effect(AudioManager.effects.DOGBARK,0,0,0,global_position,100)

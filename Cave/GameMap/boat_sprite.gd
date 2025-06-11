@@ -48,6 +48,7 @@ func on_tween_finished(tween_step):
 		await get_tree().create_timer(.2).timeout
 		splash_anim.show()
 		splash_anim.play("default")
+		AudioManager.play_effect(AudioManager.effects.BOATSPLASH,0,0,0,global_position,125)
 		# set leave detector to active
 		$"../leave_area/CollisionShape2D".disabled = false
 
@@ -136,19 +137,20 @@ func exit_to_tunnel():
 						dum.global_position = old_man_marker.global_position
 		await get_tree().create_timer(.5).timeout
 		black.fade_from_black()
+		AudioManager.play_audio(AudioManager.songs.ENDSSTART)
 		# boat movement
 		var tween = get_tree().create_tween().bind_node(self).set_trans(Tween.TRANS_QUART)
 		tween.set_ease(Tween.EASE_OUT)
-		tween.tween_property(self, "global_position", global_position+Vector2(-37,0), 3)
+		tween.tween_property(self, "global_position", global_position+Vector2(-37,0), 5.2)
 		tween.tween_interval(1.25)
 		tween.set_trans(Tween.TRANS_SINE)
 		tween.set_ease(Tween.EASE_IN)
-		tween.chain().tween_property(self,"global_position", global_position+Vector2(-37,-110),6)
+		tween.chain().tween_property(self,"global_position", global_position+Vector2(-37,-110),12.68)
 		await tween.step_finished
-		await get_tree().create_timer(1.25).timeout
+		await get_tree().create_timer(.25).timeout
 		b_water.show()
 		b_water.play("default")
-		await get_tree().create_timer(5).timeout
+		await get_tree().create_timer(11).timeout
 		await black.fade_to_black()
-		await get_tree().create_timer(.5).timeout
+		await get_tree().create_timer(1).timeout
 		get_tree().change_scene_to_file("res://tunnel/tunnel.tscn")

@@ -3,6 +3,7 @@ extends Area2D
 @export var depletion_rate : float = 1
 var assigned_survivors = []
 var using_survivors = []
+@export var progress_SFX : AudioManager.effects
 @export var available_item_count : int = 0
 @export var available_item1 : GameHandler.items
 @export var available_item2 : GameHandler.items
@@ -139,7 +140,8 @@ func _on_progression_timer_timeout():
 			if completion_status < 100 and required_tools_accounted_for: # increase progress based on productivity level and tools
 				var progress_inc = pow(1.5,GameHandler.get_survivor_data_from_object(survivor).productivity)
 				completion_status += progress_inc
-				spawn_smoke_if_applicable()
+				if not spawn_smoke_if_applicable() and progress_SFX: # if no smoke but object has sound
+					AudioManager.play_effect(progress_SFX,0,0,0,global_position)
 
 @onready var dropped_item_base = preload("res://GameMap/dropped_item.tscn")
 func give_item(items : Array):
@@ -184,6 +186,10 @@ func spawn_smoke_if_applicable():
 				smoke_positions.append(child)
 		if smoke_positions.size() > 0:
 			var smoke_instance = smoke.instantiate()
+			if progress_SFX:
+				smoke_instance.effect_to_play = progress_SFX
 			get_tree().current_scene.add_child(smoke_instance)
 			@warning_ignore("integer_division")
 			smoke_instance.global_position = smoke_positions.pick_random().global_position + Vector2(randi_range(-12/4,12/4),randi_range(-12/4,12/4))
+			return true
+	return false

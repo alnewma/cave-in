@@ -64,6 +64,7 @@ button_text = "Close"
 [node name="Label" parent="background/button_holder/button_holder/NinePatchRect/Button" index="0"]
 text = "Close"
 
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="text_changed" from="background/button_holder/CenterContainer/NinePatchRect/name_entry" to="." method="_on_name_entry_text_changed"]
 [connection signal="pressed" from="background/button_holder/confirm_button/NinePatchRect/Button" to="." method="_on_button_pressed" binds= ["Confirm"]]
 [connection signal="pressed" from="background/button_holder/button_holder/NinePatchRect/Button" to="." method="_on_button_pressed" binds= ["Close"]]

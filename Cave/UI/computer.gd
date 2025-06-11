@@ -16,15 +16,17 @@ extends Control
 
 func _ready():
 	if GameHandler.events.BLAST_DOOR in GameHandler.save_game_instance.events_completed:
-		completion_routine()
+		completion_routine(1)
 
 func hide_screens():
+	AudioManager.play_effect(AudioManager.effects.COMPUTERCLICK,0,0,0,Vector2.ZERO,0,.2)
 	var screens = [start_screen,logs_screen,doors_screen,log1_screen,log2_screen,log3_screen,log4_screen,password_screen,opened_screen]
 	for screen in screens:
 		screen.hide()
 
 func open_computer():
 	fog.hide()
+	AudioManager.play_effect(AudioManager.effects.COMPUTERBUZZ,0,0,0,Vector2.ZERO,0,.3)
 	hide_screens()
 	if locked:
 		password_screen.show()
@@ -67,13 +69,16 @@ func _on_back_button_l_pressed():
 func _on_exit_button_pressed():
 	fog.show()
 	visible = false
+	AudioManager.stop_effect(AudioManager.effects.COMPUTERBUZZ,0)
 
 func _on_door_2_button_pressed(): # blast door opened
 	hide_screens()
 	opened_screen.show()
 	completion_routine()
 
-func completion_routine():
+func completion_routine(already_completed = 0):
+	if not already_completed and get_tree().get_first_node_in_group("blastdoor"):
+		AudioManager.play_effect(AudioManager.effects.METALDOOR,0,0,0,get_tree().get_first_node_in_group("blastdoor").global_position,500)
 	GameHandler.save_game_instance.events_completed.append(GameHandler.events.BLAST_DOOR)
 	if get_tree().get_first_node_in_group("blastdoor"):
 		get_tree().get_first_node_in_group("blastdoor").queue_free()

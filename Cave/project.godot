@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 assignment_handler="*res://GameMap/assignment_handler.gd"
 GameHandler="*res://Resources/game_handler.gd"
+AudioManager="*res://Audio/audio_manager.tscn"
 
 [display]
 
@@ -36,6 +37,7 @@ fog_layer=""
 tunnel_scene=""
 interaction_object=""
 location_flag=""
+footstep_area=""
 
 [gui]
 

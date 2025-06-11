@@ -129,6 +129,7 @@ shape = SubResource("CapsuleShape2D_bnvq1")
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="actor_reached_target" from="FiniteStateMachine/SurvivorMovementState" to="." method="_on_survivor_movement_state_actor_reached_target"]
 [connection signal="death" from="FiniteStateMachine/SurvivorDeathState" to="." method="_on_survivor_death_state_death"]
 [connection signal="input_event" from="interaction_area" to="." method="_on_interaction_area_input_event"]

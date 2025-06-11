@@ -6,6 +6,8 @@ func _on_area_2d_body_entered(body):
 	if body.is_in_group("player"):
 		get_tree().create_tween().tween_property(body.get_node("light"),"texture_scale",1,.1)
 		body.global_position = des1.global_position
+		AudioManager.stop_audio()
+		AudioManager.stop_all_effects(.5)
 	elif body.is_in_group("survivor"):
 		survivors_inside.append(body)
 		set_process(true)

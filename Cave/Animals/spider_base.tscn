@@ -1,7 +1,8 @@
-[gd_scene load_steps=28 format=3 uid="uid://b3tc1if5ng2h0"]
+[gd_scene load_steps=29 format=3 uid="uid://b3tc1if5ng2h0"]
 
 [ext_resource type="Script" uid="uid://dst230hppkidu" path="res://Animals/spider_base.gd" id="1_60e7a"]
 [ext_resource type="Texture2D" uid="uid://dpj6enia4eqva" path="res://ArtAssets/SpiderSprite.png" id="1_atnfq"]
+[ext_resource type="AudioStream" uid="uid://bap0hvdndfjag" path="res://Audio/SFX/Animals/SpiderMovement.wav" id="3_480t2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s6h0b"]
 atlas = ExtResource("1_atnfq")
@@ -192,12 +193,14 @@ z_index = 1
 y_sort_enabled = true
 collision_layer = 8
 script = ExtResource("1_60e7a")
+metadata/enemy_type = "spider"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_p012u")
-animation = &"walk"
+animation = &"idle"
+autoplay = "idle"
 
 [node name="detection_area" type="Area2D" parent="."]
 collision_layer = 0
@@ -226,7 +229,14 @@ one_shot = true
 [node name="death_timer" type="Timer" parent="."]
 one_shot = true
 
+[node name="movement" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_480t2")
+volume_db = -8.0
+autoplay = true
+max_distance = 50.0
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]
 [connection signal="timeout" from="wander_timer" to="." method="_on_wander_timer_timeout"]

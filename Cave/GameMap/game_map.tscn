@@ -1,4 +1,4 @@
-[gd_scene load_steps=210 format=4 uid="uid://dpebdqb1ictyv"]
+[gd_scene load_steps=222 format=4 uid="uid://dpebdqb1ictyv"]
 
 [ext_resource type="TileSet" uid="uid://4d5lfppjykax" path="res://GameMap/TileMaps/SewerMap.tres" id="1_kqnrg"]
 [ext_resource type="Script" uid="uid://dff0gn072b14x" path="res://GameMap/game_map.gd" id="1_u2ow3"]
@@ -48,6 +48,7 @@
 [ext_resource type="Texture2D" uid="uid://bksvfv5diq45v" path="res://ArtAssets/Furniture/down_chair.png" id="23_7x7pj"]
 [ext_resource type="Texture2D" uid="uid://sy5gifb7qvk6" path="res://ArtAssets/Furniture/BlastDoor.png" id="24_2ax1y"]
 [ext_resource type="Texture2D" uid="uid://x2japhrhvelp" path="res://ArtAssets/light_mask.png" id="26_fwebt"]
+[ext_resource type="AudioStream" uid="uid://dnhkqjiadybha" path="res://Audio/Songs/myBuddy.mp3" id="28_y226a"]
 [ext_resource type="Script" uid="uid://nuhg6q8hftj5" path="res://GameMap/holes.gd" id="35_78wkf"]
 [ext_resource type="Texture2D" uid="uid://dmyt3nufxuv5s" path="res://ArtAssets/hydrant.png" id="39_4flv0"]
 [ext_resource type="Script" uid="uid://duoy11pq3dvtt" path="res://GameMap/blast.gd" id="41_jcbvm"]
@@ -84,6 +85,8 @@
 [ext_resource type="Shader" uid="uid://ctw52kihat482" path="res://GameMap/fog.gdshader" id="71_570qr"]
 [ext_resource type="Script" uid="uid://cxy5ylbhbnx7b" path="res://GameMap/fog_layer.gd" id="71_d1wvp"]
 [ext_resource type="Script" uid="uid://bwl3gxnhu54to" path="res://GameMap/fade_black.gd" id="75_x0fev"]
+[ext_resource type="Script" uid="uid://7eahny4kuy8e" path="res://GameMap/cave_ambience.gd" id="85_7sk48"]
+[ext_resource type="Script" uid="uid://ox56uqgh1p6p" path="res://GameMap/footstepArea.gd" id="86_4a87i"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0r83o"]
 texture = ExtResource("2_1suhv")
@@ -4063,9 +4066,37 @@ shader_parameter/noise_texture = SubResource("NoiseTexture2D_e36gc")
 shader_parameter/density = 0.15
 shader_parameter/speed = Vector2(0.002, 0.001)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7sk48"]
+size = Vector2(858, 165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4a87i"]
+size = Vector2(946, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y226a"]
+size = Vector2(968, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_20vp1"]
+size = Vector2(1022, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aquxu"]
+size = Vector2(941, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yacfq"]
+size = Vector2(973, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k44r7"]
+size = Vector2(1498, 427)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lmnvp"]
+size = Vector2(941, 285)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ja5is"]
+size = Vector2(978, 32)
+
 [node name="GameMap" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_u2ow3")
+cutscene_disabled = true
 
 [node name="OutsideArea" type="TileMapLayer" parent="."]
 position = Vector2(0, 8)
@@ -4179,6 +4210,7 @@ layer_1/z_index = 1
 layer_1/tile_data = PackedInt32Array(-1376240, 65537, 2, -1376241, 65537, 2, -1376242, 65537, 2, -1376243, 65537, 2, -1376244, 65537, 2, -1376245, 65537, 2, -1376246, 65537, 2, -1376247, 196609, 5, -1310711, 196609, 5, -1245175, 196609, 5, -1179639, 196609, 5, -1114103, 196609, 5, -1048567, 196609, 5, -1441776, 65537, 0, -1441777, 65537, 0, -1441778, 65537, 0, -1441779, 65537, 0, -1441780, 65537, 0, -1441781, 65537, 0, -1441782, 65537, 0, -1441783, 196609, 4, -1310740, 196609, 4, -1245204, 196609, 5, -1179668, 196609, 5, -1114132, 196609, 5, -1048596, 196609, 5, -983060, 196609, 5, -917524, 196609, 5, -1310739, 65537, 0, -1245203, 65537, 2, -1310738, 65537, 0, -1245202, 65537, 2, -1310737, 65537, 0, -1245201, 65537, 2, -1310736, 65537, 0, -1245200, 65537, 2, -1310735, 131073, 4, -1245199, 131073, 6, -1310731, 1, 4, -1245195, 1, 6, -1310730, 65537, 0, -1245194, 65537, 2, -1310729, 65537, 0, -1245193, 65537, 2, -1310728, 65537, 0, -1245192, 65537, 2, -1310727, 65537, 0, -1245191, 65537, 2, -1310726, 262145, 4, -1245190, 262145, 5, -1179654, 262145, 5, -1114118, 262145, 5, -1048582, 262145, 5, -983046, 262145, 5, -917510, 262145, 5, -1376239, 65537, 2, -1376238, 65537, 2, -1441774, 65537, 0, -1441775, 65537, 0, -1507319, 65537, 3, -1507318, 65537, 3, -1507317, 65537, 3, -1507316, 65537, 3, -1507315, 65537, 3, -1507314, 65537, 3, -1507313, 65537, 3, -1507312, 65537, 3, -1507311, 65537, 3, -1507310, 65537, 3, -1179630, 1, 3, -1114094, 262145, 5, -1048558, 262145, 5, -983022, 262145, 6, -983023, 65537, 3, -983024, 65537, 3, -983025, 1, 3, -983028, 131073, 3, -983029, 65537, 3, -983030, 65537, 3, -983031, 196609, 6, -1441807, 196609, 5, -1376271, 196609, 5, -1441803, 262145, 5, -1376267, 262145, 5, -851988, 196609, 5, -786452, 196609, 5, -851974, 262145, 5, -786438, 262145, 5, -2031595, 196609, 4, -1966059, 196609, 5, -1572843, 196609, 6, -1441771, 65537, 0, -1376235, 65537, 2, -1179627, 65537, 3, -1966058, 65537, 2, -1572842, 65537, 3, -1441770, 65537, 0, -1376234, 65537, 2, -1179626, 65537, 3, -1966057, 65537, 2, -1572841, 65537, 3, -1441769, 65537, 0, -1376233, 65537, 2, -1179625, 65537, 3, -1966056, 65537, 2, -1179624, 65537, 3, -1966055, 65537, 2, -1179623, 65537, 3, -1966054, 65537, 2, -1179622, 65537, 3, -1966053, 65537, 2, -1179621, 65537, 3, -1114085, 196609, 4, -1048549, 196609, 5, -1966052, 65537, 2, -1572836, 1, 3, -1441764, 1, 4, -1376228, 1, 6, -1179620, 65537, 3, -1114084, 65537, 4, -1048548, 65537, 2, -1966051, 65537, 2, -1572835, 65537, 3, -1441763, 65537, 4, -1376227, 65537, 2, -1966050, 65537, 2, -1572834, 65537, 3, -1441762, 65537, 4, -1376226, 65537, 2, -1966049, 65537, 2, -1572833, 65537, 3, -1441761, 65537, 4, -1376225, 65537, 2, -1966048, 65537, 2, -1572832, 65537, 3, -1441760, 65537, 4, -1376224, 65537, 2, -1966047, 65537, 2, -1572831, 65537, 3, -1441759, 65537, 4, -1376223, 65537, 2, -1179615, 1, 3, -1114079, 1, 4, -1048543, 1, 6, -1441758, 65537, 4, -1376222, 65537, 2, -1179614, 65537, 3, -1114078, 65537, 4, -1048542, 65537, 2, -1441757, 65537, 4, -1376221, 65537, 2, -1179613, 65537, 3, -1507292, 65537, 3, -1441756, 65537, 4, -1376220, 65537, 2, -1179612, 65537, 3, -1900523, 196609, 5, -1834987, 196609, 5, -1769451, 196609, 5, -1703915, 196609, 5, -1638379, 196609, 5, -1572840, 65537, 3, -1441768, 65537, 0, -1376232, 65537, 2, -1572839, 131073, 3, -1507303, 196609, 5, -1441767, 131073, 4, -1376231, 131073, 6, -983013, 196609, 5, -917477, 196609, 5, -851941, 196609, 5, -1507300, 262145, 5, -1179619, 65537, 3, -1114083, 65537, 4, -1048547, 65537, 2, -1179618, 131073, 3, -1114082, 131073, 4, -1048546, 131073, 6, -1966046, 65537, 2, -1572830, 65537, 3, -2031581, 262145, 4, -1966045, 262145, 5, -1900509, 262145, 5, -1834973, 262145, 5, -1769437, 262145, 5, -1703901, 262145, 5, -1638365, 262145, 5, -1572829, 262145, 6, -1114077, 65537, 4, -1048541, 65537, 2, -1114076, 262145, 4, -1048540, 262145, 5, -983004, 262145, 5, -917468, 262145, 5, -851932, 262145, 5, -1507289, 65537, 3, -1441753, 65537, 4, -1376217, 65537, 2, -1179609, 65537, 3, -1507288, 65537, 3, -1441752, 65537, 4, -1376216, 65537, 2, -1507287, 65537, 3, -1441751, 65537, 4, -1376215, 65537, 2, -982999, 196609, 6, -1507286, 65537, 3, -1441750, 65537, 4, -1376214, 65537, 2, -982998, 65537, 3, -1507285, 65537, 3, -1441749, 65537, 4, -1376213, 65537, 2, -982997, 65537, 3, -1179608, 65537, 3, -1179607, 131073, 3, -1114071, 196609, 5, -1048535, 196609, 5, -1507284, 65537, 3, -1441748, 65537, 4, -1376212, 65537, 2, -982996, 65537, 3, -1507283, 65537, 3, -1441747, 262145, 4, -1376211, 262145, 5, -1310675, 262145, 5, -1245139, 262145, 5, -1179603, 262145, 5, -1114067, 262145, 5, -1048531, 262145, 5, -982995, 262145, 6, -1376219, 65537, 2, -1376218, 65537, 2, -1441754, 65537, 4, -1441755, 65537, 4, -1179610, 65537, 3, -1179611, 65537, 3, -1179628, 65537, 3, -1179629, 65537, 3, -1376236, 65537, 2, -1441772, 65537, 4, -1441773, 65537, 4, -1376237, 65537, 2, -1507291, 65537, 3, -1507290, 65537, 3, -1507308, 65537, 3, -1507309, 65537, 3, -2031594, 65537, 0, -2031593, 65537, 0, -2031592, 65537, 0, -2031591, 65537, 0, -2031590, 65537, 0, -2031589, 65537, 0, -2031588, 65537, 0, -2031587, 65537, 0, -2031586, 65537, 0, -2031585, 65537, 0, -2031584, 65537, 0, -2031583, 65537, 0, -2031582, 65537, 0, -720869, 196609, 6, -720868, 65537, 3, -720867, 65537, 3, -720866, 65537, 3, -720865, 65537, 3, -720864, 65537, 3, -720863, 65537, 3, -720862, 65537, 3, -720861, 65537, 3, -720860, 262145, 6, -786405, 196609, 5, -786396, 262145, 5)
 layer_2/name = "Details"
 layer_2/y_sort_enabled = true
+layer_2/y_sort_origin = 10
 layer_2/z_index = 1
 layer_2/tile_data = PackedInt32Array(-1114128, 589825, 7, -1048592, 589825, 8, -983056, 65537, 1, -917520, 65537, 805306369, -1114127, 589825, 7, -1048591, 589825, 8, -983055, 65537, 1, -917519, 65537, 805306369, -1114126, 589825, 7, -1048590, 589825, 8, -983054, 65537, 1, -917518, 65537, 805306369, -1114125, 589825, 7, -1048589, 589825, 8, -983053, 65537, 1, -917517, 65537, 805306369, -1114124, 589825, 7, -1048588, 589825, 8, -983052, 65537, 1, -917516, 65537, 805306369, -1114123, 589825, 7, -1048587, 589825, 8, -983051, 65537, 1, -917515, 65537, 805306369, -1114122, 589825, 7, -1048586, 589825, 8, -983050, 65537, 1, -917514, 65537, 805306369, -1114121, 589825, 7, -1048585, 589825, 8, -983049, 65537, 1, -917513, 65537, 805306369, -1114120, 589825, 7, -1048584, 589825, 8, -983048, 65537, 1, -917512, 65537, 805306369, -1114119, 589825, 7, -1048583, 589825, 8, -983047, 65537, 1, -917511, 65537, 805306369)
 layer_3/name = "LowerWalls"
@@ -4320,21 +4352,28 @@ y_sort_enabled = true
 position = Vector2(169, -264)
 texture = ExtResource("20_oljep")
 
-[node name="Radio(WeMtAgn)" type="Sprite2D" parent="InsideFurniture"]
+[node name="Radio" type="Sprite2D" parent="InsideFurniture"]
 z_index = 1
 y_sort_enabled = true
 position = Vector2(170.5, -261)
 texture = ExtResource("21_xuinb")
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="InsideFurniture/Radio"]
+stream = ExtResource("28_y226a")
+volume_db = -10.0
+autoplay = true
+max_distance = 200.0
+attenuation = 4.0
+
 [node name="Chair" type="Sprite2D" parent="InsideFurniture"]
 z_index = 1
 y_sort_enabled = true
-position = Vector2(186, -277)
+position = Vector2(186, -271)
 texture = ExtResource("22_iiw5l")
-offset = Vector2(0, 1)
+offset = Vector2(0, -5)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="InsideFurniture/Chair"]
-position = Vector2(0, 2)
+position = Vector2(0, -4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InsideFurniture/Chair/StaticBody2D"]
 position = Vector2(0, 5)
@@ -4344,12 +4383,12 @@ shape = SubResource("CapsuleShape2D_w1623")
 [node name="ChairDown" type="Sprite2D" parent="InsideFurniture"]
 z_index = 1
 y_sort_enabled = true
-position = Vector2(188, -257)
+position = Vector2(188, -249)
 texture = ExtResource("23_7x7pj")
-offset = Vector2(0, 4)
+offset = Vector2(0, -4)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="InsideFurniture/ChairDown"]
-position = Vector2(0, 4)
+position = Vector2(0, -4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InsideFurniture/ChairDown/StaticBody2D"]
 position = Vector2(0, 1)
@@ -4369,7 +4408,7 @@ position = Vector2(1, 7.5)
 shape = SubResource("RectangleShape2D_uqubc")
 
 [node name="Player" parent="." instance=ExtResource("5_a72qw")]
-position = Vector2(424, 102)
+position = Vector2(393, 61)
 
 [node name="light" type="PointLight2D" parent="Player"]
 color = Color(1, 1, 1, 0.576471)
@@ -4470,6 +4509,7 @@ y_sort_enabled = true
 y_sort_enabled = true
 position = Vector2(275, 114)
 script = ExtResource("15_jax31")
+progress_SFX = 117
 display_name = "Fire Hydrant"
 assignment = "Pump"
 
@@ -4499,6 +4539,7 @@ shape = SubResource("CircleShape2D_mhnpw")
 y_sort_enabled = true
 position = Vector2(612, 99)
 script = ExtResource("15_jax31")
+progress_SFX = 117
 display_name = "Fire Hydrant"
 assignment = "Pump"
 
@@ -4575,6 +4616,7 @@ z_index = 1
 y_sort_enabled = true
 position = Vector2(289, 155)
 script = ExtResource("19_t1mi8")
+progress_SFX = 116
 available_item_count = 2
 available_item1 = 7
 available_item2 = 7
@@ -4613,6 +4655,7 @@ z_index = 1
 y_sort_enabled = true
 position = Vector2(501, 56)
 script = ExtResource("19_t1mi8")
+progress_SFX = 116
 available_item_count = 2
 available_item1 = 7
 available_item2 = 7
@@ -4651,6 +4694,7 @@ z_index = 1
 y_sort_enabled = true
 position = Vector2(465, 140)
 script = ExtResource("19_t1mi8")
+progress_SFX = 116
 available_item_count = 2
 available_item1 = 7
 display_name = "Car"
@@ -4687,6 +4731,7 @@ z_index = 1
 y_sort_enabled = true
 position = Vector2(687, 138)
 script = ExtResource("19_t1mi8")
+progress_SFX = 116
 available_item_count = 3
 available_item1 = 7
 available_item2 = 7
@@ -4725,6 +4770,7 @@ z_index = 1
 y_sort_enabled = true
 position = Vector2(690, 79)
 script = ExtResource("17_q6647")
+progress_SFX = 116
 available_item_count = 2
 available_item1 = 8
 available_item2 = 9
@@ -4758,6 +4804,7 @@ position = Vector2(2, -3)
 position = Vector2(853, 333)
 script = ExtResource("42_ftob1")
 depletion_rate = 0.0
+progress_SFX = 119
 display_name = "Low Area"
 assignment = "Build"
 required_tools = 4
@@ -4854,6 +4901,7 @@ position = Vector2(1, 15)
 [node name="gate" parent="interaction_objects" instance=ExtResource("15_xbe63")]
 position = Vector2(779, 211)
 script = ExtResource("42_hksw1")
+progress_SFX = 118
 display_name = "Sewer Gate"
 assignment = "Open"
 required_tools = 1
@@ -4887,6 +4935,7 @@ position = Vector2(-16, 29)
 [node name="welding" parent="interaction_objects" instance=ExtResource("15_xbe63")]
 position = Vector2(-110, -294)
 depletion_rate = 0.0
+progress_SFX = 120
 available_item_count = 2
 available_item1 = 6
 available_item2 = 6
@@ -4898,15 +4947,16 @@ position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_lavlj")
 
 [node name="smoke1" type="Marker2D" parent="interaction_objects/welding"]
-position = Vector2(22, -11)
+position = Vector2(-5, -11)
 
 [node name="smoke2" type="Marker2D" parent="interaction_objects/welding"]
-position = Vector2(21, 2)
+position = Vector2(6, 2)
 
 [node name="blast" parent="interaction_objects" instance=ExtResource("15_xbe63")]
 z_index = 1
 position = Vector2(240, -15)
 script = ExtResource("41_jcbvm")
+progress_SFX = 121
 display_name = "Door"
 assignment = "Demolish"
 required_tools = 1
@@ -5515,6 +5565,82 @@ shadow_enabled = true
 texture = ExtResource("26_fwebt")
 texture_scale = 3.0
 
+[node name="caveAmbience" type="Node" parent="."]
+script = ExtResource("85_7sk48")
+
+[node name="music" type="Timer" parent="caveAmbience"]
+wait_time = 60.0
+one_shot = true
+autostart = true
+
+[node name="sfx" type="Timer" parent="caveAmbience"]
+wait_time = 15.0
+one_shot = true
+autostart = true
+
+[node name="FootstepAreas" type="Node2D" parent="."]
+
+[node name="dirt" type="Area2D" parent="FootstepAreas" groups=["footstep_area"]]
+visible = false
+collision_mask = 6
+script = ExtResource("86_4a87i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FootstepAreas/dirt"]
+position = Vector2(515, -26.5)
+shape = SubResource("RectangleShape2D_7sk48")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="FootstepAreas/dirt"]
+position = Vector2(520, 92)
+shape = SubResource("RectangleShape2D_4a87i")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="FootstepAreas/dirt"]
+position = Vector2(553, 132)
+shape = SubResource("RectangleShape2D_y226a")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="FootstepAreas/dirt"]
+position = Vector2(525, 174.5)
+shape = SubResource("RectangleShape2D_20vp1")
+
+[node name="asphalt" type="Area2D" parent="FootstepAreas" groups=["footstep_area"]]
+visible = false
+collision_mask = 6
+script = ExtResource("86_4a87i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FootstepAreas/asphalt"]
+position = Vector2(490.5, 72)
+shape = SubResource("RectangleShape2D_aquxu")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="FootstepAreas/asphalt"]
+position = Vector2(525.5, 152)
+shape = SubResource("RectangleShape2D_yacfq")
+
+[node name="tile" type="Area2D" parent="FootstepAreas" groups=["footstep_area"]]
+visible = false
+collision_mask = 6
+script = ExtResource("86_4a87i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FootstepAreas/tile"]
+position = Vector2(384, -367.5)
+shape = SubResource("RectangleShape2D_k44r7")
+
+[node name="stone" type="Area2D" parent="FootstepAreas" groups=["footstep_area"]]
+visible = false
+collision_mask = 6
+script = ExtResource("86_4a87i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FootstepAreas/stone"]
+position = Vector2(524.5, 323.5)
+shape = SubResource("RectangleShape2D_lmnvp")
+
+[node name="metal" type="Area2D" parent="FootstepAreas" groups=["footstep_area"]]
+visible = false
+collision_mask = 6
+script = ExtResource("86_4a87i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FootstepAreas/metal"]
+position = Vector2(540, 112)
+shape = SubResource("RectangleShape2D_ja5is")
+
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="timeout" from="CaveArea/lavaParticles/bubble_timer" to="CaveArea/lavaParticles" method="_on_bubble_timer_timeout"]
 [connection signal="timeout" from="InsideFurniture/ToxicBarrel/Timer" to="InsideFurniture/ToxicBarrel" method="_on_timer_timeout"]
@@ -5548,6 +5674,18 @@ texture_scale = 3.0
 [connection signal="body_entered" from="door_nodes/SdoorA2/Area2D" to="door_nodes/SdoorA2" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="door_nodes/SdoorB1/Area2D" to="door_nodes/SdoorB1" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="door_nodes/SdoorB2/Area2D" to="door_nodes/SdoorB2" method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="caveAmbience/music" to="caveAmbience" method="_on_music_timeout"]
+[connection signal="timeout" from="caveAmbience/sfx" to="caveAmbience" method="_on_sfx_timeout"]
+[connection signal="body_entered" from="FootstepAreas/dirt" to="FootstepAreas/dirt" method="_on_body_entered"]
+[connection signal="body_exited" from="FootstepAreas/dirt" to="FootstepAreas/dirt" method="_on_body_exited"]
+[connection signal="body_entered" from="FootstepAreas/asphalt" to="FootstepAreas/asphalt" method="_on_body_entered"]
+[connection signal="body_exited" from="FootstepAreas/asphalt" to="FootstepAreas/asphalt" method="_on_body_exited"]
+[connection signal="body_entered" from="FootstepAreas/tile" to="FootstepAreas/tile" method="_on_body_entered"]
+[connection signal="body_exited" from="FootstepAreas/tile" to="FootstepAreas/tile" method="_on_body_exited"]
+[connection signal="body_entered" from="FootstepAreas/stone" to="FootstepAreas/stone" method="_on_body_entered"]
+[connection signal="body_exited" from="FootstepAreas/stone" to="FootstepAreas/stone" method="_on_body_exited"]
+[connection signal="body_entered" from="FootstepAreas/metal" to="FootstepAreas/metal" method="_on_body_entered"]
+[connection signal="body_exited" from="FootstepAreas/metal" to="FootstepAreas/metal" method="_on_body_exited"]
 
 [editable path="ActivityArea"]
 [editable path="interaction_objects/hydrant1"]

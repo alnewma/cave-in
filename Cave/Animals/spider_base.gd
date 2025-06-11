@@ -101,10 +101,12 @@ func attack():
 	sprite.play("attack")
 	GameHandler.damage_target(self,attack_target,attack_damage)
 
+@onready var movement_sound = $movement
 func _on_health_changed(value):
 	health = value
 	if health <= 0:
 		state = states.DEAD
+		movement_sound.stop()
 		set_collision_layer_value(4,false)
 		sprite.play("death")
 		death_timer.start(20)
@@ -115,3 +117,7 @@ func _on_death_timer_timeout():
 func _on_animated_sprite_2d_animation_finished():
 	if sprite.animation == "attack":
 		sprite.play("idle")
+
+func _on_animated_sprite_2d_frame_changed() -> void:
+	if sprite.animation == "attack" and sprite.frame == 3:
+		AudioManager.play_effect(AudioManager.effects.SPIDERBITE,0,0,0,global_position)

@@ -98,6 +98,7 @@ func attack():
 			on_attack_cooldown = true
 			attacking_currently = true
 			attack_cooldown_timer.start(attack_cooldown)
+			AudioManager.play_effect(AudioManager.effects.WOOSH,0,0,.3)
 			_handle_attack_effect()
 			get_tree().create_timer(.6).connect("timeout",attack_deal_damage)
 			get_tree().create_timer(.8).connect("timeout",_attack_ended)
@@ -109,6 +110,15 @@ func _handle_attack_effect():
 func attack_deal_damage():
 	if enemies_in_attack_radius.size() > 0:
 		GameHandler.damage_target(self,enemies_in_attack_radius[0],attack_damage)
+		match enemies_in_attack_radius[0].get_meta("enemy_type"):
+			"spider":
+				AudioManager.play_effect(AudioManager.effects.SPIDER_PUNCH)
+			"bat":
+				AudioManager.play_effect(AudioManager.effects.BAT_PUNCH)
+			"dog":
+				AudioManager.play_effect(AudioManager.effects.DOG_PUNCH)
+			"rat":
+				AudioManager.play_effect(AudioManager.effects.DOG_PUNCH)
 func _on_attack_cooldown_timeout():
 	on_attack_cooldown = false
 func _attack_ended():
@@ -160,3 +170,50 @@ func set_using_survivors(value,add_or_erase : bool):
 	
 func _verify_self_array_existence():
 	GameHandler.save_game_instance.player_data.objective_data.get_or_add(name,[assigned_survivors.duplicate(),using_survivors.duplicate()])
+
+## Audio ##
+
+var nearby_enemies = []
+func _on_aggro_range_body_entered(body: Node2D) -> void:
+	nearby_enemies.append(body)
+	if nearby_enemies.size() == 1:
+		AudioManager.pause_audio()
+		# play combat music or make louder if already has streamer
+		if AudioManager.search_effect(AudioManager.effects.DRUMS) > 0:
+			AudioManager.increase_effect(AudioManager.effects.DRUMS,0)
+		else:
+			AudioManager.play_effect(AudioManager.effects.DRUMS)
+func _on_aggro_range_body_exited(body: Node2D) -> void:
+	nearby_enemies.erase(body)
+	if nearby_enemies.size() == 0:
+		# deafen combat music
+		AudioManager.deafen_effect(AudioManager.effects.DRUMS,-15)
+		var start_time = Time.get_ticks_msec()
+		var grace_period_duration = 5 # seconds after no enemy with quieter combat music
+		while Time.get_ticks_msec() - start_time < int(grace_period_duration * 1000):
+			if nearby_enemies.size() != 0:
+				return
+			await get_tree().process_frame  # Wait 1 frame before checking again
+		AudioManager.stop_effect(AudioManager.effects.DRUMS)
+		var silence_duration = 3 # seconds
+		start_time = Time.get_ticks_msec() # if nearby enemies stays 0 for 5 seconds, resume music
+		while Time.get_ticks_msec() - start_time < int(silence_duration * 1000):
+			if nearby_enemies.size() != 0:
+				return
+			await get_tree().process_frame  # Wait 1 frame before checking again
+		AudioManager.resume_audio()
+
+func play_footstep():
+	for area in get_tree().get_nodes_in_group("footstep_area"):
+		if self in area.bodies_inside:
+			match area.name:
+				"dirt":
+					AudioManager.play_effect(AudioManager.effects.DIRT)
+				"asphalt":
+					AudioManager.play_effect(AudioManager.effects.ASPHALT)
+				"tile":
+					AudioManager.play_effect(AudioManager.effects.TILE)
+				"stone":
+					AudioManager.play_effect(AudioManager.effects.STONE)
+				"metal":
+					AudioManager.play_effect(AudioManager.effects.METAL)
