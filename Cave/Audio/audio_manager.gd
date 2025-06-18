@@ -167,6 +167,46 @@ enum effects {
 	BATWING4,
 	DOGYELP1,
 	DOGYELP2,
+	BOOKCLOSE,
+	BOOKOPEN,
+	CLICK1,
+	CLICK2,
+	CLICK3,
+	CLICK4,
+	CLICK5,
+	ERASE1,
+	ERASE2,
+	ERASE3,
+	ERASE4,
+	PAPERFLIP1,
+	PAPERFLIP2,
+	PAPERFLIP3,
+	PAPERFLIP4,
+	PAPERPUTAWAY,
+	PAPERTAKEOUT,
+	WRITE1,
+	WRITE2,
+	WRITE3,
+	WRITE4,
+	WRITE5,
+	WRITE6,
+	WRITE7,
+	BOATENGINESTOP,
+	BOATENGINEIDLE,
+	STONECRASH1,
+	STONECRASH2,
+	STONECRASH3,
+	STONECRASH4,
+	STONECRASH5,
+	TUNNELRUMBLING,
+	STONESPLASH1,
+	STONESPLASH2,
+	STONESPLASH3,
+	STONESPLASH4,
+	STONESPLASH5,
+	BIGSPLASH,
+	BOATCRASH,
+	BIGROCK,
 	
 	# Effect Categories
 	CAVE_AMBIENT,
@@ -191,6 +231,13 @@ enum effects {
 	SPIDERBITE,
 	BATWING,
 	DOGYELP,
+	CLICK,
+	ERASE,
+	WRITE,
+	PAPERFLIP,
+	STONECRASH,
+	STONESPLASH,
+	OUTSIDEDESERT,
 }
 
 var effect_files = {
@@ -328,6 +375,47 @@ var effect_files = {
 	effects.BATWING4 : preload("res://Audio/SFX/Animals/Wing4.wav"),
 	effects.DOGYELP1 : preload("res://Audio/SFX/Animals/Yelp1.wav"),
 	effects.DOGYELP2 : preload("res://Audio/SFX/Animals/Yelp2.wav"),
+	effects.BOOKCLOSE : preload("res://Audio/SFX/UI/BookClose.wav"),
+	effects.BOOKOPEN : preload("res://Audio/SFX/UI/BookOpen.wav"),
+	effects.CLICK1 : preload("res://Audio/SFX/UI/Click1.wav"),
+	effects.CLICK2 : preload("res://Audio/SFX/UI/Click2.wav"),
+	effects.CLICK3 : preload("res://Audio/SFX/UI/Click3.wav"),
+	effects.CLICK4 : preload("res://Audio/SFX/UI/Click4.wav"),
+	effects.CLICK5 : preload("res://Audio/SFX/UI/Click5.wav"),
+	effects.ERASE1 : preload("res://Audio/SFX/UI/Erase1.wav"),
+	effects.ERASE2 : preload("res://Audio/SFX/UI/Erase2.wav"),
+	effects.ERASE3 : preload("res://Audio/SFX/UI/Erase3.wav"),
+	effects.ERASE4 : preload("res://Audio/SFX/UI/Erase4.wav"),
+	effects.PAPERFLIP1 : preload("res://Audio/SFX/UI/PaperFlip1.wav"),
+	effects.PAPERFLIP2 : preload("res://Audio/SFX/UI/PaperFlip2.wav"),
+	effects.PAPERFLIP3 : preload("res://Audio/SFX/UI/PaperFlip3.wav"),
+	effects.PAPERFLIP4 : preload("res://Audio/SFX/UI/PaperFlip4.wav"),
+	effects.PAPERPUTAWAY : preload("res://Audio/SFX/UI/PaperPutAway.wav"),
+	effects.PAPERTAKEOUT : preload("res://Audio/SFX/UI/PaperTakeOut.wav"),
+	effects.WRITE1 : preload("res://Audio/SFX/UI/Write1.wav"),
+	effects.WRITE2 : preload("res://Audio/SFX/UI/Write2.wav"),
+	effects.WRITE3 : preload("res://Audio/SFX/UI/Write3.wav"),
+	effects.WRITE4 : preload("res://Audio/SFX/UI/Write4.wav"),
+	effects.WRITE5 : preload("res://Audio/SFX/UI/Write5.wav"),
+	effects.WRITE6 : preload("res://Audio/SFX/UI/Write6.wav"),
+	effects.WRITE7 : preload("res://Audio/SFX/UI/Write7.wav"),
+	effects.BOATENGINESTOP : preload("res://Audio/SFX/boatEngineStop.ogg"),
+	effects.BOATENGINEIDLE : preload("res://Audio/SFX/boatEngineIdle.ogg"),
+	effects.STONECRASH1 : preload("res://Audio/SFX/StoneCrash1.wav"),
+	effects.STONECRASH2 : preload("res://Audio/SFX/StoneCrash2.wav"),
+	effects.STONECRASH3 : preload("res://Audio/SFX/StoneCrash3.wav"),
+	effects.STONECRASH4 : preload("res://Audio/SFX/StoneCrash4.wav"),
+	effects.STONECRASH5 : preload("res://Audio/SFX/StoneCrash5.wav"),
+	effects.TUNNELRUMBLING : preload("res://Audio/SFX/TunnelRumbling.ogg"),
+	effects.STONESPLASH1 : preload("res://Audio/SFX/StoneSplash1.wav"),
+	effects.STONESPLASH2 : preload("res://Audio/SFX/StoneSplash2.wav"),
+	effects.STONESPLASH3 : preload("res://Audio/SFX/StoneSplash3.wav"),
+	effects.STONESPLASH4 : preload("res://Audio/SFX/StoneSplash4.wav"),
+	effects.STONESPLASH5 : preload("res://Audio/SFX/StoneSplash5.wav"),
+	effects.BIGSPLASH : preload("res://Audio/SFX/BigSplash.wav"),
+	effects.BOATCRASH : preload("res://Audio/SFX/boatCrash.wav"),
+	effects.BIGROCK : preload("res://Audio/SFX/bigRock.wav"),
+	effects.OUTSIDEDESERT : preload("res://Audio/SFX/OutsideDesert.ogg"),
 }
 
 # Audio Groups
@@ -358,9 +446,15 @@ var effect_files = {
 @onready var SPIDERBITE_effects = [effects.SPIDERBITE1,effects.SPIDERBITE2,effects.SPIDERBITE3]
 @onready var BATWING_effects = [effects.BATWING1,effects.BATWING2,effects.BATWING3,effects.BATWING4]
 @onready var DOGYELP_effects = [effects.DOGYELP1,effects.DOGYELP2]
+@onready var CLICK_effects = [effects.CLICK1,effects.CLICK1,effects.CLICK3,effects.CLICK4,effects.CLICK5]
+@onready var ERASE_effects = [effects.ERASE1,effects.ERASE2,effects.ERASE3,effects.ERASE4]
+@onready var WRITE_effects = [effects.WRITE1,effects.WRITE2,effects.WRITE3,effects.WRITE4,effects.WRITE5,effects.WRITE6,effects.WRITE7]
+@onready var PAPERFLIP_effects = [effects.PAPERFLIP1,effects.PAPERFLIP2]
+@onready var STONECRASH_effects = [effects.STONECRASH1,effects.STONECRASH2,effects.STONECRASH3,effects.STONECRASH4,effects.STONECRASH5]
+@onready var STONESPLASH_effects = [effects.STONESPLASH1,effects.STONESPLASH2,effects.STONESPLASH3,effects.STONESPLASH4,effects.STONESPLASH5]
 
 @onready var effect_groups = {effects.CAVE_AMBIENT : CAVE_AMBIENT_effects,effects.DOG_PUNCH : DOG_PUNCH_effects,effects.SPIDER_PUNCH : SPIDER_PUNCH_effects,effects.BAT_PUNCH : BAT_PUNCH_effects, effects.WOOSH : WOOSH_effects, effects.ASPHALT : ASPHALT_effects, effects.DIRT : DIRT_effects, effects.STONE : STONE_effects, effects.TILE : TILE_effects, effects.METAL : METAL_effects, effects.SCAVENGE : SCAVENGE_effects, effects.HYDRANT : HYDRANT_effects, effects.WELD : WELD_effects, effects.BUILD : BUILD_effects, effects.BOX : BOX_effects, effects.POUR : POUR_effects,
-effects.DOGBARK : DOGBARK_effects,effects.BATATTACK : BATATTACK_effects,effects.DOGGROWL : DOGGROWL_effects,effects.SPIDERBITE : SPIDERBITE_effects,effects.BATWING : BATWING_effects,effects.DOGYELP : DOGYELP_effects}
+effects.DOGBARK : DOGBARK_effects,effects.BATATTACK : BATATTACK_effects,effects.DOGGROWL : DOGGROWL_effects,effects.SPIDERBITE : SPIDERBITE_effects,effects.BATWING : BATWING_effects,effects.DOGYELP : DOGYELP_effects, effects.CLICK : CLICK_effects, effects.ERASE : ERASE_effects, effects.WRITE : WRITE_effects, effects.PAPERFLIP : PAPERFLIP_effects, effects.STONECRASH : STONECRASH_effects, effects.STONESPLASH : STONESPLASH_effects}
 
 # Songs
 
@@ -436,7 +530,7 @@ func deafen_effect(effect : effects,volume_db : float):
 func increase_effect(effect : effects,volume_db : float):
 	for item in get_children():
 		if item is AudioStreamPlayer and item.stream == effect_files[effect]:
-			get_tree().create_tween().tween_property(item, "volume_db", volume_db, 1)
+			get_tree().create_tween().tween_property(item, "volume_db", volume_db, .5)
 func search_effect(effect : effects):
 	var count = 0
 	for item in get_children():

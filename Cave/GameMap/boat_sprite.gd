@@ -4,6 +4,7 @@ extends AnimatedSprite2D
 var player_inside = false
 
 @onready var splash_anim = $"../boatSplash"
+@onready var engineSound = $boatEngineAudio
 
 func _physics_process(_delta):
 	if player_inside and Input.is_action_just_pressed("interact"): # start exit sequence
@@ -64,12 +65,18 @@ func _on_boat_area_body_exited(_body: Node2D) -> void:
 	player_inside = false
 
 @onready var trig_area = $boat_area/CollisionShape2D
+@onready var col_area1 = $AnimatableBody2D/CollisionShape2D
+@onready var col_area2 = $AnimatableBody2D/CollisionShape2D2
 func _on_visibility_changed() -> void:
 	if trig_area:
 		if visible:
 			trig_area.disabled = false
+			col_area1.disabled = false
+			col_area2.disabled = false
 		else:
 			trig_area.disabled = true
+			col_area1.disabled = true
+			col_area2.disabled = true
 
 ## Leaving Script ##
 
@@ -150,6 +157,7 @@ func exit_to_tunnel():
 		await get_tree().create_timer(.25).timeout
 		b_water.show()
 		b_water.play("default")
+		engineSound.play()
 		await get_tree().create_timer(11).timeout
 		await black.fade_to_black()
 		await get_tree().create_timer(1).timeout

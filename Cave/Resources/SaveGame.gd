@@ -17,7 +17,7 @@ func load_data() -> Resource:
 	print("loading")
 	save_path = SAVE_DIR + SAVE_FILE_NAME
 	if ResourceLoader.exists(save_path):
-		var loaded_resource = load(save_path)
+		var loaded_resource = ResourceLoader.load(save_path, "", ResourceLoader.CACHE_MODE_IGNORE)
 		# NOTE: assign every variable in save file with loaded variables
 		player_data = loaded_resource.player_data
 		events_completed = loaded_resource.events_completed

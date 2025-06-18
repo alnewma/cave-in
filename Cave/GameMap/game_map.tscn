@@ -1,4 +1,4 @@
-[gd_scene load_steps=222 format=4 uid="uid://dpebdqb1ictyv"]
+[gd_scene load_steps=227 format=4 uid="uid://dpebdqb1ictyv"]
 
 [ext_resource type="TileSet" uid="uid://4d5lfppjykax" path="res://GameMap/TileMaps/SewerMap.tres" id="1_kqnrg"]
 [ext_resource type="Script" uid="uid://dff0gn072b14x" path="res://GameMap/game_map.gd" id="1_u2ow3"]
@@ -69,6 +69,7 @@
 [ext_resource type="PackedScene" uid="uid://cgs33ypljrcev" path="res://Survivors/old_man_survivor.tscn" id="55_bhn5q"]
 [ext_resource type="PackedScene" uid="uid://cimeurx3tlf36" path="res://Survivors/old_woman_survivor.tscn" id="56_14yqn"]
 [ext_resource type="Script" uid="uid://cghnofs8jgrb1" path="res://GameMap/door1.gd" id="56_kfw8l"]
+[ext_resource type="AudioStream" uid="uid://deypmlm3qqnx7" path="res://Audio/SFX/boatEngine.ogg" id="57_aquxu"]
 [ext_resource type="Script" uid="uid://du78r57ghsfcs" path="res://GameMap/door2.gd" id="57_j3o0h"]
 [ext_resource type="Script" uid="uid://ulbjmy6o8hsn" path="res://GameMap/doorB1.gd" id="58_0bqun"]
 [ext_resource type="Script" uid="uid://butrfmf46rvvu" path="res://GameMap/doorB2.gd" id="59_bxhx6"]
@@ -3833,6 +3834,13 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_206c5"]
+size = Vector2(30, 38)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ffor2"]
+radius = 5.0
+height = 22.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nfjjm"]
 size = Vector2(20, 43)
 
@@ -4051,6 +4059,12 @@ size = Vector2(72, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e36gc"]
 size = Vector2(23, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qv7s2"]
+size = Vector2(178, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v22h6"]
+size = Vector2(73, 9)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_pjkxi"]
 
@@ -4509,7 +4523,7 @@ y_sort_enabled = true
 y_sort_enabled = true
 position = Vector2(275, 114)
 script = ExtResource("15_jax31")
-progress_SFX = 117
+progress_SFX = 100
 display_name = "Fire Hydrant"
 assignment = "Pump"
 
@@ -4539,7 +4553,7 @@ shape = SubResource("CircleShape2D_mhnpw")
 y_sort_enabled = true
 position = Vector2(612, 99)
 script = ExtResource("15_jax31")
-progress_SFX = 117
+progress_SFX = 189
 display_name = "Fire Hydrant"
 assignment = "Pump"
 
@@ -4859,6 +4873,23 @@ position = Vector2(0, 18.5)
 sprite_frames = SubResource("SpriteFrames_ogswa")
 autoplay = "default"
 
+[node name="boatEngineAudio" type="AudioStreamPlayer2D" parent="interaction_objects/buildboat/boatSprite"]
+position = Vector2(0, 8)
+stream = ExtResource("57_aquxu")
+max_distance = 40.0
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="interaction_objects/buildboat/boatSprite"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interaction_objects/buildboat/boatSprite/AnimatableBody2D"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_206c5")
+disabled = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="interaction_objects/buildboat/boatSprite/AnimatableBody2D"]
+position = Vector2(1, 13)
+shape = SubResource("CapsuleShape2D_ffor2")
+disabled = true
+
 [node name="leave_area" type="Area2D" parent="interaction_objects/buildboat"]
 collision_layer = 2
 collision_mask = 2
@@ -5119,11 +5150,11 @@ position = Vector2(535, -400)
 position = Vector2(605, -306)
 
 [node name="man_survivor" parent="." instance=ExtResource("19_d6pms")]
-position = Vector2(676, 67)
+position = Vector2(659, 48)
 collision_mask = 1
 
 [node name="girl_survivor" parent="." instance=ExtResource("54_w7ss7")]
-position = Vector2(863, 237)
+position = Vector2(858, 226)
 collision_mask = 1
 
 [node name="old_man_survivor" parent="." instance=ExtResource("55_bhn5q")]
@@ -5131,7 +5162,7 @@ position = Vector2(278, 55)
 collision_mask = 1
 
 [node name="old_woman_survivor" parent="." instance=ExtResource("56_14yqn")]
-position = Vector2(814, 145)
+position = Vector2(812, 143)
 collision_mask = 1
 
 [node name="door_nodes" type="Node2D" parent="."]
@@ -5498,6 +5529,18 @@ position = Vector2(-110, -287)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="manual_collisions/weldBox"]
 position = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_e36gc")
+
+[node name="survDoorColl1" type="StaticBody2D" parent="manual_collisions"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="manual_collisions/survDoorColl1"]
+position = Vector2(135, -4.5)
+shape = SubResource("RectangleShape2D_qv7s2")
+
+[node name="survDoorColl2" type="StaticBody2D" parent="manual_collisions"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="manual_collisions/survDoorColl2"]
+position = Vector2(291.5, -4.5)
+shape = SubResource("RectangleShape2D_v22h6")
 
 [node name="interaction_UI_handler" parent="." instance=ExtResource("11_tmnem")]
 

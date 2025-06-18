@@ -24,6 +24,7 @@ func _process(_delta: float) -> void:
 	if not target_reached:
 		if global_position.y >= target.y: # hide stone if reached target
 			target_reached = true
+			AudioManager.play_effect(AudioManager.effects.STONESPLASH,0,0,0,global_position,100,.5)
 			global_position = target
 			stone_sprite_bottom.hide()
 			ripple.show()

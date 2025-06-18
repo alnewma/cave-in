@@ -2,11 +2,16 @@ extends Node2D
 
 @export var travel_duration = 15
 var spectator_mode = false
+@onready var usage_prompt = $usage_holder/usage_prompt
+@onready var playerUI = $interaction_UI_handler
 
 func _ready():
 	AudioManager.play_audio(AudioManager.songs.ENDSEND,false)
+	AudioManager.play_effect(AudioManager.effects.TUNNELRUMBLING,0,0,0,Vector2.ZERO,0,2.2)
 	speech_setup()
 	cutscene_setup()
+	usage_prompt.set_text("Go First")
+	playerUI.show()
 
 ## Interaction/Speech Code ##
 
@@ -31,8 +36,8 @@ func survivor_mouse_exited(survivor):
 	survivors_within_mouse.erase(survivor)
 
 func create_interaction_menu(survivor):
-	interaction_menu.change_page(interaction_menu.start_page,true)
 	interaction_menu.current_survivor = survivor
+	interaction_menu.change_page(interaction_menu.start_page,true)
 
 ## Cutscene Code ##
 
@@ -90,7 +95,9 @@ func _on_progress_timer_timeout() -> void:
 			tween.tween_property($FogLayer/ParallaxLayer/ColorRect,"modulate:a",0,1)
 			tween.parallel().tween_property($FogLayer2/ParallaxLayer/ColorRect,"modulate:a",1,1)
 			leave_area.get_node("CollisionShape2D").disabled = false
-			print("blocked = false")
+			$boat/engine/engineSound.stop()
+			AudioManager.play_effect(AudioManager.effects.BOATENGINESTOP,0,0,0,$boat/engine.global_position,40)
+			$boat/boat_water.play("water_stop")
 			progression += 1
 			progress_timer.start(60)
 		3: # tunnel about to collapse
@@ -126,12 +133,14 @@ func _spawn_rock():
 
 
 func _on_rock_timer_1_timeout() -> void:
-	r_timer1.start(randf_range(.01,2.5))
-	_spawn_rock()
+	if not last_rock_landed:
+		r_timer1.start(randf_range(.01,2.5))
+		_spawn_rock()
 
 func _on_rock_timer_2_timeout() -> void:
-	r_timer2.start(randf_range(.01,2.5))
-	_spawn_rock()
+	if not last_rock_landed:
+		r_timer2.start(randf_range(.01,2.5))
+		_spawn_rock()
 
 @onready var q_timer = $quake_timer
 func set_quakes():
@@ -191,12 +200,15 @@ func _move_survivor(survivor_instance):
 
 @onready var top_ripple = $tunnel_background/ripple_top
 @onready var bottom_ripple = $tunnel_background/ripple_bottom
+@onready var blocking_rocks = $tunnel_background/blocking_rocks
 @onready var block_rock = preload("res://tunnel/block_rock.tscn")
 @onready var pos1 = $tunnel_background/rock1
 @onready var pos2 = $tunnel_background/rock2
 @onready var pos3 = $tunnel_background/rock3
 var dummies = []
 func trigger_end():
+	usage_prompt.hide()
+	blocking_rocks.z_index = 2
 	var tween = get_tree().create_tween()
 	tween.tween_property(to_move,"global_position",exit_marker.global_position,1.5)
 	to_move.play("run")
@@ -241,8 +253,10 @@ func rock2_land():
 	break_sprite.play("default")
 	push_characters_away(pos2.global_position)
 
+var last_rock_landed = false
 @onready var dark_cover = $darkness_cover
 func rock3_land():
+	last_rock_landed = true
 	dark_cover.show()
 	var tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_OUT_IN)
@@ -261,7 +275,6 @@ func replace_sprite(replacement_file,original,location:bool): # true:original lo
 	original.hide()
 	return man_inst
 
-
 func _on_interaction_ui_handler_updated_conversation_flag() -> void:
 	if GameHandler.save_game_instance.player_data.conversation_flags["ida_chosen"]:
 		survivor_chosen = woman
@@ -278,6 +291,8 @@ func _on_interaction_ui_handler_updated_conversation_flag() -> void:
 func _on_interaction_ui_handler_menu_closed() -> void:
 	if to_move:
 		trigger_end()
+	elif surv_talked_to:
+		usage_holder.show() # allow player to leave after talking
 
 func push_characters_away(origin_position:Vector2):
 	for dummy in dummies:
@@ -300,9 +315,25 @@ func _on_leave_area_body_exited(body: Node2D) -> void:
 	player_prompt.hide()
 	player_inside = false
 func _physics_process(_delta):
-	if not started_self_exit and player_inside and Input.is_action_just_pressed("interact"):
+	if not started_self_exit and player_inside and usage_holder.visible and Input.is_action_just_pressed("interact"):
 		started_self_exit = true
 		player.can_be_controlled = false
 		self.survivor_chosen = player
 		player_prompt.hide()
 		trigger_end()
+
+@onready var st_timer = $stoneCrashAudioTimer
+func _on_stone_crash_audio_timer_timeout() -> void:
+	if not last_rock_landed:
+		AudioManager.play_effect(AudioManager.effects.STONECRASH,0,0,0,Vector2.ZERO,0,2.5)
+		st_timer.start(randi_range(1,5))
+
+@onready var li_timer = $lightTimer
+func _on_light_timer_timeout() -> void:
+	$Player/light.energy = randf_range(.5,1)
+	li_timer.start(randf_range(.5,1.5))
+
+@onready var usage_holder = $usage_holder
+var surv_talked_to = false
+func _on_dialogue_page_survivor_talked_to_during_end() -> void:
+	surv_talked_to = true

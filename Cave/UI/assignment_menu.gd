@@ -8,8 +8,10 @@ extends Control
 
 func _ready():
 	player_pos = get_tree().get_first_node_in_group("player").global_position
+	AudioManager.play_effect(AudioManager.effects.PAPERTAKEOUT)
 
 func _on_button_pressed():
+	AudioManager.play_effect(AudioManager.effects.PAPERPUTAWAY)
 	queue_free()
 
 var player_pos : Vector2

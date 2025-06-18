@@ -123,7 +123,7 @@ func _on_interaction_area_mouse_exited():
 @export var status_break = false
 
 func status_check(): # check status when one decreases
-	if thirst < 20 and not status_break:
+	if thirst < 98 and not status_break: # CHANGE BACK TO 20
 		status_break = true
 		take_status_break("thirst")
 
@@ -185,6 +185,7 @@ func _on_survivor_movement_state_actor_reached_target():
 		returning_from_status_break = false
 		state_machine.change_state(state_machine.activity)
 		get_node(target_assignment).set_assigned_survivors(get_path(),true)
+		print("returned from water break")
 		#returned from water break, begin working on assignment
 
 var enemies_nearby : Array = []

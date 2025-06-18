@@ -82,6 +82,7 @@ func cutscene():
 	side_rocks.scroll_scale = Vector2(1,1)
 	playercam.enabled = false
 	playerlight.hide()
+	AudioManager.play_effect(AudioManager.effects.OUTSIDEDESERT,0,0,0,Vector2.ZERO,0,.3)
 	#var intro_instance = intro_logos.instantiate()
 	#get_tree().current_scene.add_child(intro_instance)
 	#await intro_instance.get_node("AnimationPlayer").animation_finished
@@ -91,6 +92,7 @@ func cutscene():
 	var tween = get_tree().create_tween()
 	tween.connect("step_finished",cutscene_finished)
 	tween.tween_property(cutcam,"global_position",Vector2(122,104),12)
+	get_tree().create_timer(11).timeout.connect(_end_outside_sfx)
 	tween.tween_property(cutcam,"global_position",$Player.global_position,8)
 	tween.set_ease(Tween.EASE_IN)
 	tween.set_trans(Tween.TRANS_EXPO)
@@ -116,6 +118,8 @@ func cutscene_finished(index):
 			playerlight.show()
 			side_rocks.scroll_scale = Vector2(1.1,1.1)
 			spectator_mode = false
+func _end_outside_sfx():
+	AudioManager.stop_effect(AudioManager.effects.OUTSIDEDESERT,.5)
 
 # Game Ending Effect #
 enum ending_types {SURVIVORS_DEAD, PLAYER_DEAD}

@@ -11,7 +11,7 @@ response3 = "I should go first."
 
 [node name="r1" parent="." index="4" instance=ExtResource("1_t4l6k")]
 layout_mode = 2
-line = "We've wasted too much time already, and this tunnel isn’t standing much longer. Seconds, maybe. We can't all make it, and we both know that. Kate—she's got so much more life ahead of her. We've lived our years, and it's her turn. She needs to go first."
+line = "We've wasted too much time already, and this tunnel isn’t standing much longer. Seconds, maybe. We can't all make it, and we both know that. Kate–she's got so much more life ahead of her. We've lived our years, and it's her turn. She needs to go first."
 line_requirement = "kate_dead"
 line_alt = "We've wasted too much time already, and this tunnel isn’t standing much longer. Seconds, maybe. We can't all make it, and we both know that. Use whatever heuristic you want: age, purity, your own personal feelings. Then just accept what’s to come."
 

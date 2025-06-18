@@ -15,10 +15,17 @@ enum states {
 }
 
 func _ready():
-	_on_wander_timer_timeout()
 	set_physics_process(false)
 	await get_tree().process_frame
 	set_physics_process(true)
+
+var last_velocity : Vector2
+func check_if_stuck(): # check if velocities are being mirrored
+	if last_velocity * -1 - velocity < Vector2(.1,.1):
+		return true
+	else:
+		last_velocity = velocity
+		return false
 
 var last_full_vector = Vector2.ZERO
 func _physics_process(_delta):
@@ -26,9 +33,14 @@ func _physics_process(_delta):
 	match state:
 		states.WANDER:
 			nav_agent.target_position = wander_destination
-			dir = to_local(nav_agent.get_next_path_position()).normalized()
-			velocity = dir * SPEED
-			move_and_slide()
+			if global_position.distance_squared_to(wander_destination) > 50:
+				if check_if_stuck() and not velocity == Vector2.ZERO:
+					velocity = Vector2.ZERO
+					wander_destination = global_position # resetting wander destination
+				else:
+					dir = to_local(nav_agent.get_next_path_position()).normalized()
+					velocity = dir * SPEED
+					move_and_slide()
 		states.FLEE:
 			if not get_last_slide_collision(): # if the rat isn't cornered/running into a wall
 				var full_vector = Vector2.ZERO
@@ -60,7 +72,8 @@ var wander_destination = Vector2.ZERO
 
 @onready var wander_timer = $wander_timer
 func _on_wander_timer_timeout():
-	wander_destination = find_random_destination()
+	wander_destination = global_position + find_random_destination()
+	wander_destination = NavigationServer2D.map_get_closest_point(get_tree().get_first_node_in_group("navigation_region").get_navigation_map(),wander_destination)
 	wander_timer.start(randi_range(6,12))
 
 func find_random_destination():
@@ -106,6 +119,11 @@ func _on_health_changed(value):
 		death_timer.start(20)
 
 func _on_death_timer_timeout():
+	var t = get_tree().create_tween()
+	sprite.material = sprite.material.duplicate()
+	t.tween_property(sprite.material,"shader_parameter/sensitivity",1,1)
+	t.finished.connect(_delete)
+func _delete():
 	queue_free()
 
 func _on_animated_sprite_2d_animation_finished():

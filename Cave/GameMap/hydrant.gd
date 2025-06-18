@@ -3,6 +3,9 @@ extends "res://GameMap/interaction_object.gd"
 @onready var barrel1 = $barrelSprite
 @onready var barrel2 = $barrelSprite2
 
+func _ready():
+	_update_barrels()
+
 func ready_status_changed():
 	_update_barrels()
 

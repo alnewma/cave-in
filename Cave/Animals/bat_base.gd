@@ -19,20 +19,33 @@ enum states {
 }
 
 func _ready():
-	_on_wander_timer_timeout()
 	set_physics_process(false)
 	await get_tree().process_frame
 	set_physics_process(true)
+	sprite.material = sprite.material.duplicate()
+
+var last_velocity : Vector2
+func check_if_stuck(): # check if velocities are being mirrored
+	if last_velocity * -1 - velocity < Vector2(.1,.1):
+		return true
+	else:
+		last_velocity = velocity
+		return false
 
 func _physics_process(_delta):
+	death_sprite.material.set_shader_parameter("redness",sprite.material.get_shader_parameter("redness"))
 	var dir
 	match state:
 		states.WANDER:
 			nav_agent.target_position = wander_destination
 			if global_position.distance_squared_to(wander_destination) > 50:
-				dir = to_local(nav_agent.get_next_path_position()).normalized()
-				velocity = dir * SPEED
-				move_and_slide()
+				if check_if_stuck() and not velocity == Vector2.ZERO:
+					velocity = Vector2.ZERO
+					wander_destination = global_position # resetting wander destination
+				else:
+					dir = to_local(nav_agent.get_next_path_position()).normalized()
+					velocity = dir * SPEED
+					move_and_slide()
 		states.ATTACK:
 			if attack_target:
 				if global_position.distance_squared_to(attack_target.global_position) < 50:
@@ -63,6 +76,7 @@ var wander_destination = Vector2.ZERO
 @onready var wander_timer = $wander_timer
 func _on_wander_timer_timeout():
 	wander_destination = global_position + find_random_destination()
+	wander_destination = NavigationServer2D.map_get_closest_point(get_tree().get_first_node_in_group("navigation_region").get_navigation_map(),wander_destination)
 	wander_timer.start(randi_range(6,12))
 
 func find_random_destination():
@@ -134,6 +148,11 @@ func _on_health_changed(value):
 		death_timer.start(20)
 
 func _on_death_timer_timeout():
+	var t = get_tree().create_tween()
+	death_sprite.material = death_sprite.material.duplicate()
+	t.tween_property(death_sprite,"material:shader_parameter/sensitivity",1.0,1)
+	t.finished.connect(_delete)
+func _delete():
 	queue_free()
 
 func _on_wing_sound_timeout() -> void:

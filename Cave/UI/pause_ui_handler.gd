@@ -19,6 +19,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"):
 		var gameMap = get_tree().current_scene
 		if not gameMap.spectator_mode:
+			AudioManager.play_effect(AudioManager.effects.BOOKCLOSE)
 			visible = not visible
 
 var inventory_item = preload("res://UI/inventory_item.tscn")
@@ -31,6 +32,7 @@ func _on_exit_button_pressed():
 		get_tree().quit()
 	else:
 		exit_started = true
+		AudioManager.play_effect(AudioManager.effects.CLICK)
 		exit_timer.start(3)
 		exit_button.text = "Are you sure?"
 
@@ -40,12 +42,15 @@ func _on_exit_timer_timeout():
 
 var menu_scene = load("res://MainMenu/main_menu.tscn")
 func _on_quit_button_pressed():
+	AudioManager.play_effect(AudioManager.effects.CLICK)
 	get_tree().change_scene_to_packed(menu_scene)
 
 func _on_save_button_pressed():
+	AudioManager.play_effect(AudioManager.effects.CLICK)
 	GameHandler.save_game_instance.write_data()
 
 func _on_resume_button_pressed():
+	AudioManager.play_effect(AudioManager.effects.BOOKCLOSE)
 	visible = false
 
 @onready var notes = $background/right_container/notes_edit
@@ -54,4 +59,5 @@ func _on_notes_edit_text_changed():
 
 func _on_visibility_changed() -> void:
 	if visible:
+		AudioManager.play_effect(AudioManager.effects.BOOKOPEN)
 		pause_setup()

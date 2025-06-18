@@ -18,27 +18,29 @@ func _on_mouse_exited():
 
 func check_if_near_flag() -> bool:
 	for flag in get_tree().get_nodes_in_group("location_flag"):
-		if global_position.distance_to(flag.global_position) < flag.get_node("location_area/CollisionShape2D").shape.radius:
-			return true
+		if flag.flag_placed:
+			if global_position.distance_to(flag.global_position) < flag.get_node("location_area/CollisionShape2D").shape.radius:
+				return true
 	return false
 
 func _on_input_event(viewport, event, _shape_idx):
-	viewport.set_input_as_handled()
-	if event.is_action_pressed("object_select"):
-		var menu_instance = assignment_menu.instantiate()
-		get_tree().get_root().add_child(menu_instance)
-		menu_instance.position = global_position + Vector2(5,-251*.1-3.5)
-		var location = get_parent()
-		menu_instance.location.text = location.display_name
-		menu_instance.assignment.text = "Assignment: " + location.assignment
-		refresh_assignment_menu_tool_text(location,menu_instance)
-		menu_instance.get_node("p_move_timer").timeout.connect(refresh_assignment_menu_tool_text.bind(location,menu_instance))
-		for item in location.available_items:
-			var item_sprite = TextureRect.new()
-			item_sprite.custom_minimum_size = Vector2(95,95)
-			item_sprite.texture = GameHandler.item_images[item]
-			menu_instance.output_grid.add_child(item_sprite)
-			# add items to available output of assignment in assignment menu
+	if check_if_near_flag():
+		viewport.set_input_as_handled()
+		if event.is_action_pressed("object_select"):
+			var menu_instance = assignment_menu.instantiate()
+			get_tree().get_root().add_child(menu_instance)
+			menu_instance.position = global_position + Vector2(5,-251*.1-3.5)
+			var location = get_parent()
+			menu_instance.location.text = location.display_name
+			menu_instance.assignment.text = "Assignment: " + location.assignment
+			refresh_assignment_menu_tool_text(location,menu_instance)
+			menu_instance.get_node("p_move_timer").timeout.connect(refresh_assignment_menu_tool_text.bind(location,menu_instance))
+			for item in location.available_items:
+				var item_sprite = TextureRect.new()
+				item_sprite.custom_minimum_size = Vector2(95,95)
+				item_sprite.texture = GameHandler.item_images[item]
+				menu_instance.output_grid.add_child(item_sprite)
+				# add items to available output of assignment in assignment menu
 
 func refresh_assignment_menu_tool_text(location,menu_instance):
 	if location.required_tools and location.required_tools > 0:

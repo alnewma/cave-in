@@ -18,13 +18,17 @@ func _on_button_pressed(source_text):
 				placeholder.peri.visible = false
 				GameHandler.save_game_instance.player_data.map_data.locations.append({"position":placeholder.position,"name":name_entry.text})
 			visible = false
+			AudioManager.play_effect(AudioManager.effects.PAPERPUTAWAY)
 		"Close":
+			AudioManager.play_effect(AudioManager.effects.PAPERPUTAWAY)
 			if placeholder:
 				placeholder.queue_free()
 			visible = false
 
+@onready var estimer = $erase_sound_timer
+var erase_cooldown = false
+var old_text_size = 0
 func _on_name_entry_text_changed(new_text):
-
 	# valid characters
 	var results = []
 	for result in regex.search_all(new_text):
@@ -32,6 +36,16 @@ func _on_name_entry_text_changed(new_text):
 	new_text = "".join(results)
 	name_entry.text = new_text
 	name_entry.caret_column = new_text.length()
+	
+	# SFX
+	if old_text_size < new_text.length():
+		AudioManager.play_effect(AudioManager.effects.WRITE)
+	elif old_text_size > new_text.length():
+		if not erase_cooldown:
+			erase_cooldown = true
+			estimer.start(.1)
+			AudioManager.play_effect(AudioManager.effects.ERASE)
+	old_text_size = new_text.length()
 	
 	# name availability
 	var name_available = true
@@ -56,5 +70,18 @@ func creation_process(flag_placeholder : AnimatedSprite2D):
 
 func _on_visibility_changed() -> void:
 	if visible:
+		AudioManager.play_effect(AudioManager.effects.PAPERTAKEOUT)
 		name_entry.text = ""
+		old_text_size = 0
 		_on_name_entry_text_changed(name_entry.text)
+
+func _on_erase_sound_timer_timeout() -> void:
+	erase_cooldown = false
+
+func _on_name_entry_focus_entered() -> void:
+	GameHandler.player_typing = true
+func _on_name_entry_focus_exited() -> void:
+	GameHandler.player_typing = false
+
+func _on_name_entry_text_submitted(_new_text: String) -> void:
+	name_entry.release_focus()

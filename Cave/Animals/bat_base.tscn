@@ -1,8 +1,45 @@
-[gd_scene load_steps=23 format=3 uid="uid://ygnyyeje43ta"]
+[gd_scene load_steps=27 format=3 uid="uid://ygnyyeje43ta"]
 
 [ext_resource type="Texture2D" uid="uid://joavwh2jneu5" path="res://ArtAssets/BatSprite.png" id="1_dpp1s"]
 [ext_resource type="Script" uid="uid://kc60k06hot8s" path="res://Animals/bat_base.gd" id="1_gcnrs"]
 [ext_resource type="Texture2D" uid="uid://8pakf2qkk3d" path="res://ArtAssets/BatShadow.png" id="3_tgjbk"]
+
+[sub_resource type="Shader" id="Shader_whd33"]
+code = "shader_type canvas_item;
+
+float random(vec2 uv) {
+	return fract(sin(dot(uv, vec2(12.9898, 78.233))) * 438.5453);
+}
+
+uniform float sensitivity : hint_range(0.0, 1.0) = 0.5;
+uniform float redness : hint_range(0.0, 1.0) = 0.0;
+
+void fragment() {
+	// Get size of texture in pixels
+	float size_x = float(textureSize(TEXTURE, 0).x);
+	float size_y = float(textureSize(TEXTURE, 0).y);
+
+	// Sample original color
+	vec4 pixelColor = texture(TEXTURE, UV);
+
+	// Remap UV to pixel grid
+	vec2 UVr = vec2(floor(UV.x * size_x) / size_x, floor(UV.y * size_y) / size_y);
+
+	// Determine pixel visibility based on noise
+	float visible = step(sensitivity, random(UVr));
+
+	// Apply redness by blending original color with red
+	vec3 redTint = mix(pixelColor.rgb, vec3(1.0, 0.0, 0.0), redness);
+
+	// Final color with adjusted alpha
+	COLOR = vec4(redTint, min(visible, pixelColor.a));
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s7qe7"]
+shader = SubResource("Shader_whd33")
+shader_parameter/sensitivity = 0.0
+shader_parameter/redness = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xygsq"]
 atlas = ExtResource("1_dpp1s")
@@ -146,6 +183,43 @@ radius = 186.762
 radius = 4.0
 height = 14.0
 
+[sub_resource type="Shader" id="Shader_ff1py"]
+code = "shader_type canvas_item;
+
+float random(vec2 uv) {
+	return fract(sin(dot(uv, vec2(12.9898, 78.233))) * 438.5453);
+}
+
+uniform float sensitivity : hint_range(0.0, 1.0) = 0.5;
+uniform float redness : hint_range(0.0, 1.0) = 0.0;
+
+void fragment() {
+	// Get size of texture in pixels
+	float size_x = float(textureSize(TEXTURE, 0).x);
+	float size_y = float(textureSize(TEXTURE, 0).y);
+
+	// Sample original color
+	vec4 pixelColor = texture(TEXTURE, UV);
+
+	// Remap UV to pixel grid
+	vec2 UVr = vec2(floor(UV.x * size_x) / size_x, floor(UV.y * size_y) / size_y);
+
+	// Determine pixel visibility based on noise
+	float visible = step(sensitivity, random(UVr));
+
+	// Apply redness by blending original color with red
+	vec3 redTint = mix(pixelColor.rgb, vec3(1.0, 0.0, 0.0), redness);
+
+	// Final color with adjusted alpha
+	COLOR = vec4(redTint, min(visible, pixelColor.a));
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_whd33"]
+shader = SubResource("Shader_ff1py")
+shader_parameter/sensitivity = 0.0
+shader_parameter/redness = 0.0
+
 [node name="bat_base" type="CharacterBody2D" groups=["enemy"]]
 z_index = 1
 y_sort_enabled = true
@@ -155,6 +229,7 @@ script = ExtResource("1_gcnrs")
 metadata/enemy_type = "bat"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_s7qe7")
 sprite_frames = SubResource("SpriteFrames_rv0nq")
 animation = &"up"
 autoplay = "down"
@@ -192,6 +267,7 @@ texture = ExtResource("3_tgjbk")
 
 [node name="death_sprite" type="Sprite2D" parent="."]
 visible = false
+material = SubResource("ShaderMaterial_whd33")
 texture = ExtResource("1_dpp1s")
 offset = Vector2(0, -12)
 hframes = 4

@@ -35,6 +35,10 @@ func change_page(page,_opening = false):
 			#offset.x = get_viewport().content_scale_size.x - start_page.get_node("background").size.x*scale.x
 		#if offset.y > get_viewport().content_scale_size.y - start_page.get_node("background").size.y*scale.y:
 			#offset.y = get_viewport().content_scale_size.y - start_page.get_node("background").size.y*scale.y
+	if _opening:
+		AudioManager.play_effect(AudioManager.effects.PAPERTAKEOUT)
+	else:
+		AudioManager.play_effect(AudioManager.effects.PAPERFLIP)
 	page.visible = true
 
 func _on_button_pressed(source_text):
@@ -47,4 +51,5 @@ func _on_button_pressed(source_text):
 			change_page(location_page)
 		"Close":
 			hide_pages()
+			AudioManager.play_effect(AudioManager.effects.PAPERPUTAWAY)
 			emit_signal("menu_closed")

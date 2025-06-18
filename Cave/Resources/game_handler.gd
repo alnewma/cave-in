@@ -3,6 +3,7 @@ extends Node
 @onready var save_game_instance = SaveGame.new()
 
 var game_just_opened = true
+var player_typing = false
 
 ## Save Handler ##
 #
@@ -140,10 +141,14 @@ func damage_target(origin:CharacterBody2D,target:CharacterBody2D,damage:int):
 	if "health" in target:
 		target.health -= damage
 		target.modulate = Color.RED
+		if target.is_in_group("enemy"):
+			target.get_node("AnimatedSprite2D").material.set_shader_parameter("redness",.4)
 		get_tree().create_timer(.25).connect("timeout",_damage_timer_timeout.bind(target))
 func _damage_timer_timeout(target):
 	if target:
 		target.modulate = Color.WHITE
+		if target.is_in_group("enemy"):
+			target.get_node("AnimatedSprite2D").material.set_shader_parameter("redness",0)
 
 enum enemies {
 	BAT,

@@ -31,6 +31,7 @@ func _on_quit_pressed():
 	get_tree().quit()
 
 func switch_container(target_container):
+	AudioManager.play_effect(AudioManager.effects.CLICK)
 	for container in containers:
 		container.visible = false
 	target_container.visible = true

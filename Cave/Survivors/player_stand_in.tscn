@@ -1,8 +1,8 @@
 [gd_scene load_steps=22 format=3 uid="uid://bklfr2yexe60a"]
 
 [ext_resource type="Texture2D" uid="uid://dtrjyn14rv0so" path="res://ArtAssets/PeopleSprites2/4 Woman/Woman_idle.png" id="1_iyddr"]
-[ext_resource type="Shader" path="res://Resources/erase_texture.gdshader" id="1_la48d"]
-[ext_resource type="Script" path="res://Player/camera_2d.gd" id="2_yiffp"]
+[ext_resource type="Shader" uid="uid://bblndim5t5ap0" path="res://Resources/erase_texture.gdshader" id="1_la48d"]
+[ext_resource type="Script" uid="uid://uhtyfgb2kw1o" path="res://Player/camera_2d.gd" id="2_yiffp"]
 [ext_resource type="Texture2D" uid="uid://x2japhrhvelp" path="res://ArtAssets/light_mask.png" id="3_1f3p6"]
 [ext_resource type="Texture2D" uid="uid://bkl172syuyrjh" path="res://ArtAssets/PeopleSprites2/4 Woman/Woman_walk.png" id="3_e4n8m"]
 
@@ -299,8 +299,8 @@ tracks/7/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_duts7"]
 _data = {
-"RESET": SubResource("Animation_n588c"),
-"exit": SubResource("Animation_2p417")
+&"RESET": SubResource("Animation_n588c"),
+&"exit": SubResource("Animation_2p417")
 }
 
 [node name="playerStandIn" type="AnimatedSprite2D"]
@@ -317,11 +317,13 @@ noise = SubResource("FastNoiseLite_b8dic")
 
 [node name="light" type="PointLight2D" parent="."]
 color = Color(1, 1, 1, 0.576471)
+energy = 0.5
 shadow_enabled = true
 texture = ExtResource("3_1f3p6")
+texture_scale = 0.5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_duts7")
+&"": SubResource("AnimationLibrary_duts7")
 }
 speed_scale = 0.7

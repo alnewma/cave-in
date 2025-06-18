@@ -26,6 +26,7 @@ var kate3 = preload("res://Resources/dialogue_trees/kate_3.tscn")
 
 @onready var ui_label = preload("res://UI/ui_label.tscn")
 
+signal survivor_talked_to_during_end
 var survivors_talked_to_during_end = []
 
 func _on_visibility_changed() -> void:
@@ -46,6 +47,7 @@ func _on_visibility_changed() -> void:
 							if not "Kate" in survivors_talked_to_during_end: # tunnel scene
 								tree_holder.add_child(kate0.instantiate())
 								survivors_talked_to_during_end.append("Kate")
+								emit_signal("survivor_talked_to_during_end")
 							else:
 								tree_holder.add_child(kate00.instantiate())
 					elif total_convo_points >= 0 and kate_pts == 0:
@@ -75,6 +77,7 @@ func _on_visibility_changed() -> void:
 							if not "Mace" in survivors_talked_to_during_end: # tunnel scene
 								tree_holder.add_child(mace0.instantiate())
 								survivors_talked_to_during_end.append("Mace")
+								emit_signal("survivor_talked_to_during_end")
 							else:
 								tree_holder.add_child(mace00.instantiate())
 					elif total_convo_points >= 0 and mace_pts == 0:
@@ -102,6 +105,7 @@ func _on_visibility_changed() -> void:
 							if not "Ida" in survivors_talked_to_during_end: # tunnel scene
 								tree_holder.add_child(ida0.instantiate())
 								survivors_talked_to_during_end.append("Ida")
+								emit_signal("survivor_talked_to_during_end")
 							else:
 								tree_holder.add_child(ida00.instantiate())
 					elif total_convo_points >= 0 and ida_pts == 0:
@@ -129,6 +133,7 @@ func _on_visibility_changed() -> void:
 							if not "Wesley" in survivors_talked_to_during_end: # tunnel scene
 								tree_holder.add_child(wesley0.instantiate())
 								survivors_talked_to_during_end.append("Wesley")
+								emit_signal("survivor_talked_to_during_end")
 							else:
 								tree_holder.add_child(wesley00.instantiate())
 					elif total_convo_points >= 0 and wesley_pts == 0:

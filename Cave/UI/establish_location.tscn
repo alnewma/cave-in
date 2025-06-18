@@ -64,10 +64,17 @@ button_text = "Close"
 [node name="Label" parent="background/button_holder/button_holder/NinePatchRect/Button" index="0"]
 text = "Close"
 
+[node name="erase_sound_timer" type="Timer" parent="." index="1"]
+one_shot = true
+
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="focus_entered" from="background/button_holder/CenterContainer/NinePatchRect/name_entry" to="." method="_on_name_entry_focus_entered"]
+[connection signal="focus_exited" from="background/button_holder/CenterContainer/NinePatchRect/name_entry" to="." method="_on_name_entry_focus_exited"]
 [connection signal="text_changed" from="background/button_holder/CenterContainer/NinePatchRect/name_entry" to="." method="_on_name_entry_text_changed"]
+[connection signal="text_submitted" from="background/button_holder/CenterContainer/NinePatchRect/name_entry" to="." method="_on_name_entry_text_submitted"]
 [connection signal="pressed" from="background/button_holder/confirm_button/NinePatchRect/Button" to="." method="_on_button_pressed" binds= ["Confirm"]]
 [connection signal="pressed" from="background/button_holder/button_holder/NinePatchRect/Button" to="." method="_on_button_pressed" binds= ["Close"]]
+[connection signal="timeout" from="erase_sound_timer" to="." method="_on_erase_sound_timer_timeout"]
 
 [editable path="background/button_holder/title_holder"]
 [editable path="background/button_holder/confirm_button"]

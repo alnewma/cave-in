@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=4 uid="uid://dbt6aj80ujt3x"]
+[gd_scene load_steps=84 format=4 uid="uid://dbt6aj80ujt3x"]
 
 [ext_resource type="Script" uid="uid://cat2d6vhka2ts" path="res://tunnel/tunnel.gd" id="1_esspt"]
 [ext_resource type="TileSet" uid="uid://4d5lfppjykax" path="res://GameMap/TileMaps/SewerMap.tres" id="1_jpvxj"]
@@ -21,7 +21,9 @@
 [ext_resource type="PackedScene" uid="uid://dvx2j0q542f3" path="res://Survivors/girl_survivor.tscn" id="10_3g804"]
 [ext_resource type="Texture2D" uid="uid://bpxkpc0otix8c" path="res://ArtAssets/raft_break.png" id="12_g0nga"]
 [ext_resource type="Texture2D" uid="uid://biixss06nkggd" path="res://icon.svg" id="13_wyg5k"]
+[ext_resource type="Texture2D" uid="uid://h5cw0w4fadhq" path="res://ArtAssets/boat_water_stop.png" id="14_cwr3s"]
 [ext_resource type="PackedScene" uid="uid://buwfwcnvl62h1" path="res://UI/interaction_ui_handler.tscn" id="15_kg5ai"]
+[ext_resource type="AudioStream" uid="uid://deypmlm3qqnx7" path="res://Audio/SFX/boatEngine.ogg" id="15_mr5ad"]
 [ext_resource type="Script" uid="uid://bwl3gxnhu54to" path="res://GameMap/fade_black.gd" id="16_08ssx"]
 [ext_resource type="Script" uid="uid://cxy5ylbhbnx7b" path="res://GameMap/fog_layer.gd" id="21_xdl81"]
 [ext_resource type="Shader" uid="uid://ctw52kihat482" path="res://GameMap/fog.gdshader" id="22_c45y2"]
@@ -287,6 +289,14 @@ region = Rect2(150, 0, 30, 14)
 atlas = ExtResource("3_2wtuk")
 region = Rect2(180, 0, 30, 14)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_2lqux"]
+atlas = ExtResource("14_cwr3s")
+region = Rect2(0, 0, 30, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3dp4"]
+atlas = ExtResource("14_cwr3s")
+region = Rect2(30, 0, 30, 14)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_0ekxl"]
 animations = [{
 "frames": [{
@@ -313,6 +323,17 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2lqux")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q3dp4")
+}],
+"loop": false,
+"name": &"water_stop",
 "speed": 5.0
 }]
 
@@ -352,6 +373,12 @@ shader = ExtResource("22_c45y2")
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_q6skh")
 shader_parameter/density = 0.3
 shader_parameter/speed = Vector2(0.002, 0.001)
+
+[sub_resource type="Environment" id="Environment_cwr3s"]
+ambient_light_energy = 0.0
+fog_enabled = true
+fog_light_color = Color(0, 0, 0, 1)
+fog_density = 0.516
 
 [node name="tunnel" type="Node2D" node_paths=PackedStringArray("player_prompt") groups=["tunnel_scene"]]
 y_sort_enabled = true
@@ -415,7 +442,6 @@ position = Vector2(42, -20)
 sprite_frames = SubResource("SpriteFrames_hwxvr")
 
 [node name="blocking_rocks" type="Sprite2D" parent="tunnel_background"]
-z_index = 2
 y_sort_enabled = true
 position = Vector2(40, -55)
 texture = ExtResource("8_kpe0n")
@@ -442,8 +468,10 @@ sprite_frames = SubResource("SpriteFrames_qc7h8")
 [node name="boat_water" type="AnimatedSprite2D" parent="boat"]
 position = Vector2(0, 18.5)
 sprite_frames = SubResource("SpriteFrames_0ekxl")
+animation = &"water_stop"
 autoplay = "default"
-frame_progress = 0.769821
+frame = 1
+frame_progress = 1.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="boat"]
 
@@ -466,8 +494,15 @@ shape = SubResource("RectangleShape2D_ovph7")
 [node name="engine" type="Sprite2D" parent="boat"]
 z_index = 1
 y_sort_enabled = true
-position = Vector2(0, 10)
+position = Vector2(1, 15)
 texture = ExtResource("5_jqqnc")
+offset = Vector2(-1, -5)
+
+[node name="engineSound" type="AudioStreamPlayer2D" parent="boat/engine"]
+stream = ExtResource("15_mr5ad")
+volume_db = 5.0
+autoplay = true
+max_distance = 40.0
 
 [node name="leave_area" type="Area2D" parent="boat"]
 collision_layer = 2
@@ -477,31 +512,6 @@ collision_mask = 2
 position = Vector2(0, -20)
 shape = SubResource("CircleShape2D_jq54c")
 disabled = true
-
-[node name="Player" parent="." instance=ExtResource("5_dwkph")]
-y_sort_enabled = true
-position = Vector2(39, 86)
-
-[node name="light" type="PointLight2D" parent="Player"]
-color = Color(1, 1, 1, 0.576471)
-shadow_enabled = true
-texture = ExtResource("8_xcwqk")
-
-[node name="man_survivor" parent="." instance=ExtResource("7_5lghp")]
-position = Vector2(45, 110)
-
-[node name="old_man_survivor" parent="." instance=ExtResource("8_7xlc5")]
-z_index = 1
-y_sort_enabled = true
-position = Vector2(34, 92)
-
-[node name="old_woman_survivor" parent="." instance=ExtResource("9_wggvp")]
-z_index = 1
-y_sort_enabled = true
-position = Vector2(50, 94)
-
-[node name="girl_survivor" parent="." instance=ExtResource("10_3g804")]
-position = Vector2(32, 107)
 
 [node name="rock_timer1" type="Timer" parent="."]
 one_shot = true
@@ -528,6 +538,7 @@ texture = ExtResource("13_wyg5k")
 one_shot = true
 
 [node name="interaction_UI_handler" parent="." instance=ExtResource("15_kg5ai")]
+visible = false
 tunnel_scene = true
 
 [node name="fadeBlack" type="CanvasLayer" parent="."]
@@ -565,6 +576,7 @@ mouse_filter = 2
 
 [node name="FogLayer2" type="ParallaxBackground" parent="." groups=["fog_layer"]]
 layer = 2
+visible = false
 script = ExtResource("21_xdl81")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="FogLayer2"]
@@ -591,9 +603,42 @@ grow_vertical = 2
 texture = ExtResource("26_hmj4w")
 
 [node name="usage_holder" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="usage_prompt" parent="usage_holder" instance=ExtResource("27_skbrv")]
 visible = false
+
+[node name="Player" parent="." instance=ExtResource("5_dwkph")]
+position = Vector2(40, 86)
+
+[node name="light" type="PointLight2D" parent="Player"]
+color = Color(1, 1, 1, 0.576471)
+energy = 0.5
+shadow_enabled = true
+texture = ExtResource("8_xcwqk")
+texture_scale = 0.5
+
+[node name="girl_survivor" parent="." instance=ExtResource("10_3g804")]
+position = Vector2(30, 91)
+
+[node name="old_man_survivor" parent="." instance=ExtResource("8_7xlc5")]
+position = Vector2(48, 93)
+
+[node name="old_woman_survivor" parent="." instance=ExtResource("9_wggvp")]
+position = Vector2(30, 108)
+
+[node name="man_survivor" parent="." instance=ExtResource("7_5lghp")]
+position = Vector2(49, 110)
+
+[node name="stoneCrashAudioTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="lightTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_cwr3s")
 
 [connection signal="animation_finished" from="tunnel_background/gate/survivor_ripple" to="tunnel_background/gate/survivor_ripple" method="_on_animation_finished"]
 [connection signal="area_entered" from="tunnel_background/gate/light_area" to="." method="_on_light_area_area_entered"]
@@ -607,6 +652,9 @@ visible = false
 [connection signal="child_entered_tree" from="interaction_UI_handler" to="." method="_on_interaction_ui_handler_child_entered_tree"]
 [connection signal="menu_closed" from="interaction_UI_handler" to="." method="_on_interaction_ui_handler_menu_closed"]
 [connection signal="updated_conversation_flag" from="interaction_UI_handler" to="." method="_on_interaction_ui_handler_updated_conversation_flag"]
+[connection signal="survivor_talked_to_during_end" from="interaction_UI_handler/dialogue_page" to="." method="_on_dialogue_page_survivor_talked_to_during_end"]
+[connection signal="timeout" from="stoneCrashAudioTimer" to="." method="_on_stone_crash_audio_timer_timeout"]
+[connection signal="timeout" from="lightTimer" to="." method="_on_light_timer_timeout"]
 
 [editable path="interaction_UI_handler"]
 [editable path="interaction_UI_handler/interaction_page"]

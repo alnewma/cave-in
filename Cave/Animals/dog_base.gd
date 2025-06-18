@@ -118,6 +118,11 @@ func _on_health_changed(value):
 		death_timer.start(20)
 
 func _on_death_timer_timeout():
+	var t = get_tree().create_tween()
+	sprite.material = sprite.material.duplicate()
+	t.tween_property(sprite.material,"shader_parameter/sensitivity",1,1)
+	t.finished.connect(_delete)
+func _delete():
 	queue_free()
 
 func _on_animated_sprite_2d_animation_finished():

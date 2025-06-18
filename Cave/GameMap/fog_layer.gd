@@ -1,4 +1,5 @@
 extends ParallaxBackground
 
 func _ready():
-	show()
+	pass
+	#show()

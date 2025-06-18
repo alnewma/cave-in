@@ -38,14 +38,15 @@ func movement(_delta):
 		velocity = velocity.move_toward(Vector2.ZERO,_delta*250)
 	if can_be_controlled:
 		velocity = Vector2.ZERO
-		if Input.is_action_pressed("move_down"):
-			velocity += Vector2(0,1)
-		if Input.is_action_pressed("move_left"):
-			velocity += Vector2(-1,0)
-		if Input.is_action_pressed("move_right"):
-			velocity += Vector2(1,0)
-		if Input.is_action_pressed("move_up"):
-			velocity += Vector2(0,-1)
+		if not GameHandler.player_typing:
+			if Input.is_action_pressed("move_down"):
+				velocity += Vector2(0,1)
+			if Input.is_action_pressed("move_left"):
+				velocity += Vector2(-1,0)
+			if Input.is_action_pressed("move_right"):
+				velocity += Vector2(1,0)
+			if Input.is_action_pressed("move_up"):
+				velocity += Vector2(0,-1)
 		if velocity != Vector2.ZERO:
 			velocity = speed * velocity.normalized()
 		if velocity.dot(Vector2(cos(PI+attack_area.rotation),sin(PI+attack_area.rotation))) < 0:
@@ -193,14 +194,14 @@ func _on_aggro_range_body_exited(body: Node2D) -> void:
 		while Time.get_ticks_msec() - start_time < int(grace_period_duration * 1000):
 			if nearby_enemies.size() != 0:
 				return
-			await get_tree().process_frame  # Wait 1 frame before checking again
+			await Engine.get_main_loop().process_frame  # Wait 1 frame before checking again
 		AudioManager.stop_effect(AudioManager.effects.DRUMS)
 		var silence_duration = 3 # seconds
 		start_time = Time.get_ticks_msec() # if nearby enemies stays 0 for 5 seconds, resume music
 		while Time.get_ticks_msec() - start_time < int(silence_duration * 1000):
 			if nearby_enemies.size() != 0:
 				return
-			await get_tree().process_frame  # Wait 1 frame before checking again
+			await Engine.get_main_loop().process_frame  # Wait 1 frame before checking again
 		AudioManager.resume_audio()
 
 func play_footstep():

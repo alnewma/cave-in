@@ -20,6 +20,16 @@ func _ready() -> void:
 	emit_signal("landed")
 	splash.show()
 	splash.play("default")
+	if frame == 0:
+		AudioManager.play_effect(AudioManager.effects.BIGSPLASH,0,0,0,Vector2.ZERO,0,1.5)
+	elif frame == 1:
+		AudioManager.play_effect(AudioManager.effects.BIGSPLASH,0,0,0,Vector2.ZERO,0,1.5)
+		AudioManager.play_effect(AudioManager.effects.BOATCRASH,0,0,0,Vector2.ZERO,0,2.5)
+	elif frame == 2:
+		AudioManager.stop_audio()
+		AudioManager.stop_all_effects()
+		AudioManager.play_effect(AudioManager.effects.BIGSPLASH,0,0,0,Vector2.ZERO,0,1.5)
+		AudioManager.play_effect(AudioManager.effects.BIGROCK,0,0,0,Vector2.ZERO,0,.8)
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:

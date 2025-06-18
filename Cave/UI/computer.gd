@@ -19,7 +19,7 @@ func _ready():
 		completion_routine(1)
 
 func hide_screens():
-	AudioManager.play_effect(AudioManager.effects.COMPUTERCLICK,0,0,0,Vector2.ZERO,0,.2)
+	AudioManager.play_effect(AudioManager.effects.COMPUTERCLICK,0,0,0,Vector2.ZERO,0,.1)
 	var screens = [start_screen,logs_screen,doors_screen,log1_screen,log2_screen,log3_screen,log4_screen,password_screen,opened_screen]
 	for screen in screens:
 		screen.hide()
@@ -27,6 +27,7 @@ func hide_screens():
 func open_computer():
 	fog.hide()
 	AudioManager.play_effect(AudioManager.effects.COMPUTERBUZZ,0,0,0,Vector2.ZERO,0,.3)
+	get_tree().get_first_node_in_group("player").can_be_controlled = false
 	hide_screens()
 	if locked:
 		password_screen.show()
@@ -69,6 +70,7 @@ func _on_back_button_l_pressed():
 func _on_exit_button_pressed():
 	fog.show()
 	visible = false
+	get_tree().get_first_node_in_group("player").can_be_controlled = true
 	AudioManager.stop_effect(AudioManager.effects.COMPUTERBUZZ,0)
 
 func _on_door_2_button_pressed(): # blast door opened

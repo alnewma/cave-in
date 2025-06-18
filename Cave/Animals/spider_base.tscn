@@ -1,8 +1,45 @@
-[gd_scene load_steps=29 format=3 uid="uid://b3tc1if5ng2h0"]
+[gd_scene load_steps=31 format=3 uid="uid://b3tc1if5ng2h0"]
 
 [ext_resource type="Script" uid="uid://dst230hppkidu" path="res://Animals/spider_base.gd" id="1_60e7a"]
 [ext_resource type="Texture2D" uid="uid://dpj6enia4eqva" path="res://ArtAssets/SpiderSprite.png" id="1_atnfq"]
 [ext_resource type="AudioStream" uid="uid://bap0hvdndfjag" path="res://Audio/SFX/Animals/SpiderMovement.wav" id="3_480t2"]
+
+[sub_resource type="Shader" id="Shader_480t2"]
+code = "shader_type canvas_item;
+
+float random(vec2 uv) {
+	return fract(sin(dot(uv, vec2(12.9898, 78.233))) * 438.5453);
+}
+
+uniform float sensitivity : hint_range(0.0, 1.0) = 0.5;
+uniform float redness : hint_range(0.0, 1.0) = 0.0;
+
+void fragment() {
+	// Get size of texture in pixels
+	float size_x = float(textureSize(TEXTURE, 0).x);
+	float size_y = float(textureSize(TEXTURE, 0).y);
+
+	// Sample original color
+	vec4 pixelColor = texture(TEXTURE, UV);
+
+	// Remap UV to pixel grid
+	vec2 UVr = vec2(floor(UV.x * size_x) / size_x, floor(UV.y * size_y) / size_y);
+
+	// Determine pixel visibility based on noise
+	float visible = step(sensitivity, random(UVr));
+
+	// Apply redness by blending original color with red
+	vec3 redTint = mix(pixelColor.rgb, vec3(1.0, 0.0, 0.0), redness);
+
+	// Final color with adjusted alpha
+	COLOR = vec4(redTint, min(visible, pixelColor.a));
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4rge4"]
+shader = SubResource("Shader_480t2")
+shader_parameter/sensitivity = 0.0
+shader_parameter/redness = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s6h0b"]
 atlas = ExtResource("1_atnfq")
@@ -196,6 +233,7 @@ script = ExtResource("1_60e7a")
 metadata/enemy_type = "spider"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_4rge4")
 position = Vector2(0, -8)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_p012u")
