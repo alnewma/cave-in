@@ -46,11 +46,12 @@ func _physics_process(_delta):
 		states.ATTACK:
 			if attack_target:
 				nav_agent.target_position = attack_target.global_position
-				dir = to_local(nav_agent.get_next_path_position()).normalized()
-				velocity = dir * SPEED
-				move_and_slide()
 				if global_position.distance_squared_to(attack_target.global_position) < 100:
 					attempt_attack()
+				else:
+					dir = to_local(nav_agent.get_next_path_position()).normalized()
+					velocity = dir * SPEED
+					move_and_slide()
 		states.DEAD:
 			pass
 	var velN = velocity.length_squared()

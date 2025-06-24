@@ -20,4 +20,5 @@ func _on_computer_area_body_exited(_body):
 
 func _physics_process(_delta):
 	if player_inside and Input.is_action_just_pressed("interact"):
-		computer_screen.open_computer()
+		if not computer_screen.visible:
+			computer_screen.open_computer()

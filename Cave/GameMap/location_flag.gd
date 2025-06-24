@@ -40,7 +40,7 @@ func _started_interacted(value):
 		peri.modulate = Color("ffffff00")
 
 
-func _on_location_area_body_entered(body: Node2D) -> void:
+func _on_location_area_body_entered(_body: Node2D) -> void:
 	if flag_placed:
 		# register player as near each assignment within flag
 		for object in get_tree().get_nodes_in_group("interaction_object"):
@@ -60,7 +60,7 @@ func _on_location_area_body_entered(body: Node2D) -> void:
 				return
 			peri.hide()
 
-func _on_location_area_body_exited(body: Node2D) -> void:
+func _on_location_area_body_exited(_body: Node2D) -> void:
 	if flag_placed:
 		# deregister player as near each assignment within flag
 		for object in get_tree().get_nodes_in_group("interaction_object"):

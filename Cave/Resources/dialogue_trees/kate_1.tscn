@@ -60,7 +60,7 @@ line = "Sure, I like exploring."
 
 [node name="r2" parent="." index="5" instance=ExtResource("1_hdxkl")]
 layout_mode = 2
-line = "I left my parents back at our campsite. They’re pretty far away so I guess they’re OK but they’re probably starting to get worried about me."
+line = "I left my parents back at our campsite. They’re pretty far away so I guess they’re okay but they’re probably starting to get worried about me."
 response1 = "How about you? Are you feeling fine?"
 response2 = "Well just keep them in mind while you work. They can serve as encouragement when you need some."
 reacting_character8 = 4

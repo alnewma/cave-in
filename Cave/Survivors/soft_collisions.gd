@@ -5,7 +5,7 @@ var colliding = false
 
 var lastPushVector = Vector2.ZERO
 
-func get_soft_collisions_push_vector(delta) -> Vector2:
+func get_soft_collisions_push_vector(_delta) -> Vector2:
 	if overlapping_soft_collision_bodies.size() > 1:
 		var push_vector = overlapping_soft_collision_bodies[1].global_position.direction_to(global_position)
 		push_vector = push_vector.normalized()*pow((20/global_position.distance_squared_to(overlapping_soft_collision_bodies[1].global_position)),2)

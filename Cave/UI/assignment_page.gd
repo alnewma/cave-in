@@ -46,7 +46,15 @@ func assign_survivor(object:Object, location = Vector2.ZERO, assignment = ""): #
 		object.set_assigned_survivors(c_survivor.get_path(),true)
 		GameHandler.get_survivor_data_from_object(c_survivor).target_assignment = c_survivor.target_assignment
 		GameHandler.get_survivor_data_from_object(c_survivor).target_usage = c_survivor.target_usage
+		# remarks #
 		if object.is_in_group("player"):
 			c_survivor.queue_remark(c_survivor.remark_prompts.FOLLOWING)
+		elif object.is_in_group("blast"):
+			c_survivor.queue_remark(c_survivor.remark_prompts.GAS)
+		elif object.assignment == "Scavenge":
+			c_survivor.queue_remark(c_survivor.remark_prompts.SCAVENGING)
+		elif object.is_in_group("computer"):
+			c_survivor.queue_remark(c_survivor.remark_prompts.COMPUTERSTART)
 	elif assignment == "guard":
 		c_survivor.target_assignment = ""
+		c_survivor.queue_remark(c_survivor.remark_prompts.GUARDING)

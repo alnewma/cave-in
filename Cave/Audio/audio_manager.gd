@@ -207,6 +207,30 @@ enum effects {
 	BIGSPLASH,
 	BOATCRASH,
 	BIGROCK,
+	DRILL1,
+	DRILL2,
+	DRILL3,
+	DRILL4,
+	DRILL5,
+	DRILL6,
+	DRILL7,
+	ROCKFALL1,
+	ROCKFALL2,
+	ROCKFALL3,
+	DRILLROCKS1,
+	DRILLROCKS2,
+	ERROR1,
+	ERROR2,
+	ERROR3,
+	CORRECTPASSWORD,
+	TYPE1,
+	TYPE2,
+	TYPE3,
+	TYPE4,
+	TYPE5,
+	TYPE6,
+	SINGLECORRECT,
+	SINGLEERROR,
 	
 	# Effect Categories
 	CAVE_AMBIENT,
@@ -238,6 +262,11 @@ enum effects {
 	STONECRASH,
 	STONESPLASH,
 	OUTSIDEDESERT,
+	DRILL,
+	ROCKFALL,
+	DRILLROCKS,
+	ERROR,
+	TYPE,
 }
 
 var effect_files = {
@@ -416,6 +445,30 @@ var effect_files = {
 	effects.BOATCRASH : preload("res://Audio/SFX/boatCrash.wav"),
 	effects.BIGROCK : preload("res://Audio/SFX/bigRock.wav"),
 	effects.OUTSIDEDESERT : preload("res://Audio/SFX/OutsideDesert.ogg"),
+	effects.DRILL1 : preload("res://Audio/SFX/Drill1.ogg"),
+	effects.DRILL2 : preload("res://Audio/SFX/Drill2.ogg"),
+	effects.DRILL3 : preload("res://Audio/SFX/Drill3.ogg"),
+	effects.DRILL4 : preload("res://Audio/SFX/Drill4.ogg"),
+	effects.DRILL5 : preload("res://Audio/SFX/Drill5.ogg"),
+	effects.DRILL6 : preload("res://Audio/SFX/Drill6.ogg"),
+	effects.DRILL7 : preload("res://Audio/SFX/Drill7.ogg"),
+	effects.ROCKFALL1 : preload("res://Audio/SFX/RockFall1.ogg"),
+	effects.ROCKFALL2 : preload("res://Audio/SFX/RockFall2.ogg"),
+	effects.ROCKFALL3 : preload("res://Audio/SFX/RockFall3.ogg"),
+	effects.DRILLROCKS1 : preload("res://Audio/SFX/DrillRocks1.ogg"),
+	effects.DRILLROCKS2 : preload("res://Audio/SFX/DrillRocks2.ogg"),
+	effects.ERROR1 : preload("res://Audio/SFX/Error1.ogg"),
+	effects.ERROR2 : preload("res://Audio/SFX/Error2.ogg"),
+	effects.ERROR3 : preload("res://Audio/SFX/Error3.ogg"),
+	effects.CORRECTPASSWORD : preload("res://Audio/SFX/correctPassword.ogg"),
+	effects.TYPE1 : preload("res://Audio/SFX/Type1.wav"),
+	effects.TYPE2 : preload("res://Audio/SFX/Type2.wav"),
+	effects.TYPE3 : preload("res://Audio/SFX/Type3.wav"),
+	effects.TYPE4 : preload("res://Audio/SFX/Type4.wav"),
+	effects.TYPE5 : preload("res://Audio/SFX/Type5.wav"),
+	effects.TYPE6 : preload("res://Audio/SFX/Type6.wav"),
+	effects.SINGLECORRECT : preload("res://Audio/SFX/singleCorrect.mp3"),
+	effects.SINGLEERROR : preload("res://Audio/SFX/singleError.mp3"),
 }
 
 # Audio Groups
@@ -452,9 +505,15 @@ var effect_files = {
 @onready var PAPERFLIP_effects = [effects.PAPERFLIP1,effects.PAPERFLIP2]
 @onready var STONECRASH_effects = [effects.STONECRASH1,effects.STONECRASH2,effects.STONECRASH3,effects.STONECRASH4,effects.STONECRASH5]
 @onready var STONESPLASH_effects = [effects.STONESPLASH1,effects.STONESPLASH2,effects.STONESPLASH3,effects.STONESPLASH4,effects.STONESPLASH5]
+@onready var DRILL_effects = [effects.DRILL1,effects.DRILL2,effects.DRILL3,effects.DRILL4,effects.DRILL5,effects.DRILL6,effects.DRILL7]
+@onready var ROCKFALL_effects = [effects.ROCKFALL1,effects.ROCKFALL2,effects.ROCKFALL3]
+@onready var DRILLROCKS_effects = [effects.DRILLROCKS1,effects.DRILLROCKS2]
+@onready var ERROR_effects = [effects.ERROR1,effects.ERROR2,effects.ERROR3]
+@onready var TYPE_effects = [effects.TYPE1,effects.TYPE2,effects.TYPE3,effects.TYPE4,effects.TYPE5,effects.TYPE6]
 
 @onready var effect_groups = {effects.CAVE_AMBIENT : CAVE_AMBIENT_effects,effects.DOG_PUNCH : DOG_PUNCH_effects,effects.SPIDER_PUNCH : SPIDER_PUNCH_effects,effects.BAT_PUNCH : BAT_PUNCH_effects, effects.WOOSH : WOOSH_effects, effects.ASPHALT : ASPHALT_effects, effects.DIRT : DIRT_effects, effects.STONE : STONE_effects, effects.TILE : TILE_effects, effects.METAL : METAL_effects, effects.SCAVENGE : SCAVENGE_effects, effects.HYDRANT : HYDRANT_effects, effects.WELD : WELD_effects, effects.BUILD : BUILD_effects, effects.BOX : BOX_effects, effects.POUR : POUR_effects,
-effects.DOGBARK : DOGBARK_effects,effects.BATATTACK : BATATTACK_effects,effects.DOGGROWL : DOGGROWL_effects,effects.SPIDERBITE : SPIDERBITE_effects,effects.BATWING : BATWING_effects,effects.DOGYELP : DOGYELP_effects, effects.CLICK : CLICK_effects, effects.ERASE : ERASE_effects, effects.WRITE : WRITE_effects, effects.PAPERFLIP : PAPERFLIP_effects, effects.STONECRASH : STONECRASH_effects, effects.STONESPLASH : STONESPLASH_effects}
+effects.DOGBARK : DOGBARK_effects,effects.BATATTACK : BATATTACK_effects,effects.DOGGROWL : DOGGROWL_effects,effects.SPIDERBITE : SPIDERBITE_effects,effects.BATWING : BATWING_effects,effects.DOGYELP : DOGYELP_effects, effects.CLICK : CLICK_effects, effects.ERASE : ERASE_effects, effects.WRITE : WRITE_effects, effects.PAPERFLIP : PAPERFLIP_effects, effects.STONECRASH : STONECRASH_effects, effects.STONESPLASH : STONESPLASH_effects, effects.DRILL : DRILL_effects, effects.ROCKFALL : ROCKFALL_effects, effects.DRILLROCKS : DRILLROCKS_effects, effects.ERROR : ERROR_effects,
+effects.TYPE : TYPE_effects}
 
 # Songs
 
@@ -488,7 +547,7 @@ func _on_song_player_finished() -> void:
 
 # Sound Effects
 
-func play_effect(effect : effects,fade_in = false,fade_length = 0,delay = 0,location = Vector2.ZERO,max_distance = 75,volume = 1):
+func play_effect(effect : effects,fade_in = false,fade_length = 0.0,delay = 0.0,location = Vector2.ZERO,max_distance = 75.0,volume = 1.0):
 	var sfx_stream
 	if location == Vector2.ZERO:
 		sfx_stream = AudioStreamPlayer.new()
@@ -509,11 +568,16 @@ func play_effect(effect : effects,fade_in = false,fade_length = 0,delay = 0,loca
 		sfx_stream.volume_linear = 0
 		get_tree().create_tween().tween_property(sfx_stream, "volume_linear", volume, fade_length)
 	sfx_stream.play()
-func stop_effect(effect : effects,fade_length = 1):
+func stop_effect(effect : effects,fade_length = 1.0):
 	for item in get_children():
-		if item is AudioStreamPlayer and item.stream == effect_files[effect]:
-			schedule_effect_stop(item,fade_length)
-func stop_all_effects(fade_length = 1):
+		if effect_groups.has(effect): # effect is group
+			for effect_member in effect_groups[effect]:
+				if item is AudioStreamPlayer and item.stream == effect_files[effect_member]:
+					schedule_effect_stop(item,fade_length)
+		else: # regular single effect
+			if item is AudioStreamPlayer and item.stream == effect_files[effect]:
+					schedule_effect_stop(item,fade_length)
+func stop_all_effects(fade_length = 1.0):
 	for item in get_children():
 		if item is AudioStreamPlayer and item != streamer:
 			schedule_effect_stop(item, fade_length)

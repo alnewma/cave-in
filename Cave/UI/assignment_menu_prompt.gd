@@ -23,7 +23,22 @@ func check_if_near_flag() -> bool:
 				return true
 	return false
 
-func _on_input_event(viewport, event, _shape_idx):
+func refresh_assignment_menu_tool_text(location,menu_instance):
+	if location.required_tools and location.required_tools > 0:
+		menu_instance.requirements.text = "Tool Requirements: "
+		for tool in range(location.required_tools):
+			menu_instance.requirements.text += GameHandler.items.keys()[location.required_tool[tool]].capitalize()
+			# add checks and exes
+			var tools_being_used = location.get_tools_being_used()
+			if location.required_tool[tool] in tools_being_used:
+				menu_instance.requirements.text += "[✓]"
+			else:
+				menu_instance.requirements.text += "[X]"
+			if location.required_tools != 1 and tool != location.required_tools-1:
+				menu_instance.requirements.text += ", "
+
+
+func _on_click_shape_input_event(viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if check_if_near_flag():
 		viewport.set_input_as_handled()
 		if event.is_action_pressed("object_select"):
@@ -41,17 +56,3 @@ func _on_input_event(viewport, event, _shape_idx):
 				item_sprite.texture = GameHandler.item_images[item]
 				menu_instance.output_grid.add_child(item_sprite)
 				# add items to available output of assignment in assignment menu
-
-func refresh_assignment_menu_tool_text(location,menu_instance):
-	if location.required_tools and location.required_tools > 0:
-		menu_instance.requirements.text = "Tool Requirements: "
-		for tool in range(location.required_tools):
-			menu_instance.requirements.text += GameHandler.items.keys()[location.required_tool[tool]].capitalize()
-			# add checks and exes
-			var tools_being_used = location.get_tools_being_used()
-			if location.required_tool[tool] in tools_being_used:
-				menu_instance.requirements.text += "[✓]"
-			else:
-				menu_instance.requirements.text += "[X]"
-			if location.required_tools != 1 and tool != location.required_tools-1:
-				menu_instance.requirements.text += ", "

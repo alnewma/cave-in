@@ -1,0 +1,107 @@
+[gd_scene load_steps=16 format=3 uid="uid://dgl0bpuyf07k8"]
+
+[ext_resource type="Texture2D" uid="uid://do4fw0f8q7rto" path="res://ArtAssets/falling_rocks.png" id="1_rij3w"]
+[ext_resource type="Script" uid="uid://dpou41apqjx0u" path="res://GameMap/cave_rock.gd" id="2_vwi6f"]
+[ext_resource type="Texture2D" uid="uid://dxogx5le3qhrh" path="res://ArtAssets/rock_smoke.png" id="3_rij3w"]
+[ext_resource type="Texture2D" uid="uid://rws8bbmcevat" path="res://ArtAssets/water_ripple_clear.png" id="4_vwi6f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vwi6f"]
+atlas = ExtResource("3_rij3w")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2288m"]
+atlas = ExtResource("3_rij3w")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_418s2"]
+atlas = ExtResource("3_rij3w")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ufxy"]
+atlas = ExtResource("3_rij3w")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkx0n"]
+atlas = ExtResource("3_rij3w")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pv8k0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vwi6f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2288m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_418s2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ufxy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jkx0n")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_osb7g"]
+atlas = ExtResource("4_vwi6f")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iema8"]
+atlas = ExtResource("4_vwi6f")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5fbhy"]
+atlas = ExtResource("4_vwi6f")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pv8k0"]
+atlas = ExtResource("4_vwi6f")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lsxk1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_osb7g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iema8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5fbhy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pv8k0")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="cave_rock" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("2_vwi6f")
+
+[node name="falling_rock" type="Sprite2D" parent="."]
+texture = ExtResource("1_rij3w")
+offset = Vector2(0, -5)
+hframes = 4
+vframes = 4
+
+[node name="smoke" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_pv8k0")
+offset = Vector2(0, -5)
+
+[node name="ripple" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_lsxk1")
+offset = Vector2(0, -5)
+
+[connection signal="animation_finished" from="ripple" to="." method="_on_ripple_animation_finished"]

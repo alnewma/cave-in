@@ -107,7 +107,7 @@ func initialization():
 			current_survivor_string = "Ida"
 		4: # Wesley
 			current_survivor_string = "Wesley"
-	var current_survivor = get_tree().get_first_node_in_group("interaction_UI_handler").current_survivor
+	var _current_survivor = get_tree().get_first_node_in_group("interaction_UI_handler").current_survivor
 	lineT.text = current_survivor_string + ": " + line
 	if line_requirement == "happy": # if line has happiness requirement
 		if GameHandler.save_game_instance.player_data.survivor_data[current_survivor_string.to_lower()].conversation_happiness >= 0:

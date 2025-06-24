@@ -1,9 +1,11 @@
 extends AnimatedSprite2D
 
 var effect_to_play
+@export var wait_duration = -1.0
 
 func _ready():
-	var wait_duration = .2 * randi_range(0,5)
+	if wait_duration < 0:
+		wait_duration = .2 * randi_range(0,5)
 	await get_tree().create_timer(wait_duration).timeout
 	show()
 	play("default")

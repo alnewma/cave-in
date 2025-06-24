@@ -82,7 +82,8 @@ enum events {
 	NULL_EVENT,
 	BLAST_DOOR,
 	COMPUTER_UNLOCK,
-	ENTRANCE_DOOR
+	ENTRANCE_DOOR,
+	GENERATOR,
 }
 
 var prompts_hovered = []
@@ -137,13 +138,41 @@ const item_images_small = {
 
 @onready var death_conversations_given = save_game_instance.death_conversations_given
 
-func damage_target(origin:CharacterBody2D,target:CharacterBody2D,damage:int):
+func damage_target(_origin:CharacterBody2D,target:CharacterBody2D,damage:int):
 	if "health" in target:
+		# Damage #
 		target.health -= damage
+		# Red Flash #
 		target.modulate = Color.RED
 		if target.is_in_group("enemy"):
 			target.get_node("AnimatedSprite2D").material.set_shader_parameter("redness",.4)
 		get_tree().create_timer(.25).connect("timeout",_damage_timer_timeout.bind(target))
+		# Remarks #
+		if target.is_in_group("survivor"):
+			var survs = get_tree().get_nodes_in_group("survivor")
+			survs.erase(target)
+			if target.health <= 0: # nearby death remark
+				for surv in survs:
+					if surv.global_position.distance_to(target.global_position) < 100:
+						surv.queue_remark(surv.remark_prompts.NEARBYDEATH, get_survivor_name_from_object(target))
+			elif target.health < damage: # nearby low health remark
+				for surv in survs:
+					if surv.global_position.distance_to(target.global_position) < 100:
+						if randi()%2==0:
+							surv.queue_remark(surv.remark_prompts.NEARBYLOWHEALTH, get_survivor_name_from_object(target))
+			
+		elif target.is_in_group("player"):
+			var survs = get_tree().get_nodes_in_group("survivor")
+			if target.health <= 0: # nearby death remark
+				for surv in survs:
+					if surv.global_position.distance_to(target.global_position) < 100:
+						surv.queue_remark(surv.remark_prompts.PLAYERDEATH)
+			elif target.health < damage: # nearby low health remark
+				for surv in survs:
+					if surv.global_position.distance_to(target.global_position) < 100:
+						if randi()%2==0:
+							surv.queue_remark(surv.remark_prompts.PLAYERLOW)
+			
 func _damage_timer_timeout(target):
 	if target:
 		target.modulate = Color.WHITE
@@ -181,3 +210,11 @@ func get_survivor_data_from_object(object : Object):
 		2: return GameHandler.save_game_instance.player_data.survivor_data.mace
 		3: return GameHandler.save_game_instance.player_data.survivor_data.ida
 		4: return GameHandler.save_game_instance.player_data.survivor_data.wesley
+
+func get_survivor_name_from_object(object : Object) -> String:
+	match object.survivor_type:
+		0: return "Kate"
+		2: return "Mace"
+		3: return "Ida"
+		4: return "Wesley"
+	return ""

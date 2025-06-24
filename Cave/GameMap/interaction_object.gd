@@ -136,12 +136,16 @@ func _on_progression_timer_timeout():
 	for survivorPath in assigned_survivors:
 		var survivor = get_node(survivorPath)
 		if survivor.state_machine.state == survivor.state_machine.activity: # if survivor is currently working
-			#print(name + " progression: " + str(completion_status))
-			if completion_status < 100 and required_tools_accounted_for: # increase progress based on productivity level and tools
-				var progress_inc = pow(1.5,GameHandler.get_survivor_data_from_object(survivor).productivity)
-				completion_status += progress_inc
-				if not spawn_smoke_if_applicable() and progress_SFX: # if no smoke but object has sound
-					AudioManager.play_effect(progress_SFX,0,0,0,global_position)
+			if survivor.thirst > 0: # if survivor not too thirsty to work
+				#print(name + " progression: " + str(completion_status))
+				if completion_status < 100 and required_tools_accounted_for: # increase progress based on productivity level and tools
+					var progress_inc = pow(1.5,GameHandler.get_survivor_data_from_object(survivor).productivity)
+					completion_status += progress_inc
+					if not spawn_smoke_if_applicable() and progress_SFX: # if no smoke but object has sound
+						AudioManager.play_effect(progress_SFX,0,0,0,global_position)
+			else:
+				if randi()%4==0:
+					survivor.queue_remark(survivor.remark_prompts.WORKTHIRST)
 
 @onready var dropped_item_base = preload("res://GameMap/dropped_item.tscn")
 func give_item(items : Array):
@@ -157,10 +161,9 @@ func give_item(items : Array):
 				for item_instance in GameHandler.save_game_instance.item_instances:
 					if item_instance[0] == item and item_instance[1] == null: #item is available to be given
 						if not item_dispensed:
-							print(survivor)
 							item_dispensed = true
 							item_instance[1] = get_node(survivor)
-							get_node(survivor).queue_remark(get_node(survivor).remark_prompts.TOOL)
+							get_node(survivor).queue_remark(get_node(survivor).remark_prompts.TOOL,GameHandler.item_names[item_instance[0]])
 		if not item_dispensed:
 			item_dispensed = true
 			var item_drop = dropped_item_base.instantiate()

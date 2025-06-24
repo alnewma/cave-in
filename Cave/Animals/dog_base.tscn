@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://ipol2p4wtxb3" path="res://Animals/dog_base.gd" id="1_it4ru"]
 
 [sub_resource type="Shader" id="Shader_a8cmx"]
+resource_local_to_scene = true
 code = "shader_type canvas_item;
 
 float random(vec2 uv) {
@@ -36,6 +37,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6edpl"]
+resource_local_to_scene = true
 shader = SubResource("Shader_a8cmx")
 shader_parameter/sensitivity = 0.0
 shader_parameter/redness = 0.0

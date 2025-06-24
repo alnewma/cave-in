@@ -5,7 +5,7 @@
 [node name="mace_1" instance=ExtResource("1_so4iv")]
 visible = true
 line = "Wow. Just wow. I spend all my life stuck in my dead-end insurance rep job and when something finally happens to shake things up? Still stuck!"
-response1 = "Well, things could be worse. Are you feeling OK otherwise?"
+response1 = "Well, things could be worse. Are you feeling okay otherwise?"
 response2 = "Insurance sales? Like home or car or what?"
 response3 = "Insurance sales? I always wondered what you degenerates look like behind the phone."
 reacting_character6 = 2

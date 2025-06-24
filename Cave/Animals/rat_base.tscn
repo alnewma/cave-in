@@ -5,6 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://dj1g2cvy3p3bb" path="res://Audio/SFX/Animals/RatMovement.wav" id="3_8oor0"]
 
 [sub_resource type="Shader" id="Shader_8oor0"]
+resource_local_to_scene = true
 code = "shader_type canvas_item;
 
 float random(vec2 uv) {
@@ -37,6 +38,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_amaib"]
+resource_local_to_scene = true
 shader = SubResource("Shader_8oor0")
 shader_parameter/sensitivity = 0.0
 shader_parameter/redness = 0.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://d185j6h1es4ps"]
+[gd_scene load_steps=16 format=3 uid="uid://d185j6h1es4ps"]
 
 [ext_resource type="Script" uid="uid://r8sappu5q1mg" path="res://Survivors/survivor_base.gd" id="1_21p5d"]
 [ext_resource type="Script" uid="uid://bt57v3pk6cixy" path="res://Survivors/finite_state_machine.gd" id="2_861pe"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://2g0wcoyncs6o" path="res://Survivors/survivor_death_state.gd" id="7_fd67k"]
 [ext_resource type="Theme" uid="uid://bgr6frj5j5a2w" path="res://UI/label_theme.tres" id="9_7edol"]
 [ext_resource type="Script" uid="uid://dhh0dywupyku7" path="res://Survivors/soft_collisions.gd" id="10_uiuss"]
+[ext_resource type="Script" uid="uid://cnt7pmsqmr2os" path="res://Survivors/remark_area.gd" id="11_cy0j4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bnvq1"]
 radius = 4.0
@@ -19,6 +20,9 @@ height = 16.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7vnyp"]
 radius = 136.719
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ye4t3"]
+radius = 60.1664
 
 [node name="SurvivorBase" type="CharacterBody2D" groups=["survivor"]]
 scale = Vector2(0.5, 0.5)
@@ -83,6 +87,7 @@ shape = SubResource("CapsuleShape2D_xnsnr")
 
 [node name="thirst_timer" type="Timer" parent="."]
 wait_time = 5.0
+one_shot = true
 autostart = true
 
 [node name="danger_area" type="Area2D" parent="."]
@@ -127,6 +132,15 @@ position = Vector2(0, -4)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_bnvq1")
 
+[node name="remark_area" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("11_cy0j4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="remark_area"]
+shape = SubResource("CircleShape2D_ye4t3")
+
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
@@ -142,3 +156,4 @@ shape = SubResource("CapsuleShape2D_bnvq1")
 [connection signal="timeout" from="remark/emotion_timer" to="." method="_on_emotion_timer_timeout"]
 [connection signal="body_entered" from="softCollisions" to="softCollisions" method="_on_body_entered"]
 [connection signal="body_exited" from="softCollisions" to="softCollisions" method="_on_body_exited"]
+[connection signal="body_shape_entered" from="remark_area" to="remark_area" method="_on_body_shape_entered"]

@@ -21,6 +21,10 @@ assignment_handler="*res://GameMap/assignment_handler.gd"
 GameHandler="*res://Resources/game_handler.gd"
 AudioManager="*res://Audio/audio_manager.tscn"
 
+[debug]
+
+gdscript/warnings/unused_signal=0
+
 [display]
 
 window/size/viewport_width=640
@@ -38,6 +42,8 @@ tunnel_scene=""
 interaction_object=""
 location_flag=""
 footstep_area=""
+boat_sprite=""
+water_area=""
 
 [gui]
 

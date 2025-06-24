@@ -70,6 +70,8 @@ offset_top = 106.0
 offset_right = 1063.0
 offset_bottom = 156.0
 theme = SubResource("Theme_vc6oc")
+max_length = 15
+keep_editing_on_text_submit = true
 context_menu_enabled = false
 caret_blink = true
 caret_force_displayed = true
@@ -310,7 +312,7 @@ offset_bottom = 673.0
 theme = ExtResource("3_0gtt5")
 theme_override_constants/line_spacing = 4
 theme_override_font_sizes/font_size = 13
-text = "First day on the job and it’s not like I have much to do yet so I guess I’ll just start a log. I’m supposed to be “monitoring and investigating” a subterranean fissure that scans found under this mountain. Very cool, but the only equipment that’s been delivered is some welding gear and pizza (not that I’m complaining about the latter). I guess this still beats lab work."
+text = "First day on the job and it’s not like I have much to do yet so I guess I’ll just start a log. I’m supposed to be “monitoring and investigating” a subterranean fissure that scans found under this mountain. Very cool, but the only equipment that’s been delivered is some welding gear, a massive drill, and pizza (not that I’m complaining about the latter). I guess this still beats lab work."
 autowrap_mode = 2
 metadata/_edit_use_anchors_ = true
 
@@ -481,7 +483,7 @@ offset_bottom = 673.0
 theme = ExtResource("3_0gtt5")
 theme_override_constants/line_spacing = 4
 theme_override_font_sizes/font_size = 13
-text = "Upper brass called and they’re making us evacuate the bunker. Thank God. The scanners have been going berserk all morning and I was starting to get worried. The ground starts shaking too hard and next thing you know that fissure full of magma is going to be decorating our basement! I’m not trying to be here if that happens."
+text = "Upper brass called and they’re making us shut down the station. Thank God. The scanners have been going berserk all morning. If we left that drill running, next thing you know that fissure full of magma was going to be decorating our basement! I wouldn’t want to be here if that happens."
 autowrap_mode = 2
 metadata/_edit_use_anchors_ = true
 
@@ -553,6 +555,59 @@ theme = ExtResource("4_smsvl")
 text = "Back"
 alignment = 0
 
+[node name="unpowered_text" type="Control" parent="Base"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+
+[node name="title" type="Label" parent="Base/unpowered_text"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0512153
+anchor_top = 0.0972222
+anchor_right = 0.412326
+anchor_bottom = 0.132716
+offset_left = 59.0
+offset_top = 63.0
+offset_right = 475.0
+offset_bottom = 79.0
+theme = ExtResource("3_0gtt5")
+text = "Staircase Security Door."
+
+[node name="body" type="Label" parent="Base/unpowered_text"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0512153
+anchor_top = 0.0972222
+anchor_right = 0.412326
+anchor_bottom = 0.132716
+offset_left = 89.0
+offset_top = 106.0
+offset_right = 1063.0
+offset_bottom = 535.0
+theme = ExtResource("3_0gtt5")
+text = "System must be powered to open."
+metadata/_edit_use_anchors_ = true
+
+[node name="back_buttonD" type="Button" parent="Base/unpowered_text"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 527.0
+offset_top = 300.0
+offset_right = 591.0
+offset_bottom = 316.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("4_smsvl")
+text = "Back"
+alignment = 0
+
+[connection signal="text_changed" from="Base/password_text/body" to="." method="_on_body_text_changed"]
+[connection signal="text_submitted" from="Base/password_text/body" to="." method="_on_body_text_submitted"]
 [connection signal="pressed" from="Base/password_text/exit_button" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="Base/start_text/VBoxContainer/logs_button" to="." method="_on_logs_button_pressed"]
 [connection signal="pressed" from="Base/start_text/VBoxContainer/door_button" to="." method="_on_door_button_pressed"]
@@ -569,3 +624,4 @@ alignment = 0
 [connection signal="pressed" from="Base/log3_text/back_buttonL" to="." method="_on_back_button_l_pressed"]
 [connection signal="pressed" from="Base/log4_text/back_buttonL" to="." method="_on_back_button_l_pressed"]
 [connection signal="pressed" from="Base/opened_text/back_buttonD" to="." method="_on_back_button_d_pressed"]
+[connection signal="pressed" from="Base/unpowered_text/back_buttonD" to="." method="_on_back_button_d_pressed"]

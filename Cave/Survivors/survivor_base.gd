@@ -82,9 +82,14 @@ func find_target_area(input_location):
 	GameHandler.get_survivor_data_from_object(self).assigned_location = assigned_location
 	state_machine.change_state(state_machine.movement)
 	navigation_agent.target_position = input_location
+	var found_flag = false
 	for item2 in get_tree().get_nodes_in_group("location_flag"):
 		if item2.global_position == assigned_location:
 			target_area = get_path_to(item2)
+			found_flag = true
+			break
+	if not found_flag:
+		target_area = get_path_to(self)
 	GameHandler.get_survivor_data_from_object(self).target_area = target_area
 	## for debugging location assignments
 	#print(str(get_tree().get_nodes_in_group("location_flag").size()) + " flags cross-checked")
@@ -97,7 +102,11 @@ func get_point_in_target_area() -> Vector2:
 	if target_area:
 		while true and get_node(target_area):
 			var random_angle = randf_range(0,2*PI)
-			var random_radius = randf_range(0,get_node(target_area).location_area_shape.shape.radius)
+			var random_radius
+			if get_node(target_area) == self: # wandering near self during game start
+				random_radius = randf_range(0,68.36)
+			else: # usual wandering near flag
+				random_radius = randf_range(0,get_node(target_area).location_area_shape.shape.radius)
 			point_within_location = Vector2(random_radius*cos(random_angle),random_radius*sin(random_angle)) + get_node(target_area).global_position
 			var closest = NavigationServer2D.map_get_closest_point(get_tree().get_first_node_in_group("navigation_region").get_navigation_map(),point_within_location)
 			if point_within_location.distance_to(closest) < .1:
@@ -123,9 +132,14 @@ func _on_interaction_area_mouse_exited():
 @export var status_break = false
 
 func status_check(): # check status when one decreases
-	if thirst < 98 and not status_break: # CHANGE BACK TO 20
-		status_break = true
-		take_status_break("thirst")
+	#if thirst < -999 and not status_break: # deprecated feature: automatic water drinking
+		#status_break = true
+		#take_status_break("thirst")
+	if thirst < 40:
+		if target_assignment != NodePath("") and get_node(target_assignment).is_in_group("hydrant"):
+			if get_node(target_assignment).manual_depletion(30): # try to drink from hydrant
+				queue_remark(remark_prompts.WATER)
+				thirst = 100
 
 func take_status_break(status:String): # take break to move to status area
 	state_machine.change_state(state_machine.movement)
@@ -149,6 +163,7 @@ func take_status_break(status:String): # take break to move to status area
 					target_usage = hydrant.get_path()
 		#navigation_agent.target_position = input_location
 
+@onready var thirst_timer = $thirst_timer
 func _on_thirst_timer_timeout():
 	#print("assigned location for " + name + ": " + str(assigned_location)) 
 	if thirst != 0:
@@ -157,6 +172,7 @@ func _on_thirst_timer_timeout():
 			queue_remark(remark_prompts.THIRST)
 		status_check()
 	GameHandler.get_survivor_data_from_object(self).thirst = thirst
+	thirst_timer.start(randi_range(4,5))
 
 var returning_from_status_break = false
 func _on_survivor_movement_state_actor_reached_target():
@@ -249,7 +265,21 @@ enum remark_prompts {
 	FALLING,
 	BLOCKED1,
 	BLOCKED2,
-	BLOCKED3
+	BLOCKED3,
+	GUARDING,
+	GAS,
+	HIDING,
+	SCAVENGING,
+	NEARBYLOWHEALTH,
+	NEARBYDEATH,
+	NEARBYBODY,
+	COMPUTERSTART,
+	COMPUTERFINISH,
+	WORKTHIRST,
+	DRILLINSIDE,
+	DRILLOUTSIDE,
+	PLAYERLOW,
+	PLAYERDEATH,
 }
 
 @onready var remark_box = $remark
@@ -264,15 +294,27 @@ func _on_remark_timer_timeout() -> void:
 	remark_empty = true
 
 var ending_sequence = false
-func queue_remark(prompt : remark_prompts):
+func queue_remark(prompt : remark_prompts, custom_string_insert = ""):
 	if remark_empty and not ending_sequence and remark_timer:
 		remark_empty = false
 		remark_timer.start(10)
-		remark_box.text = remarks[survivor_type][prompt].pick_random()
-		if prompt == remark_prompts.TOOL:
-			for item in GameHandler.save_game_instance.item_instances:
-				if typeof(item[1]) == TYPE_OBJECT and item[1] == self:
-					remark_box.text = remark_box.text.replace("XXXX",GameHandler.item_names[item[0]]) # if tool, replace placeholder with tool
+		## Specific Tags ##
+		if custom_string_insert != "":
+			var specific_tag = "<" + custom_string_insert + ">"
+			var temp_options = []
+			for remark in remarks[survivor_type][prompt]: # only use remarks that have no tag or that tag
+				if not "<" in remark or specific_tag in remark:
+					while ">" in remark: # remove tags from remark
+						var pos = remark.find(">")
+						remark = remark.erase(0,pos+1)
+					temp_options.append(remark)
+			remark_box.text = temp_options.pick_random()
+		else:
+			remark_box.text = remarks[survivor_type][prompt].pick_random()
+		## Customizable Remarks ##
+		if custom_string_insert != "":
+			if "XXXX" in remark_box.text:
+				remark_box.text = remark_box.text.replace("XXXX",custom_string_insert)
 	elif ending_sequence and (prompt == remark_prompts.FALLING or prompt == remark_prompts.BLOCKED1 or prompt == remark_prompts.BLOCKED2):
 		remark_timer.start(10)
 		remark_box.text = remarks[survivor_type][prompt].pick_random() # ending lines
@@ -333,8 +375,7 @@ var remarks = {
 		],
 		remark_prompts.ENEMY : [
 			"Animal on the loose!",
-			"That thing looks dangerous!",
-			""
+			"That thing looks dangerous!"
 		],
 		remark_prompts.WATER : [
 			"Gonna pump some water for myself",
@@ -351,6 +392,58 @@ var remarks = {
 		],
 		remark_prompts.BLOCKED3 : [
 			"Oh lord, this is it"
+		],
+		remark_prompts.GUARDING : [
+			"I’ve got this",
+			"I’ll keep us safe"
+		],
+		remark_prompts.GAS : [
+			"Guess the devil’s tryna rush me home"
+		],
+		remark_prompts.HIDING : [
+			"Not messin’ around here any longer",
+			"High time to run"
+		],
+		remark_prompts.SCAVENGING : [
+			"This oughta be good",
+			"This is looking fine!"
+		],
+		remark_prompts.NEARBYLOWHEALTH : [
+			"You better watch out hon!",
+			"Save yourself XXXX!"
+		],
+		remark_prompts.NEARBYDEATH : [
+			"Stay with us XXXX! C’mon",
+			"Father, come down!"
+		],
+		remark_prompts.NEARBYBODY : [
+			"Oh lord, XXXX",
+			"There’s no more hurting now",
+			"<Kate>Rest now, child"
+		],
+		remark_prompts.COMPUTERSTART : [
+			"Just like my ol’ typewriter!"
+		],
+		remark_prompts.COMPUTERFINISH : [
+			"Well I’ll be!"
+		],
+		remark_prompts.WORKTHIRST : [
+			"So thirsty I can hardly work"
+		],
+		remark_prompts.DRILLINSIDE : [
+			"That’s coming from WAY down below",
+			"Best be wary of that noise"
+		],
+		remark_prompts.DRILLOUTSIDE : [
+			"Just keep movin’ girl",
+			"These rocks got no manners!"
+		],
+		remark_prompts.PLAYERLOW : [
+			"You’re getting battered!",
+			"You better watch out hon!"
+		],
+		remark_prompts.PLAYERDEATH : [
+			"Don’t you leave us!"
 		],
 	},
 	survivor_types.MAN : {
@@ -378,8 +471,7 @@ var remarks = {
 		],
 		remark_prompts.ENEMY : [
 			"That thing doesn’t look friendly!",
-			"Animal nearby!",
-			""
+			"Animal nearby!"
 		],
 		remark_prompts.WATER : [
 			"Alright, water break",
@@ -396,7 +488,60 @@ var remarks = {
 		],
 		remark_prompts.BLOCKED3 : [
 			"Last chance to get out"
-		]
+		],
+		remark_prompts.GUARDING : [
+			"I’ll keep an eye out",
+			"Watching out"
+		],
+		remark_prompts.GAS : [
+			"Now we’re cooking with gas!"
+		],
+		remark_prompts.HIDING : [
+			"This is too much",
+			"I’m getting away"
+		],
+		remark_prompts.SCAVENGING : [
+			"Please have something good",
+			"Maybe I’ll find dynamite...",
+			"I’ll pick this clean"
+		],
+		remark_prompts.NEARBYLOWHEALTH : [
+			"Get away from that thing XXXX!",
+			"You look hurt!"
+		],
+		remark_prompts.NEARBYDEATH : [
+			"XXXX! No!",
+			"This can’t be happening... XXXX!"
+		],
+		remark_prompts.NEARBYBODY : [
+			"Get up XXXX. Please.",
+			"<Wesley>This part of his plan?",
+			"XXXX..."
+		],
+		remark_prompts.COMPUTERSTART : [
+			"Let’s try brute force, I guess"
+		],
+		remark_prompts.COMPUTERFINISH : [
+			"Snowball!? What a dumb password"
+		],
+		remark_prompts.WORKTHIRST : [
+			"So thirsty. Body shutting down"
+		],
+		remark_prompts.DRILLINSIDE : [
+			"That sound’s new...",
+			"Did we do that?"
+		],
+		remark_prompts.DRILLOUTSIDE : [
+			"Woah, that’s not good!",
+			"Watch out for rocks!"
+		],
+		remark_prompts.PLAYERLOW : [
+			"That looks like it hurts",
+			"You look super hurt!"
+		],
+		remark_prompts.PLAYERDEATH : [
+			"Come on, stay with me!"
+		],
 	},
 	survivor_types.OLDMAN : {
 		remark_prompts.TOOL : [
@@ -423,8 +568,7 @@ var remarks = {
 		],
 		remark_prompts.ENEMY : [
 			"Get back!",
-			"Watch out for that thing!",
-			""
+			"Watch out for that thing!"
 		],
 		remark_prompts.WATER : [
 			"Let’s get some water",
@@ -441,7 +585,59 @@ var remarks = {
 		],
 		remark_prompts.BLOCKED3 : [
 			"We need to move NOW!"
-		]
+		],
+		remark_prompts.GUARDING : [
+			"Nothing’s getting past me",
+			"I’ll stand guard"
+		],
+		remark_prompts.GAS : [
+			"Stand back from this"
+		],
+		remark_prompts.HIDING : [
+			"Cover for me!",
+			"Get back!"
+		],
+		remark_prompts.SCAVENGING : [
+			"This’ll do",
+			"We can use parts of this"
+		],
+		remark_prompts.NEARBYLOWHEALTH : [
+			"XXXX! Get out of there!",
+			"Hang in there XXXX, I’m coming!"
+		],
+		remark_prompts.NEARBYDEATH : [
+			"No, no, no–Goddammit",
+			"Oh, hell. XXXX!"
+		],
+		remark_prompts.NEARBYBODY : [
+			"I should’ve stopped this...",
+			"You didn’t deserve this XXXX",
+			"We can cry later"
+		],
+		remark_prompts.COMPUTERSTART : [
+			"This is more your domain"
+		],
+		remark_prompts.COMPUTERFINISH : [
+			"Great. Now back to work"
+		],
+		remark_prompts.WORKTHIRST : [
+			"We need water to work well"
+		],
+		remark_prompts.DRILLINSIDE : [
+			"Hope that’s not trouble",
+			"Figure out what that is"
+		],
+		remark_prompts.DRILLOUTSIDE : [
+			"This shortens our time frame!",
+			"Don’t get distracted"
+		],
+		remark_prompts.PLAYERLOW : [
+			"I’ll cover for you, get back!",
+			"Get out of there!"
+		],
+		remark_prompts.PLAYERDEATH : [
+			"I should’ve been faster..."
+		],
 	},
 	survivor_types.GIRL : {
 		remark_prompts.TOOL : [
@@ -468,8 +664,7 @@ var remarks = {
 		],
 		remark_prompts.ENEMY : [
 			"Big animal! Help!",
-			"Oh no!",
-			""
+			"Oh no!"
 		],
 		remark_prompts.WATER : [
 			"I’m getting water",
@@ -486,6 +681,61 @@ var remarks = {
 		],
 		remark_prompts.BLOCKED3 : [
 			"The ceiling is falling down!"
-		]
+		],
+		remark_prompts.GUARDING : [
+			"Don’t leave for long",
+			"I’ll yell if something comes"
+		],
+		remark_prompts.GAS : [
+			"We’re pouring it out?"
+		],
+		remark_prompts.HIDING : [
+			"Run!",
+			"Get away!",
+			"Hide!"
+		],
+		remark_prompts.SCAVENGING : [
+			"I’m checking for useful stuff",
+			"I’ll take it apart"
+		],
+		remark_prompts.NEARBYLOWHEALTH : [
+			"Are you okay XXXX?",
+			"<Wesley><Mace>Stop! Don’t hurt him!",
+			"<Ida>Stop! Don't hurt her!"
+		],
+		remark_prompts.NEARBYDEATH : [
+			"XXXX? XXXX!",
+			"<Wesley><Mace>Help him!",
+			"<Ida>Help her!",
+			"No! No!!"
+		],
+		remark_prompts.NEARBYBODY : [
+			"I’ll be okay XXXX. I promise.",
+			"I don’t get it. I just don’t"
+		],
+		remark_prompts.COMPUTERSTART : [
+			"I just try random words?"
+		],
+		remark_prompts.COMPUTERFINISH : [
+			"Finally! My fingers hurt"
+		],
+		remark_prompts.WORKTHIRST : [
+			"Ugh. I can’t move without water"
+		],
+		remark_prompts.DRILLINSIDE : [
+			"Um. What was that?",
+			"Is that a monster!?"
+		],
+		remark_prompts.DRILLOUTSIDE : [
+			"Is the ceiling going to fall!?",
+			"I don’t like that!"
+		],
+		remark_prompts.PLAYERLOW : [
+			"Run away!",
+			"Someone! Help!"
+		],
+		remark_prompts.PLAYERDEATH : [
+			"Get up! Get up!"
+		],
 	},
 }

@@ -9,8 +9,10 @@ func _ready():
 func _enter_state() -> void:
 	set_physics_process(true)
 	movement_cooldown = true
+	just_started_running = true
 	get_tree().create_timer(3).connect("timeout",_end_movement_cooldown)
-	actor.queue_remark(actor.remark_prompts.ENEMY)
+	if randi()%3==0:
+		actor.queue_remark(actor.remark_prompts.ENEMY)
 
 func _exit_state() -> void:
 	set_physics_process(false)
@@ -27,11 +29,11 @@ func handle_enemies():
 			actor.survivor_types.WOMAN:
 				fight_enemies()
 			actor.survivor_types.MAN:
-				fight_enemies()
+				run_from_enemies()
 			actor.survivor_types.OLDWOMAN:
 				fight_enemies()
 			actor.survivor_types.OLDMAN:
-				run_from_enemies()
+				fight_enemies()
 	elif not movement_cooldown:
 		actor.state_machine.change_state(actor.state_machine.movement)
 	else:
@@ -48,7 +50,11 @@ var run_cooldown = false # survivor won't try running again soon after being for
 func _end_run_cooldown():
 	run_cooldown = false
 
+var just_started_running = true
 func run_from_enemies():
+	if just_started_running:
+		just_started_running = false
+		actor.queue_remark(actor.remark_prompts.HIDING)
 	# get closest enemy
 	var closest_distance = INF
 	for enemy in actor.enemies_nearby:

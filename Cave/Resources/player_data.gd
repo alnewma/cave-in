@@ -22,7 +22,7 @@ class_name PlayerData
 		conversation_point = 0,
 		conversation_happiness = 0,
 		productivity = 0,
-		assigned_location = Vector2.ZERO,
+		assigned_location = Vector2(814,145),
 		target_area = "",
 		target_assignment = "",
 		target_usage = ""
@@ -34,7 +34,7 @@ class_name PlayerData
 		conversation_point = 0,
 		conversation_happiness = 0,
 		productivity = 0,
-		assigned_location = Vector2.ZERO,
+		assigned_location = Vector2(676,67),
 		target_area = "",
 		target_assignment = "",
 		target_usage = ""
@@ -46,7 +46,7 @@ class_name PlayerData
 		conversation_point = 0,
 		conversation_happiness = 0,
 		productivity = 0,
-		assigned_location = Vector2.ZERO,
+		assigned_location = Vector2(205,55),
 		target_area = "",
 		target_assignment = "",
 		target_usage = ""
@@ -58,7 +58,7 @@ class_name PlayerData
 		conversation_point = 0,
 		conversation_happiness = 0,
 		productivity = 0,
-		assigned_location = Vector2.ZERO,
+		assigned_location = Vector2(863,237),
 		target_area = "",
 		target_assignment = "",
 		target_usage = ""

@@ -10,6 +10,7 @@ func _on_button_pressed(source_text):
 	match source_text:
 		"Confirm":
 			if removal_flag:
+				GameHandler.save_game_instance.player_data.map_data.locations.erase({"position":removal_flag.position,"name":removal_flag.flag_name})
 				removal_flag.queue_free()
 			visible = false
 		"Close":

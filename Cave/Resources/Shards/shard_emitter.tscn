@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://niafdr4es8nt"]
+
+[ext_resource type="Script" uid="uid://d2t5hjxgdrflt" path="res://Resources/Shards/shard_emitter.gd" id="1_78rka"]
+
+[node name="shardEmitter" type="Node2D"]
+z_index = 2
+script = ExtResource("1_78rka")
+min_impulse = 100.0
+max_impulse = 300.0
+lifetime = 50.0
+display_triangles = true
+
+[node name="deleteTimer" type="Timer" parent="."]

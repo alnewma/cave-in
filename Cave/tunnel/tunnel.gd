@@ -71,6 +71,12 @@ func tween_background():
 	var tween = get_tree().create_tween()
 	tween.tween_property(bg, "global_position", Vector2(bg.global_position.x,boat.global_position.y), travel_duration)
 
+var bobbing = false
+func _maintain_boat_bobbing():
+	pass
+	boat.global_position.y = 100+(sin(((Time.get_ticks_msec()/1000.0)*PI+PI/2))*.5)*.1375
+
+
 var progression = 0 # 0- start, 1- falling line, 2- blocked1 line, 3- blocked2 line
 func _on_progress_timer_timeout() -> void:
 	match progression:
@@ -87,6 +93,7 @@ func _on_progress_timer_timeout() -> void:
 			progression += 1
 			progress_timer.start(2)
 		2:
+			bobbing = true
 			var current_survivors = get_tree().get_nodes_in_group("survivor")
 			var speaking_survivor = current_survivors.pick_random()
 			speaking_survivor.queue_remark(speaking_survivor.remark_prompts.BLOCKED2)
@@ -104,6 +111,7 @@ func _on_progress_timer_timeout() -> void:
 			var current_survivors = get_tree().get_nodes_in_group("survivor")
 			var speaking_survivor = current_survivors.pick_random()
 			speaking_survivor.queue_remark(speaking_survivor.remark_prompts.BLOCKED2)
+
 
 @onready var rock_file = preload("res://tunnel/falling_rock.tscn")
 @onready var r_timer1 = $rock_timer1
@@ -169,6 +177,9 @@ var to_move = null
 func _move_survivor(survivor_instance):
 	survivor_chosen = survivor_instance
 	player.get_node("Camera2D").enabled = false
+	bobbing = false
+	boat.global_position.y = 100
+	bg.z_index = 0
 	to_move = replace_sprite(player_dummy,player,true)
 	player.speed = 0
 	match survivor_chosen.name:
@@ -234,18 +245,18 @@ func trigger_end():
 	get_node("playerStandIn").get_node("Camera2D").add_trauma(.45)
 	var rock_inst = block_rock.instantiate()
 	rock_inst.destination = pos1.global_position
-	add_child(rock_inst)
+	bg.add_child(rock_inst)
 	await get_tree().create_timer(1).timeout
 	rock_inst = block_rock.instantiate()
 	rock_inst.connect("landed",rock2_land)
 	rock_inst.frame = 1
 	rock_inst.destination = pos2.global_position
-	add_child(rock_inst)
+	bg.add_child(rock_inst)
 	await get_tree().create_timer(.75).timeout
 	rock_inst = block_rock.instantiate()
 	rock_inst.frame = 2
 	rock_inst.destination = pos3.global_position
-	add_child(rock_inst)
+	bg.add_child(rock_inst)
 
 @onready var break_sprite = $boat/break
 func rock2_land():
@@ -315,6 +326,8 @@ func _on_leave_area_body_exited(body: Node2D) -> void:
 	player_prompt.hide()
 	player_inside = false
 func _physics_process(_delta):
+	if bobbing:
+		_maintain_boat_bobbing()
 	if not started_self_exit and player_inside and usage_holder.visible and Input.is_action_just_pressed("interact"):
 		started_self_exit = true
 		player.can_be_controlled = false

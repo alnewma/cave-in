@@ -5,6 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://bap0hvdndfjag" path="res://Audio/SFX/Animals/SpiderMovement.wav" id="3_480t2"]
 
 [sub_resource type="Shader" id="Shader_480t2"]
+resource_local_to_scene = true
 code = "shader_type canvas_item;
 
 float random(vec2 uv) {
@@ -37,6 +38,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4rge4"]
+resource_local_to_scene = true
 shader = SubResource("Shader_480t2")
 shader_parameter/sensitivity = 0.0
 shader_parameter/redness = 0.0
@@ -229,6 +231,7 @@ height = 8.0
 z_index = 1
 y_sort_enabled = true
 collision_layer = 8
+collision_mask = 9
 script = ExtResource("1_60e7a")
 metadata/enemy_type = "spider"
 

@@ -40,7 +40,7 @@ func queue_exit():
 		tween.set_ease(Tween.EASE_OUT)
 		tween.parallel().tween_property(self, "scale", Vector2(1,1), .5).set_delay(1.2)
 var tween_finished_times = 0
-func on_tween_finished(tween_step):
+func on_tween_finished(_tween_step):
 	tween_finished_times += 1
 	if tween_finished_times == 4:
 		# play splash animations
