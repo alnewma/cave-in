@@ -55,7 +55,7 @@ func set_backgrounds():
 
 func set_survivors():
 	var survivor_instances = [$man_survivor,$old_man_survivor,$old_woman_survivor,$girl_survivor]
-	var survivor_data = [GameHandler.save_game_instance.player_data.survivor_data.ida,GameHandler.save_game_instance.player_data.survivor_data.kate,GameHandler.save_game_instance.player_data.survivor_data.mace,GameHandler.save_game_instance.player_data.survivor_data.wesley]
+	var _survivor_data = [GameHandler.save_game_instance.player_data.survivor_data.ida,GameHandler.save_game_instance.player_data.survivor_data.kate,GameHandler.save_game_instance.player_data.survivor_data.mace,GameHandler.save_game_instance.player_data.survivor_data.wesley]
 	for survivor in survivor_instances:
 		if not survivor.health > 0:
 			survivor.queue_free()
@@ -67,6 +67,7 @@ func set_survivors():
 @onready var progress_timer = $progress_timer
 @onready var leave_area = $boat/leave_area
 func tween_background():
+	@warning_ignore("integer_division")
 	progress_timer.start(travel_duration/2)
 	var tween = get_tree().create_tween()
 	tween.tween_property(bg, "global_position", Vector2(bg.global_position.x,boat.global_position.y), travel_duration)
@@ -85,6 +86,7 @@ func _on_progress_timer_timeout() -> void:
 			var speaking_survivor = current_survivors.pick_random()
 			speaking_survivor.queue_remark(speaking_survivor.remark_prompts.FALLING)
 			progression += 1
+			@warning_ignore("integer_division")
 			progress_timer.start(travel_duration/2-2)
 		1:
 			var current_survivors = get_tree().get_nodes_in_group("survivor")
@@ -158,7 +160,7 @@ func _on_quake_timer_timeout() -> void:
 	player.get_node("Camera2D").add_trauma(.35)
 
 
-func _on_interaction_ui_handler_child_entered_tree(node: Node) -> void:
+func _on_interaction_ui_handler_child_entered_tree(_node: Node) -> void:
 	pass # Replace with function body.
 
 ## Escape Code ##
@@ -171,7 +173,7 @@ func _on_interaction_ui_handler_child_entered_tree(node: Node) -> void:
 
 @onready var exit_marker = $tunnel_background/exit_marker
 
-var survivor_chosen : set = _move_survivor
+var survivor_chosen = null : set = _move_survivor
 
 var to_move = null
 func _move_survivor(survivor_instance):
@@ -189,22 +191,22 @@ func _move_survivor(survivor_instance):
 			replace_sprite(old_woman_dummy,woman, true)
 			replace_sprite(girl_dummy,girl, true)
 		"man_survivor":
-			to_move = replace_sprite(man_dummy,man, false)
+			to_move = replace_sprite(man_dummy,man, true)
 			replace_sprite(old_man_dummy,oldman, true)
 			replace_sprite(old_woman_dummy,woman, true)
 			replace_sprite(girl_dummy,girl, true)
 		"old_man_survivor":
-			to_move = replace_sprite(old_man_dummy,oldman, false)
+			to_move = replace_sprite(old_man_dummy,oldman, true)
 			replace_sprite(man_dummy,man, true)
 			replace_sprite(old_woman_dummy,woman, true)
 			replace_sprite(girl_dummy,girl, true)
 		"old_woman_survivor":
-			to_move = replace_sprite(old_woman_dummy,woman, false)
+			to_move = replace_sprite(old_woman_dummy,woman, true)
 			replace_sprite(man_dummy,man, true)
 			replace_sprite(old_man_dummy,oldman, true)
 			replace_sprite(girl_dummy,girl, true)
 		"girl_survivor":
-			to_move = replace_sprite(girl_dummy,girl, false)
+			to_move = replace_sprite(girl_dummy,girl, true)
 			replace_sprite(old_woman_dummy,woman, true)
 			replace_sprite(man_dummy,man, true)
 			replace_sprite(old_man_dummy,oldman, true)
@@ -240,6 +242,9 @@ func trigger_end():
 	$tunnel_background/gate/survivor_ripple.show()
 	$tunnel_background/gate/survivor_ripple.play("default")
 	await get_tree().create_timer(10).timeout
+	_ending_cont()
+
+func _ending_cont():
 	get_node("playerStandIn").get_node("Camera2D").add_trauma(.35)
 	await get_tree().create_timer(1).timeout
 	get_node("playerStandIn").get_node("Camera2D").add_trauma(.45)
@@ -273,6 +278,8 @@ func rock3_land():
 	tween.set_ease(Tween.EASE_OUT_IN)
 	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(dark_cover,"global_position",Vector2(0,0),1)
+	await get_tree().create_timer(3).timeout
+	_show_ending_poem()
 
 func replace_sprite(replacement_file,original,location:bool): # true:original loc, false:marker loc
 	var man_inst = replacement_file.instantiate()
@@ -313,16 +320,16 @@ func push_characters_away(origin_position:Vector2):
 		var push_location = dummy.global_position + (dummy.global_position - origin_position).normalized()*3
 		tween.tween_property(dummy,"global_position",push_location,.3)
 
-func _on_light_area_area_entered(area: Area2D) -> void:
+func _on_light_area_area_entered(_area: Area2D) -> void:
 	rock3_land()
 
 @export var player_prompt : Control
 var player_inside = false
 var started_self_exit = false
-func _on_leave_area_body_entered(body: Node2D) -> void:
+func _on_leave_area_body_entered(_body: Node2D) -> void:
 	player_prompt.show()
 	player_inside = true
-func _on_leave_area_body_exited(body: Node2D) -> void:
+func _on_leave_area_body_exited(_body: Node2D) -> void:
 	player_prompt.hide()
 	player_inside = false
 func _physics_process(_delta):
@@ -350,3 +357,69 @@ func _on_light_timer_timeout() -> void:
 var surv_talked_to = false
 func _on_dialogue_page_survivor_talked_to_during_end() -> void:
 	surv_talked_to = true
+
+
+func _on_end_timer_timeout() -> void:
+	self.survivor_chosen = player
+	_ending_cont() # no one moves and song ends
+
+@onready var poem_text = $ending_text/Label
+func _show_ending_poem():
+	match survivor_chosen.name:
+		"Player":
+			poem_text.text = ending_poems["player"]
+		"man_survivor":
+			poem_text.text = ending_poems["mace"]
+		"old_man_survivor":
+			poem_text.text = ending_poems["wesley"]
+		"old_woman_survivor":
+			poem_text.text = ending_poems["ida"]
+		"girl_survivor":
+			poem_text.text = ending_poems["kate"]
+		null:
+			poem_text.text = ending_poems["none"]
+		
+	var tween = get_tree().create_tween()
+	tween.tween_property(poem_text,"modulate:a",1,2)
+	var tmr = get_tree().create_timer(15)
+	tmr.timeout.connect(_hide_ending_poem)
+
+var menu_scene = load("res://MainMenu/main_menu.tscn")
+func _hide_ending_poem():
+	var tween = get_tree().create_tween()
+	await tween.tween_property(poem_text,"modulate:a",0,2).finished
+	await get_tree().create_timer(5).timeout
+	get_tree().change_scene_to_packed(menu_scene)
+
+var ending_poems = {
+	"kate":
+		"The march of five now a soft tread solitary.
+Each step weighed down by those left behind buried.
+The dead followed you until their deathbeds' last chill.
+Except Kate, who never stopped, path led by you still.",
+	"wesley":
+		"The march of five now a soft tread solitary.
+Each step weighed down by those left behind buried.
+Wesley, the leader, bears the brand of failure’s flame.
+He lives seeking redemption, feeling haunting pain.",
+	"mace":
+		"The march of five now a soft tread solitary.
+Each step weighed down by those left behind buried.
+Mace once wandered through life, a man simple and lost.
+He walks now with purpose, yet left mourning the cost.",
+	"ida":
+		"The march of five now a soft tread solitary.
+Each step weighed down by those left behind buried.
+The dead may be blessed, for only the living grieves.
+Ida, though stalwart, a part of her never leaves.",
+	"player":
+		"The march of five now a soft tread solitary.
+Each step weighed down by those left behind buried.
+Fate presses forward, with might of a charging beast.
+You still nudged the reins, but its power never ceased.",
+	"none":
+		"The stones crashed down with their insensate cries,
+Giving no chance for regret nor goodbyes.
+The march of five never reached the sun.
+Rather stop together than be a tread of one."
+}

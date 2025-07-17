@@ -38,10 +38,17 @@ func _shatter():
 	fall_sprite.hide()
 
 func _splash():
-	fall_sprite.hide()
-	ripple.play("default")
-	ripple.show()
-	AudioManager.play_effect(AudioManager.effects.STONESPLASH,0,0,0,global_position,100,.5)
+	var boat_polygon = get_node("../interaction_objects/buildboat/boatSprite/boatPolygon")
+	if Geometry2D.is_point_in_polygon(global_position-boat_polygon.global_position,boat_polygon.polygon): #don't splash if on boat
+		_shatter()
+	else:
+		@warning_ignore("integer_division")
+		var starting_percent = frame/4 * 25 + 25
+		fall_sprite.material.set("shader_parameter/percentage",starting_percent*.01)
+		get_tree().create_tween().tween_property(fall_sprite.material,"shader_parameter/percentage",(starting_percent-25)*.01,.1)
+		ripple.play("default")
+		ripple.show()
+		AudioManager.play_effect(AudioManager.effects.STONESPLASH,0,0,0,global_position,100,.5)
 
 var square = {
 	0 : Vector2(-1,-1),

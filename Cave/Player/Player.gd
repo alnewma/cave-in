@@ -132,9 +132,54 @@ func _on_attack_area_body_exited(body):
 
 func _health_changed(val):
 	health = val
+	_adjust_effects_for_health()
 	if health <= 0:
 		_player_died()
 	GameHandler.save_game_instance.player_data.player_character_stats.health = val
+
+var current_light_tween
+var current_low_pass_tween
+var current_reverb_tween
+@onready var tweens = [current_light_tween,current_low_pass_tween,current_reverb_tween]
+var in_critical_state_effects = false
+func _adjust_effects_for_health():
+	if in_main_game:
+		var light = $light
+		if health <= 30 and health > 0: # currently doesn't apply effects if dead
+			if not in_critical_state_effects:
+				in_critical_state_effects = true
+				for t in tweens:
+					if t:
+						t.stop()
+				current_light_tween = get_tree().create_tween().tween_property(light,"color",Color("ffc9c993"),.25)
+				var low_pass_filter = AudioServer.get_bus_effect(0,0)
+				var reverb_filter = AudioServer.get_bus_effect(0,1)
+				current_low_pass_tween = get_tree().create_tween().tween_property(low_pass_filter,"cutoff_hz",1000,.25)
+				current_reverb_tween = get_tree().create_tween().tween_property(reverb_filter,"wet",.2,.25)
+				if not heartbeat_player.playing:
+					heartbeat_player.play()
+		elif in_critical_state_effects:
+			in_critical_state_effects = false
+			for t in tweens:
+				if t:
+					t.stop()
+			current_light_tween = get_tree().create_tween().tween_property(light,"color",Color("ffffff93"),2)
+			var low_pass_filter = AudioServer.get_bus_effect(0,0)
+			var reverb_filter = AudioServer.get_bus_effect(0,1)
+			current_low_pass_tween = get_tree().create_tween().tween_property(low_pass_filter,"cutoff_hz",20500,2)
+			current_reverb_tween = get_tree().create_tween().tween_property(reverb_filter,"wet",0.0,2)
+
+var taking_damage = false : set = _on_taking_damage
+var last_damage_taken_time = 0
+func _on_taking_damage(value):
+	if value:
+		last_damage_taken_time = Time.get_ticks_msec()
+	
+func _on_healing_timer_timeout() -> void:
+	pass
+	if Time.get_ticks_msec() - last_damage_taken_time > 5000: # if 5 seconds has passed since last hit
+		if health <= 30:
+			health += 1
 
 var dead := false
 func _player_died():
@@ -171,6 +216,7 @@ func set_using_survivors(value,add_or_erase : bool):
 	
 func _verify_self_array_existence():
 	GameHandler.save_game_instance.player_data.objective_data.get_or_add(name,[assigned_survivors.duplicate(),using_survivors.duplicate()])
+
 
 ## Audio ##
 
@@ -218,3 +264,8 @@ func play_footstep():
 					AudioManager.play_effect(AudioManager.effects.STONE)
 				"metal":
 					AudioManager.play_effect(AudioManager.effects.METAL)
+
+@onready var heartbeat_player = $heartbeat_player
+func _on_heartbeat_player_finished() -> void:
+	if health <= 30:
+		heartbeat_player.play()

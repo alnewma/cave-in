@@ -15,7 +15,8 @@ func _ready():
 	noise.seed = randi()
 
 func add_trauma(amount : float):
-	trauma = min(trauma + amount, 1.0)
+	if GameHandler.screen_shake_enabled:
+		trauma = min(trauma + amount, 1.0)
 	
 func _process(delta):
 	if trauma:

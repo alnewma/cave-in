@@ -38,8 +38,9 @@ func _on_visibility_changed():
 func refresh_item_textures():
 	var survivor_item = null
 	for item in GameHandler.save_game_instance.item_instances:
-		if item[1] is Node2D and item[1] == handler.current_survivor:
-			survivor_item = item[0]
+		if item[1]:
+			if item[1] is StringName and item[1] == handler.current_survivor.name:
+				survivor_item = item[0]
 	if survivor_item != null:
 		item_image.texture = GameHandler.item_images[survivor_item]
 		item_name.text = "Item: " + GameHandler.item_names[survivor_item]
@@ -73,8 +74,8 @@ func inside_change(value):
 
 func _on_take_button_pressed():
 	for item in GameHandler.save_game_instance.item_instances:
-		if item[1] is Node2D and item[1] == handler.current_survivor:
-			item[1] = get_tree().get_first_node_in_group("player")
+		if item[1] is StringName and item[1] == handler.current_survivor.name:
+			item[1] = get_tree().get_first_node_in_group("player").name
 	refresh_item_textures()
 
 @onready var item_base = preload("res://UI/scroll_item.tscn")
@@ -88,7 +89,7 @@ func _on_replace_button_pressed():
 	var player = get_tree().get_first_node_in_group("player")
 	var items_found = 0
 	for item in GameHandler.save_game_instance.item_instances:
-		if item[1] is Node2D and item[1] == player:
+		if item[1] is StringName and item[1] == player.name:
 			items_found += 1
 			var label = item_base.instantiate()
 			label.text = GameHandler.item_names[item[0]]
@@ -103,8 +104,8 @@ func replace_item_clicked(pressed_item):
 	_on_take_button_pressed()
 	var player = get_tree().get_first_node_in_group("player")
 	for item in GameHandler.save_game_instance.item_instances:
-		if item[0] == pressed_item and item[1] is Node2D and item[1] == player:
-			item[1] = handler.current_survivor
+		if item[0] == pressed_item and item[1] is StringName and item[1] == player.name:
+			item[1] = handler.current_survivor.name
 			break
 	replace_scoll_container.visible = false
 	for node in item_menu_nodes:

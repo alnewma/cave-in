@@ -5,6 +5,7 @@ var player_inside = false
 
 @onready var splash_anim = $"../boatSplash"
 @onready var engineSound = $boatEngineAudio
+@onready var boat_obstacle = $"../../../NavigationNodes/NavigationRegion2D/NavigationObstacle2D"
 
 func _physics_process(_delta):
 	if player_inside and Input.is_action_just_pressed("interact"): # start exit sequence
@@ -15,11 +16,13 @@ func _physics_process(_delta):
 
 ## Setting Boat Script ##
 
+@onready var boat_blocker = $"../boatAreaBlocker/CollisionShape2D"
 var queued = false
 func queue_exit():
 	if not queued:
 		queued = true
 		player_prompt.hide()
+		boat_blocker.disabled = false
 		var survivors = get_tree().get_nodes_in_group("survivor")
 		var UIHandler = get_tree().get_first_node_in_group("interaction_UI_handler")
 		# assign all survivors to follow player
@@ -39,10 +42,16 @@ func queue_exit():
 		tween.parallel().tween_property(self, "scale", Vector2(.9,.9), .8).set_delay(.3)
 		tween.set_ease(Tween.EASE_OUT)
 		tween.parallel().tween_property(self, "scale", Vector2(1,1), .5).set_delay(1.2)
+
 var tween_finished_times = 0
 func on_tween_finished(_tween_step):
 	tween_finished_times += 1
 	if tween_finished_times == 4:
+		# handle boat avoidance removal
+		boat_blocker.disabled = true
+		boat_obstacle.affect_navigation_mesh = false # rebake nav region to stop avoiding boat
+		boat_obstacle.carve_navigation_mesh = false
+		boat_obstacle.get_parent().bake_navigation_polygon()
 		# play splash animations
 		await get_tree().create_timer(1).timeout
 		play("default")
@@ -118,6 +127,8 @@ func exit_to_tunnel():
 		player_instance.get_node("Camera2D").enabled = false
 		player_instance.speed = 0
 		var player_dum = player_dummy.instantiate()
+		player_dum.get_node("light").energy = 1
+		player_dum.get_node("light").texture_scale = 2
 		add_child(player_dum)
 		player_dum.global_position = player_marker.global_position
 		var survivors = get_tree().get_nodes_in_group("survivor")

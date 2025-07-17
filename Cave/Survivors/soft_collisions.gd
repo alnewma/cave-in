@@ -11,6 +11,8 @@ func get_soft_collisions_push_vector(_delta) -> Vector2:
 		push_vector = push_vector.normalized()*pow((20/global_position.distance_squared_to(overlapping_soft_collision_bodies[1].global_position)),2)
 		#return clamp(push_vector,Vector2(-10,-10),Vector2(10,10))
 		lastPushVector = clamp(push_vector,Vector2(-1,-1),Vector2(1,1))*30
+		if is_nan(lastPushVector.x) or is_nan(lastPushVector.y):
+			return Vector2.ZERO
 		return lastPushVector
 	else:
 		return Vector2.ZERO #lerp(lastPushVector,Vector2.ZERO,delta*100)

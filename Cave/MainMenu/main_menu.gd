@@ -12,7 +12,7 @@ func _ready():
 @onready var mainC = $menu_canvas/background/main_container
 @onready var newC = $menu_canvas/background/new_container
 @onready var loadC = $menu_canvas/background/load_container
-@onready var settingsC = $menu_canvas/background/settings_container
+@onready var settingsC = $menu_canvas/settingsContainer
 @onready var tutorialC = $menu_canvas/tutorialContainer
 
 @onready var load_scroll_container = $menu_canvas/background/load_container/ScrollContainer
@@ -129,3 +129,6 @@ func load_map():
 
 func _on_close_button_pressed() -> void:
 	switch_container(mainC)
+
+func _on_settings_pressed() -> void:
+	switch_container(settingsC)

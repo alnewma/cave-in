@@ -123,6 +123,7 @@ signal survivor_mouse_entered
 signal survivor_mouse_exited
 func _on_interaction_area_input_event(_viewport, event, _shape_idx):
 	if event.is_action_pressed("object_select"):
+		get_viewport().set_input_as_handled()
 		emit_signal("survivor_clicked",self)
 func _on_interaction_area_mouse_entered():
 	emit_signal("survivor_mouse_entered",self)

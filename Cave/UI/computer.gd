@@ -5,7 +5,8 @@ extends Control
 		locked = value
 		if not locked:
 			hide_screens()
-			start_screen.show()
+			if start_screen:
+				start_screen.show()
 
 @onready var fog = get_tree().get_first_node_in_group("fog_layer")
 
@@ -30,7 +31,8 @@ func hide_screens():
 	AudioManager.play_effect(AudioManager.effects.COMPUTERCLICK,0,0,0,Vector2.ZERO,0,.1)
 	var screens = [start_screen,logs_screen,doors_screen,log1_screen,log2_screen,log3_screen,log4_screen,password_screen,opened_screen,unpowered_screen]
 	for screen in screens:
-		screen.hide()
+		if screen:
+			screen.hide()
 
 func open_computer():
 	fog.hide()

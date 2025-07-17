@@ -2,8 +2,9 @@ extends Node
 
 @onready var save_game_instance = SaveGame.new()
 
-var game_just_opened = true
+var game_just_opened = false#true
 var player_typing = false
+var screen_shake_enabled = true # can be disabled in settings
 
 ## Save Handler ##
 #
@@ -162,6 +163,7 @@ func damage_target(_origin:CharacterBody2D,target:CharacterBody2D,damage:int):
 							surv.queue_remark(surv.remark_prompts.NEARBYLOWHEALTH, get_survivor_name_from_object(target))
 			
 		elif target.is_in_group("player"):
+			target.taking_damage = true
 			var survs = get_tree().get_nodes_in_group("survivor")
 			if target.health <= 0: # nearby death remark
 				for surv in survs:

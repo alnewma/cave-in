@@ -82,7 +82,7 @@ func cutscene():
 	side_rocks.scroll_scale = Vector2(1,1)
 	playercam.enabled = false
 	playerlight.hide()
-	AudioManager.play_effect(AudioManager.effects.OUTSIDEDESERT,0,0,0,Vector2.ZERO,0,.3)
+	AudioManager.play_effect(AudioManager.effects.OUTSIDEDESERT,0,0,0,Vector2.ZERO,0,.8)
 	#var intro_instance = intro_logos.instantiate()
 	#get_tree().current_scene.add_child(intro_instance)
 	#await intro_instance.get_node("AnimationPlayer").animation_finished

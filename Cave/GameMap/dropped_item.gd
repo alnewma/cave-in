@@ -6,7 +6,7 @@ func _input(event):
 			get_viewport().set_input_as_handled()
 			for item in GameHandler.save_game_instance.item_instances:
 				if item[1] is Vector2 and item[1] == global_position: # switch item to player inventory
-					item[1] = get_tree().get_first_node_in_group("player")
+					item[1] = get_tree().get_first_node_in_group("player").name
 					queue_free()
 
 var mouse_inside = false

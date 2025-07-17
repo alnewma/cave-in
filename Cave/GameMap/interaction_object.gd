@@ -23,22 +23,23 @@ var completion_status = 0 : set = _on_completion_status_changed
 @onready var depletion_timer = $depletion_timer
 signal completion_status_changed
 signal object_completed
-@export var event : GameHandler.events
 var flags_through_which_player_is_nearby = []
 
 func _on_completion_status_changed(value):
 	completion_status = value
 	if completion_status == 100 and not completed:
 		completed = true
-		GameHandler.save_game_instance.events_completed.append(event)
+		GameHandler.save_game_instance.events_completed.append(name)
 	emit_signal("completion_status_changed")
 	ready_status_changed()
 
+var completed_through_save = false # true if already completed, just retriggering through save loading
 func _on_completed(value):
 	completed = value
 	if value: # assignment has been completed
 		emit_signal("object_completed")
-		give_item(available_items)
+		if not completed_through_save:
+			give_item(available_items)
 		completion_routine()
 
 func ready_status_changed(): # to be overwritten per object
@@ -88,7 +89,8 @@ func _ready():
 		ps_used += 1
 		if ps_used <= available_item_count:
 			available_items.append(p)
-	if event in GameHandler.save_game_instance.events_completed: # event has been completed in save
+	if name in GameHandler.save_game_instance.events_completed: # event has been completed in save
+		completed_through_save = true
 		self.completion_status = 100
 	if depletion_rate > 0:
 		depletion_timer.wait_time = depletion_rate
@@ -111,20 +113,20 @@ func get_tools_being_used() -> Array:
 		var survivor = get_node(survivorPath)
 		if survivor.state_machine.state == survivor.state_machine.activity: # if survivor is currently working
 			for item in GameHandler.save_game_instance.item_instances:
-				if typeof(item[1]) == TYPE_OBJECT and item[1] == survivor:
+				if typeof(item[1]) == TYPE_STRING_NAME and item[1] == survivor.name:
 					tools_being_used.append(item[0])
 					#print(name + ": " + item[1].name + " is using item")
 	# check tools player is providing
 	var player = get_tree().get_first_node_in_group("player")
 	if flags_through_which_player_is_nearby.size() > 0: # player is nearby
 		for item in GameHandler.save_game_instance.item_instances:
-			if typeof(item[1]) == TYPE_OBJECT and item[1] == player:
+			if typeof(item[1]) == TYPE_STRING_NAME and item[1] == player.name:
 				tools_being_used.append(item[0])
 				#print("player is using item")
 	return tools_being_used
 
 func _on_progression_timer_timeout():
-	
+
 	# check if all required tools are provided
 	var required_tools_accounted_for = true
 	var tools_being_used = get_tools_being_used()
@@ -136,7 +138,7 @@ func _on_progression_timer_timeout():
 	for survivorPath in assigned_survivors:
 		var survivor = get_node(survivorPath)
 		if survivor.state_machine.state == survivor.state_machine.activity: # if survivor is currently working
-			if survivor.thirst > 0: # if survivor not too thirsty to work
+			if survivor.thirst > 0 or display_name == "Fire Hydrant": # if survivor not too thirsty to work or is pumping water
 				#print(name + " progression: " + str(completion_status))
 				if completion_status < 100 and required_tools_accounted_for: # increase progress based on productivity level and tools
 					var progress_inc = pow(1.5,GameHandler.get_survivor_data_from_object(survivor).productivity)
@@ -155,14 +157,14 @@ func give_item(items : Array):
 			# determine items owned by survivor
 			var survivor_items = 0
 			for i in GameHandler.save_game_instance.item_instances:
-				if i[1] is Node2D and i[1] == get_node(survivor):
+				if i[1] is StringName and i[1] == get_node(survivor).name:
 					survivor_items += 1
 			if survivor_items == 0:
 				for item_instance in GameHandler.save_game_instance.item_instances:
 					if item_instance[0] == item and item_instance[1] == null: #item is available to be given
 						if not item_dispensed:
 							item_dispensed = true
-							item_instance[1] = get_node(survivor)
+							item_instance[1] = get_node(survivor).name
 							get_node(survivor).queue_remark(get_node(survivor).remark_prompts.TOOL,GameHandler.item_names[item_instance[0]])
 		if not item_dispensed:
 			item_dispensed = true

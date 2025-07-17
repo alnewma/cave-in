@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 assignment_handler="*res://GameMap/assignment_handler.gd"
 GameHandler="*res://Resources/game_handler.gd"
 AudioManager="*res://Audio/audio_manager.tscn"
+ConfigFileHandler="*res://Resources/ConfigFileHandler.gd"
 
 [debug]
 

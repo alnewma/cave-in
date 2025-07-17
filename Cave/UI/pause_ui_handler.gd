@@ -9,7 +9,7 @@ func pause_setup():
 	for item in inventory_grid.get_children(): # clear out inventory before reinstancing
 		item.queue_free()
 	for item in GameHandler.save_game_instance.item_instances:
-		if item[1] is Node2D and item[1] == player:
+		if item[1] is StringName and item[1] == player.name:
 			var item_button = inventory_item.instantiate()
 			item_button.get_node("item_image").texture = GameHandler.item_images_small[item[0]]
 			item_button.get_node("item_name").text = GameHandler.item_names[item[0]]

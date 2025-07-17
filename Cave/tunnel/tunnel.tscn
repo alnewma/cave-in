@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=4 uid="uid://dbt6aj80ujt3x"]
+[gd_scene load_steps=85 format=4 uid="uid://dbt6aj80ujt3x"]
 
 [ext_resource type="Script" uid="uid://cat2d6vhka2ts" path="res://tunnel/tunnel.gd" id="1_esspt"]
 [ext_resource type="TileSet" uid="uid://4d5lfppjykax" path="res://GameMap/TileMaps/SewerMap.tres" id="1_jpvxj"]
@@ -29,6 +29,7 @@
 [ext_resource type="Shader" uid="uid://ctw52kihat482" path="res://GameMap/fog.gdshader" id="22_c45y2"]
 [ext_resource type="Texture2D" uid="uid://b03seaycqujvy" path="res://ArtAssets/feather_dark.png" id="26_hmj4w"]
 [ext_resource type="PackedScene" uid="uid://cykw63mwr86q2" path="res://UI/usage_prompt.tscn" id="27_skbrv"]
+[ext_resource type="Theme" uid="uid://bgr6frj5j5a2w" path="res://UI/label_theme.tres" id="30_2lqux"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2nxuc"]
 atlas = ExtResource("5_2067x")
@@ -503,6 +504,7 @@ stream = ExtResource("15_mr5ad")
 volume_db = 5.0
 autoplay = true
 max_distance = 40.0
+bus = &"SFX_Bus"
 
 [node name="leave_area" type="Area2D" parent="boat"]
 collision_layer = 2
@@ -640,6 +642,28 @@ one_shot = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_cwr3s")
 
+[node name="endTimer" type="Timer" parent="."]
+wait_time = 256.0
+one_shot = true
+autostart = true
+
+[node name="ending_text" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="ending_text"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.1667
+offset_right = 20.0
+offset_bottom = 11.1667
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("30_2lqux")
+
 [connection signal="animation_finished" from="tunnel_background/gate/survivor_ripple" to="tunnel_background/gate/survivor_ripple" method="_on_animation_finished"]
 [connection signal="area_entered" from="tunnel_background/gate/light_area" to="." method="_on_light_area_area_entered"]
 [connection signal="animation_finished" from="tunnel_background/ripple_top" to="tunnel_background/ripple_top" method="_on_animation_finished"]
@@ -655,6 +679,7 @@ environment = SubResource("Environment_cwr3s")
 [connection signal="survivor_talked_to_during_end" from="interaction_UI_handler/dialogue_page" to="." method="_on_dialogue_page_survivor_talked_to_during_end"]
 [connection signal="timeout" from="stoneCrashAudioTimer" to="." method="_on_stone_crash_audio_timer_timeout"]
 [connection signal="timeout" from="lightTimer" to="." method="_on_light_timer_timeout"]
+[connection signal="timeout" from="endTimer" to="." method="_on_end_timer_timeout"]
 
 [editable path="interaction_UI_handler"]
 [editable path="interaction_UI_handler/interaction_page"]

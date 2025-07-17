@@ -231,6 +231,7 @@ enum effects {
 	TYPE6,
 	SINGLECORRECT,
 	SINGLEERROR,
+	CRATEBREAK,
 	
 	# Effect Categories
 	CAVE_AMBIENT,
@@ -469,6 +470,7 @@ var effect_files = {
 	effects.TYPE6 : preload("res://Audio/SFX/Type6.wav"),
 	effects.SINGLECORRECT : preload("res://Audio/SFX/singleCorrect.mp3"),
 	effects.SINGLEERROR : preload("res://Audio/SFX/singleError.mp3"),
+	effects.CRATEBREAK : preload("res://Audio/SFX/crateBreak.ogg"),
 }
 
 # Audio Groups
@@ -557,6 +559,7 @@ func play_effect(effect : effects,fade_in = false,fade_length = 0.0,delay = 0.0,
 		sfx_stream.max_distance = max_distance
 	if volume != 1:
 		sfx_stream.volume_linear = volume
+	sfx_stream.set_bus("SFX_Bus")
 	add_child(sfx_stream)
 	sfx_stream.connect("finished",delete_effect.bind(sfx_stream))
 	if effect in effect_groups.keys():
@@ -597,7 +600,13 @@ func increase_effect(effect : effects,volume_db : float):
 			get_tree().create_tween().tween_property(item, "volume_db", volume_db, .5)
 func search_effect(effect : effects):
 	var count = 0
-	for item in get_children():
-		if item is AudioStreamPlayer and item.stream == effect_files[effect]:
-			count+=1
+	if effect_groups.has(effect): # effect is group
+		for item in effect_groups[effect]:
+			for sub_item in get_children():
+				if (sub_item is AudioStreamPlayer or sub_item is AudioStreamPlayer2D) and sub_item.stream == effect_files[item]:
+					count+=1
+	else: # effect is effect
+		for item in get_children():
+			if (item is AudioStreamPlayer or item is AudioStreamPlayer2D) and item.stream == effect_files[effect]:
+				count+=1
 	return count

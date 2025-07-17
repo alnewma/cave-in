@@ -1,4 +1,4 @@
-[gd_scene load_steps=240 format=4 uid="uid://dpebdqb1ictyv"]
+[gd_scene load_steps=242 format=4 uid="uid://dpebdqb1ictyv"]
 
 [ext_resource type="TileSet" uid="uid://4d5lfppjykax" path="res://GameMap/TileMaps/SewerMap.tres" id="1_kqnrg"]
 [ext_resource type="Script" uid="uid://dff0gn072b14x" path="res://GameMap/game_map.gd" id="1_u2ow3"]
@@ -11,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://duy3hrphrx3rb" path="res://ArtAssets/Tunnel.png" id="4_yguo2"]
 [ext_resource type="PackedScene" uid="uid://bsrbrnqvx2mpa" path="res://Player/Player.tscn" id="5_a72qw"]
 [ext_resource type="Texture2D" uid="uid://du5ho3biwbpqd" path="res://ArtAssets/indoor_tiles.png" id="6_f6axd"]
-[ext_resource type="Texture2D" uid="uid://ny4unfpracp" path="res://ArtAssets/Furniture/Box.png" id="7_ac7e2"]
 [ext_resource type="Script" uid="uid://cyj8p4fmtqi4r" path="res://GameMap/NavigationNodes.gd" id="7_b43c1"]
 [ext_resource type="NavigationPolygon" uid="uid://dq7t0sejrov4s" path="res://GameMap/map_navigation_polygon.tres" id="7_gxils"]
 [ext_resource type="Texture2D" uid="uid://blp6sml23m0tg" path="res://ArtAssets/Furniture/ToxicBarrelAnimation.png" id="8_lw5l3"]
@@ -23,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://buwfwcnvl62h1" path="res://UI/interaction_ui_handler.tscn" id="11_tmnem"]
 [ext_resource type="PackedScene" uid="uid://ho1ol4kjbhmt" path="res://UI/establish_location.tscn" id="12_675d4"]
 [ext_resource type="Texture2D" uid="uid://bouu2730m1fps" path="res://ArtAssets/Furniture/side_shelf.png" id="12_c0nyb"]
+[ext_resource type="Texture2D" uid="uid://cd5dknbdt5ljb" path="res://ArtAssets/Furniture/BoxSprites.png" id="13_ja5is"]
 [ext_resource type="Texture2D" uid="uid://dga4jhk4j6grp" path="res://ArtAssets/Furniture/Beakers.png" id="13_kj8rx"]
 [ext_resource type="PackedScene" uid="uid://cnv7hwv0fiyx" path="res://UI/edit_location.tscn" id="13_lt51b"]
 [ext_resource type="PackedScene" uid="uid://c4f0lu4niir0k" path="res://UI/pause_ui_handler.tscn" id="14_07q6f"]
@@ -83,6 +83,7 @@
 [ext_resource type="Script" uid="uid://db00l68pvlvt0" path="res://GameMap/SdoorB1.gd" id="62_tc6vf"]
 [ext_resource type="Script" uid="uid://bjanmuy74hr50" path="res://GameMap/SdoorB2.gd" id="63_s4c58"]
 [ext_resource type="Script" uid="uid://cct1bp71wya1i" path="res://GameMap/news_margin.gd" id="64_5gbn0"]
+[ext_resource type="Script" uid="uid://fmorgkv1esd3" path="res://GameMap/welding.gd" id="64_qv7s2"]
 [ext_resource type="Theme" uid="uid://bgr6frj5j5a2w" path="res://UI/label_theme.tres" id="64_vtg8s"]
 [ext_resource type="PackedScene" uid="uid://cuo30d2x3drow" path="res://UI/ending_holder.tscn" id="66_e36gc"]
 [ext_resource type="Texture2D" uid="uid://cebt3qikbsdjm" path="res://ArtAssets/lavaLightMask.png" id="69_csirc"]
@@ -3889,7 +3890,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_206c5"]
-size = Vector2(30, 38)
+size = Vector2(33, 38)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ffor2"]
 radius = 5.0
@@ -3897,6 +3898,9 @@ height = 22.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nfjjm"]
 size = Vector2(20, 43)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1d3yq"]
+size = Vector2(18, 45)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_edmr0"]
 size = Vector2(54, 26)
@@ -4307,8 +4311,9 @@ y_sort_enabled = true
 z_index = 1
 y_sort_enabled = true
 position = Vector2(-110, -279)
-texture = ExtResource("7_ac7e2")
+texture = ExtResource("13_ja5is")
 offset = Vector2(1, -16)
+hframes = 2
 
 [node name="ToxicBarrel" type="AnimatedSprite2D" parent="InsideFurniture"]
 z_index = 1
@@ -4422,6 +4427,7 @@ shape = SubResource("RectangleShape2D_ffor2")
 stream = ExtResource("26_lmnvp")
 volume_db = 2.0
 max_distance = 100.0
+bus = &"SFX_Bus"
 
 [node name="generatorRunning" type="AnimatedSprite2D" parent="InsideFurniture/Generator"]
 visible = false
@@ -4455,6 +4461,7 @@ volume_db = -10.0
 autoplay = true
 max_distance = 200.0
 attenuation = 4.0
+bus = &"Music_Bus"
 
 [node name="Chair" type="Sprite2D" parent="InsideFurniture"]
 z_index = 1
@@ -4516,10 +4523,10 @@ texture = ExtResource("26_fwebt")
 texture_scale = 2.0
 
 [node name="NavigationNodes" type="Node2D" parent="."]
-visible = false
 script = ExtResource("7_b43c1")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="NavigationNodes" groups=["navigation_region"]]
+visible = false
 navigation_polygon = ExtResource("7_gxils")
 
 [node name="Polygon2D" type="Polygon2D" parent="NavigationNodes/NavigationRegion2D"]
@@ -4577,6 +4584,10 @@ polygon = PackedVector2Array(834, 266, 849, 265, 848, 293, 833, 292)
 position = Vector2(526, -404)
 polygon = PackedVector2Array(-22, -14, -2, -7, 13, 6, -11, 2)
 
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="NavigationNodes/NavigationRegion2D"]
+position = Vector2(844, 332)
+vertices = PackedVector2Array(-8, -23, 25, -23, 26, 18, 16, 18, 16, 26, 3, 26, -8, 26, -8, 17)
+
 [node name="ActivityArea" parent="." instance=ExtResource("9_yx0sg")]
 visible = false
 position = Vector2(489, 1)
@@ -4610,7 +4621,7 @@ y_sort_enabled = true
 y_sort_enabled = true
 position = Vector2(275, 114)
 script = ExtResource("15_jax31")
-progress_SFX = 100
+progress_SFX = 210
 display_name = "Fire Hydrant"
 assignment = "Pump"
 
@@ -4640,7 +4651,7 @@ shape = SubResource("CircleShape2D_mhnpw")
 y_sort_enabled = true
 position = Vector2(612, 99)
 script = ExtResource("15_jax31")
-progress_SFX = 189
+progress_SFX = 210
 display_name = "Fire Hydrant"
 assignment = "Pump"
 
@@ -4726,7 +4737,7 @@ z_index = 1
 y_sort_enabled = true
 position = Vector2(289, 155)
 script = ExtResource("19_t1mi8")
-progress_SFX = 116
+progress_SFX = 209
 available_item_count = 2
 available_item1 = 7
 available_item2 = 7
@@ -4765,7 +4776,7 @@ z_index = 1
 y_sort_enabled = true
 position = Vector2(501, 56)
 script = ExtResource("19_t1mi8")
-progress_SFX = 116
+progress_SFX = 209
 available_item_count = 2
 available_item1 = 7
 available_item2 = 7
@@ -4804,9 +4815,10 @@ z_index = 1
 y_sort_enabled = true
 position = Vector2(465, 140)
 script = ExtResource("19_t1mi8")
-progress_SFX = 116
+progress_SFX = 209
 available_item_count = 2
 available_item1 = 7
+available_item2 = 7
 display_name = "Car"
 assignment = "Scavenge"
 
@@ -4841,7 +4853,7 @@ z_index = 1
 y_sort_enabled = true
 position = Vector2(687, 138)
 script = ExtResource("19_t1mi8")
-progress_SFX = 116
+progress_SFX = 209
 available_item_count = 3
 available_item1 = 7
 available_item2 = 7
@@ -4880,7 +4892,7 @@ z_index = 1
 y_sort_enabled = true
 position = Vector2(690, 79)
 script = ExtResource("17_q6647")
-progress_SFX = 116
+progress_SFX = 209
 available_item_count = 2
 available_item1 = 8
 available_item2 = 9
@@ -4914,7 +4926,7 @@ position = Vector2(2, -3)
 position = Vector2(853, 333)
 script = ExtResource("42_ftob1")
 depletion_rate = 0.0
-progress_SFX = 119
+progress_SFX = 212
 display_name = "Low Area"
 assignment = "Build"
 required_tools = 4
@@ -4973,11 +4985,13 @@ autoplay = "default"
 position = Vector2(0, 8)
 stream = ExtResource("57_aquxu")
 max_distance = 40.0
+bus = &"SFX_Bus"
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="interaction_objects/buildboat/boatSprite"]
+sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="interaction_objects/buildboat/boatSprite/AnimatableBody2D"]
-position = Vector2(0, -4)
+position = Vector2(-1.5, -4)
 shape = SubResource("RectangleShape2D_206c5")
 disabled = true
 
@@ -4985,6 +4999,10 @@ disabled = true
 position = Vector2(1, 13)
 shape = SubResource("CapsuleShape2D_ffor2")
 disabled = true
+
+[node name="boatPolygon" type="Polygon2D" parent="interaction_objects/buildboat/boatSprite"]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(-17, 17, 17, 17, 17, -25, -17, -25)
 
 [node name="leave_area" type="Area2D" parent="interaction_objects/buildboat"]
 collision_layer = 2
@@ -5025,10 +5043,17 @@ position = Vector2(11, 10)
 [node name="smoke10" type="Marker2D" parent="interaction_objects/buildboat"]
 position = Vector2(1, 15)
 
+[node name="boatAreaBlocker" type="StaticBody2D" parent="interaction_objects/buildboat"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interaction_objects/buildboat/boatAreaBlocker"]
+position = Vector2(-11, -0.5)
+shape = SubResource("RectangleShape2D_1d3yq")
+disabled = true
+
 [node name="gate" parent="interaction_objects" instance=ExtResource("15_xbe63")]
 position = Vector2(779, 211)
 script = ExtResource("42_hksw1")
-progress_SFX = 118
+progress_SFX = 211
 display_name = "Sewer Gate"
 assignment = "Open"
 required_tools = 1
@@ -5061,8 +5086,9 @@ position = Vector2(-16, 29)
 
 [node name="welding" parent="interaction_objects" instance=ExtResource("15_xbe63")]
 position = Vector2(-110, -294)
+script = ExtResource("64_qv7s2")
 depletion_rate = 0.0
-progress_SFX = 120
+progress_SFX = 213
 available_item_count = 2
 available_item1 = 6
 available_item2 = 6
@@ -5079,16 +5105,21 @@ position = Vector2(-5, -11)
 [node name="smoke2" type="Marker2D" parent="interaction_objects/welding"]
 position = Vector2(6, 2)
 
+[node name="Marker2D" type="Marker2D" parent="interaction_objects/welding"]
+position = Vector2(-6, 5)
+
+[node name="Marker2D2" type="Marker2D" parent="interaction_objects/welding"]
+position = Vector2(6, 5)
+
 [node name="blast" parent="interaction_objects" groups=["blast"] instance=ExtResource("15_xbe63")]
 z_index = 1
 position = Vector2(240, -15)
 script = ExtResource("41_jcbvm")
-progress_SFX = 121
+progress_SFX = 214
 display_name = "Door"
 assignment = "Demolish"
 required_tools = 1
 required_tool1 = 10
-event = 1
 
 [node name="CollisionShape2D" parent="interaction_objects/blast" index="0"]
 shape = SubResource("CircleShape2D_ugqo2")
@@ -5793,6 +5824,11 @@ script = ExtResource("94_qv7s2")
 [node name="water_polygon" type="Polygon2D" parent="." groups=["water_area"]]
 visible = false
 polygon = PackedVector2Array(144, 252, 825, 251, 823, 432, 995, 431, 995, 469, 145, 469)
+
+[node name="stair_hider" type="Polygon2D" parent="."]
+z_index = 4
+color = Color(0.0784314, 0.0784314, 0.0666667, 1)
+polygon = PackedVector2Array(655, -226, 810, -226, 810, -139, 653, -140)
 
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="timeout" from="CaveArea/lavaParticles/bubble_timer" to="CaveArea/lavaParticles" method="_on_bubble_timer_timeout"]
